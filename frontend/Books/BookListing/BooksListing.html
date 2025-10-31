@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>BookyTrans</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='BooksListingStyles.css'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <script src='main.js'></script>
+</head>
+<body>
+    <nav>
+        <div class="logo">LOGO</div>
+        <ul class="nav-links">
+            <li><a href="">Community</a></li>
+            <li><a href="">How it Works</a></li>
+            <li><a href="">Contact Us</a></li>
+        </ul>
+        <div class="upload-profile">
+            <button class="upload-btn">Upload a book</button>
+            <a href=""><img src="../assets/icons/profile.svg" alt="profile"></a>
+        </div>
+        <div class="hamburger-menu" onclick="toggleMenu()">&#9776;</div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-logo">LOGO</div>
+  <ul>
+    <li><a href="">Community</a></li>
+    <li><a href="">How it Works</a></li>
+    <li><a href="">Contact Us</a></li>
+  </ul>
+  <button class="upload-btn">Upload a book</button>
+  <a href=""><img src="../assets/icons/profile.svg" alt="profile"></a>
+</div>
+    <div class="main-screen">
+        <h1>Books Ready For Translation</h1>
+        <div class="search-field">
+            <img src="" alt="">
+            <input type="text" placeholder="Search">
+            <a class="filter-btn" href=""><img class="filter-img" src="../assets/icons/filter.svg" alt="Filter"></a>
+        </div>
+        <div class="filter-popup">
+                <div class="language-inputs">
+                    <input type="text" placeholder="Original Language">
+                    <input type="text" placeholder="Target Language">
+                </div>
+                <br>
+                <div class="categories-row">
+                    <div class="book-category">Fantasy</div>
+                    <div class="book-category">Novel</div>
+                    <div class="book-category">Historical</div>
+                    <div class="book-category">Horror</div>
+                    <div class="book-category">Science Fiction</div>
+                </div>
+                
+                <div class="filter-done">
+                    <button>GO</button>
+                </div>
+            </div>
+        <div class="books-grid">
+            <div class="book-card">
+                <img src="../assets/images/book.png" alt="Book Cover">
+                <h2>Book Title</h2>
+                <p>Author Name</p>
+                <p>English &rarr; <span>Arabic</span></p>
+                <button class="translate-btn">Translate This</button>
+            </div>
+            <div class="book-card">
+                <img src="../assets/images/book.png" alt="Book Cover">
+                <h2>Book Title</h2>
+                <p>Author Name</p>
+                <p>English &rarr; <span>Arabic</span></p>
+                <button class="translate-btn">Translate This</button>
+            </div>
+            <div class="book-card">
+                <img src="../assets/images/book.png" alt="Book Cover">
+                <h2>Book Title</h2>
+                <p>Author Name</p>
+                <p>English &rarr; <span>Arabic</span></p>
+                <button class="translate-btn">Translate This</button>
+            </div>
+            <div class="book-card">
+                <img src="../assets/images/book.png" alt="Book Cover">
+                <h2>Book Title</h2>
+                <p>Author Name</p>
+                <p>English &rarr; <span>Arabic</span></p>
+                <button class="translate-btn">Translate This</button>
+            </div>
+        </div>
+        <div class="pagination-index">
+            <ul>
+                <li><a href="">&lt;</a></li>
+                <li><a href="">1,</a></li>
+                <li><a href="">2,</a></li>
+                <li><a href="">3,</a></li>
+                <li>...</li>
+                <li><a href="">&gt;</a></li>
+            </ul>
+        </div>
+    </div>
+    <script src="BookListing.js"></script>
+</body>
+</html>
