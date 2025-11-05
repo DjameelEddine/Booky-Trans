@@ -15,7 +15,7 @@ nav{
     justify-content: space-around;
     position: sticky;
     top: 0;
-    
+    z-index: 1000;
 }
 .nav-links{
     display: flex;
@@ -327,10 +327,7 @@ nav{
     background: #4199bc;
     color: white;
 }
-
-
 /* */
-
 .books-grid{
     margin: 2px;
     display: flex;
@@ -341,12 +338,50 @@ nav{
     padding: 20px;
     justify-content: center;
 }
-.book-card{
-    border: 1px solid #8dceee;
-    border-radius: 5px;
-    padding: 10px;
-    width: 200px;
+.book-card {
+    position: relative;
+  border: 1px solid #8dceee;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 10px;
+  width: 200px;
+  text-align: start;
+  transition: transform 0.2s ease;
 }
+
+.book-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Favorite icon */
+.favorite-btn {
+  position: absolute;
+  bottom: 88px;
+  right: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.favorite-btn img {
+  width: 26px;
+  height: 26px;
+  opacity: 0.8;
+  transition: transform 0.2s ease, opacity 0.2s ease, filter 0.3s ease;
+}
+
+.favorite-btn:hover img {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.favorite-btn.active img {
+  filter: invert(38%) sepia(93%) saturate(2608%) hue-rotate(340deg) brightness(95%) contrast(97%);
+}
+
+ /*         */
+
 .book-card img{
     width: 100%;
     max-height: 100%;

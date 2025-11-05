@@ -12,3 +12,7 @@ document.querySelectorAll('.book-category').forEach(category => {
 function toggleMenu() {
     document.getElementById("mobileMenu").classList.toggle("show");
   }
+
+function toggleFavorite(btn) {
+  btn.classList.toggle("active");
+}
