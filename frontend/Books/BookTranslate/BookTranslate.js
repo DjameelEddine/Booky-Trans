@@ -1,9 +1,9 @@
 // Simple interaction for rate/comment toggles and star rating
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded',function(){
 	// toggle review form
-	document.querySelectorAll('.rate-btn').forEach(btn => {
-		btn.addEventListener('click', function(e){
-			const card = e.target.closest('.translation-card');
+	document.querySelectorAll('.rate-btn').forEach(btn=>{
+		btn.addEventListener('click',function(e){
+			const card=e.target.closest('.translation-card');
 			if(!card) return;
 			const review = card.querySelector('.review-form');
 			const comment = card.querySelector('.comment-form');
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		});
 	});
 
-	// toggle comment form
+//comment 
 	document.querySelectorAll('.comment-btn').forEach(btn => {
 		btn.addEventListener('click', function(e){
 			const card = e.target.closest('.translation-card');
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function(){
 		});
 	});
 
-	// star click handling (works per card)
+//stars
 	document.querySelectorAll('.translation-card').forEach(card => {
 		const stars = card.querySelectorAll('.star');
 		stars.forEach(star => {
@@ -40,18 +40,18 @@ document.addEventListener('DOMContentLoaded', function(){
 						s.textContent = '☆';
 					}
 				});
-				// store value on form element
+		
 				const review = card.querySelector('.review-form');
 				if(review) review.dataset.value = v;
 			});
 		});
 
-		// submit rating
+//rating submit
 		const submitRating = card.querySelector('.submit-rating');
 		if(submitRating){
-			submitRating.addEventListener('click', function(){
+			submitRating.addEventListener('click',function(){
 				const review = card.querySelector('.review-form');
-				const val = review && review.dataset.value ? review.dataset.value : null;
+				const val = review && review.dataset.value?review.dataset.value : null;
 				if(!val){
 					alert('Please select a rating');
 					return;
@@ -60,8 +60,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				review.classList.add('hidden');
 			});
 		}
-
-		// submit comment
+//comment submit
 		const submitComment = card.querySelector('.submit-comment');
 		if(submitComment){
 			submitComment.addEventListener('click', function(){
@@ -80,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	});
 });
 
-// expose toggleMenu for the hamburger in the nav
+
 function toggleMenu(){
 	const el = document.getElementById('mobileMenu');
 	if(!el) return;
