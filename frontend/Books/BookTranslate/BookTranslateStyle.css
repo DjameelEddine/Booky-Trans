@@ -19,14 +19,11 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+
 .topbar {
     background: var(--navy);
     color: var(--white);
     padding: 18px 28px
-}
-
-.brand {
-    font-weight: 700
 }
 
 .page {

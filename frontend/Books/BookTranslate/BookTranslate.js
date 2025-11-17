@@ -79,3 +79,10 @@ document.addEventListener('DOMContentLoaded', function(){
 		}
 	});
 });
+
+// expose toggleMenu for the hamburger in the nav
+function toggleMenu(){
+	const el = document.getElementById('mobileMenu');
+	if(!el) return;
+	el.classList.toggle('show');
+}
