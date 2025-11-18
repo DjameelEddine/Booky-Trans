@@ -1,0 +1,349 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Manrope, Arial, sans-serif;
+}
+
+/*Nav Bar*/
+
+nav{
+    background-color: #090020;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.nav-links{
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    align-items: center;
+    list-style: none;
+}
+.logo{
+    color: white;
+}
+.nav-links a{
+    color: white;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    font-weight: 500;
+}
+.nav-links a:hover{
+    text-decoration: 2.5px underline;
+    text-decoration-color: white;
+    transition: text-decoration-color 0.4s;
+}
+.upload-profile{
+    display: flex;
+    align-items: center;
+}
+.upload-btn{
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #8dceee;
+}
+.upload-btn:hover{
+    cursor: pointer;
+    background-color: #4199bc;
+    transition: background-color 0.4s;
+}
+.upload-profile img{
+    width: 40px;
+    height: 40px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+.upload-profile img:hover{
+    border: 2px solid #8dceee;
+    border-radius: 30px;
+    transition: border 0.2s;
+}
+
+.login-signup{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.login-btn{
+    font-weight: 800;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #8dceee;
+}
+.signup-btn{
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: transparent;
+    color: #8dceee;
+    border: 1px solid #8dceee;
+}
+.login-btn:hover{
+    cursor: pointer;
+    background-color: #4199bc;
+    transition: background-color 0.4s;
+}
+.signup-btn:hover{
+    cursor: pointer;
+    background-color: #4199bc;
+    color: white;
+    transition: all 0.4s;
+}
+
+/* hamburger hidden by default */
+.hamburger-menu {
+  display: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+}
+
+/* mobile menu hidden by default */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  background-color: #090020;
+  color: white;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  padding: 20px 0;
+  z-index: 1000;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.mobile-menu li {
+  margin: 10px 0;
+}
+
+.mobile-menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.mobile-menu a:hover {
+  text-decoration: underline;
+}
+
+.mobile-menu img {
+  width: 40px;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 50%;
+}
+
+.mobile-menu img:hover {
+  border: #8dceee 2px solid;
+  transition: border 0.1s ease;
+}
+
+/* MEDIA QUERY */
+@media (max-width: 630px) {
+  nav {
+    justify-content: space-between;
+    padding: 0 15px;
+  }
+
+  .nav-links,
+  .upload-profile {
+    display: none;
+  }
+
+  .hamburger-menu {
+    display: block;
+  }
+
+  .mobile-menu.show {
+    display: flex;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+}
+
+/* smooth animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Signup Container */
+body {
+    background-color: #ffffff;
+}
+
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 60px);
+    padding: 40px 20px;
+}
+
+.signup-form {
+    background-color: white;
+    padding: 40px 50px;
+    border-radius: 10px;
+    box-shadow: none;
+    max-width: 450px;
+    width: 100%;
+}
+
+.signup-form h1 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #1a1a2e;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+/* Input Groups */
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 45px;
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+    position: relative;
+    z-index: 1;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #8dceee;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+    user-select: none;
+    z-index: 2;
+}
+
+/* Terms Group */
+.terms-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.terms-group input[type="checkbox"] {
+    margin-top: 3px;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.terms-group label {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.terms-group a {
+    color: #1a1a2e;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.terms-group a:hover {
+    text-decoration: underline;
+}
+
+/* Create Account Button */
+.create-account-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #1a1a2e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.create-account-btn:hover {
+    background-color: #0f0f1a;
+}
+
+/* Login Link */
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.login-link a {
+    color: #1a1a2e;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 630px) {
+    .signup-form {
+        padding: 30px 25px;
+    }
+    
+    .signup-form h1 {
+        font-size: 26px;
+    }
+    
+    .subtitle {
+        font-size: 13px;
+    }
+}

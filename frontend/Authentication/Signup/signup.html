@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>BookyTrans - Sign Up</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='signup.css'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="logo">LOGO</div>
+        <ul class="nav-links">
+            <li><a href="">Community</a></li>
+            <li><a href="">How it Works</a></li>
+            <li><a href="">Contact Us</a></li>
+        </ul>
+        <!-- <div class="upload-profile">
+            <button class="upload-btn">Upload a book</button>
+            <a href=""><img src="../../assets/icons/profile.svg" alt="profile"></a>
+        </div> -->
+        <div class="login-signup">
+            <button class="login-btn">Log In</button>
+            <button class="signup-btn">Sign Up</button>
+        </div>
+        <div class="hamburger-menu" onclick="toggleMenu()">&#9776;</div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-logo">LOGO</div>
+  <ul>
+    <li><a href="">Community</a></li>
+    <li><a href="">How it Works</a></li>
+    <li><a href="">Contact Us</a></li>
+  </ul>
+  <!-- <button class="upload-btn">Upload a book</button>
+  <a href=""><img src="../../assets/icons/profile.svg" alt="profile"></a> -->
+</div>
+    
+    <div class="signup-container">
+        <div class="signup-form">
+            <h1>Join Our Community</h1>
+            <p class="subtitle">Become a part of our global book translation platform</p>
+            
+            <form id="signupForm">
+                <div class="input-group">
+                    <img src="../../assets/icons/user.png" alt="user" class="input-icon">
+                    <input type="text" id="username" placeholder="Username" required>
+                </div>
+                
+                <div class="input-group">
+                    <img src="../../assets/icons/email.png" alt="email" class="input-icon">
+                    <input type="email" id="email" placeholder="Email" required>
+                </div>
+                
+                <div class="input-group">
+                    <img src="../../assets/icons/password.png" alt="password" class="input-icon">
+                    <input type="password" id="password" placeholder="Password" required>
+                    <img src="../../assets/icons/showpass.png" alt="toggle" class="toggle-password" onclick="togglePassword('password')">
+                </div>
+                
+                <div class="input-group">
+                    <img src="../../assets/icons/password.png" alt="password" class="input-icon">
+                    <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+                    <img src="../../assets/icons/showpass.png" alt="toggle" class="toggle-password" onclick="togglePassword('confirmPassword')">
+                </div>
+                
+                <div class="terms-group">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">I agree to the <a href="#">Terms Of Service</a> and <a href="#">Privacy Policy</a>.</label>
+                </div>
+                
+                <button type="submit" class="create-account-btn">Create account</button>
+                
+                <p class="login-link">Already have an account? <a href="../Login/login.html">Login</a></p>
+            </form>
+        </div>
+    </div>
+    
+    <script src="signup.js"></script>
+</body>
+</html>
