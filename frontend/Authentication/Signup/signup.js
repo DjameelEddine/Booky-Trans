@@ -2,6 +2,17 @@ function toggleMenu() {
     document.getElementById("mobileMenu").classList.toggle("show");
 }
 
+document.addEventListener('click', function(event) {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const hamburger = document.querySelector('.hamburger-menu');
+    
+    if (mobileMenu.classList.contains('show') && 
+        !mobileMenu.contains(event.target) && 
+        !hamburger.contains(event.target)) {
+        mobileMenu.classList.remove('show');
+    }
+});
+
 function togglePassword(fieldId) {
     const field = document.getElementById(fieldId);
     const icon = field.nextElementSibling;
@@ -15,7 +26,6 @@ function togglePassword(fieldId) {
     }
 }
 
-// Form submission handler
 document.getElementById('signupForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -25,22 +35,23 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
     const confirmPassword = document.getElementById('confirmPassword').value;
     const termsAccepted = document.getElementById('terms').checked;
     
-    // Validate passwords match
+    if (password.length < 8) {
+        alert('Password must be at least 8 characters long!');
+        return;
+    }
+    
     if (password !== confirmPassword) {
         alert('Passwords do not match!');
         return;
     }
     
-    // Validate terms accepted
     if (!termsAccepted) {
         alert('Please accept the Terms of Service and Privacy Policy');
         return;
     }
     
-    // Here you would typically send the data to your backend
     console.log('Signup data:', { username, email, password });
     alert('Account created successfully!');
     
-    // Reset form
     this.reset();
 });

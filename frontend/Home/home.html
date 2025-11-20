@@ -3,9 +3,9 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>BookyTrans - Login</title>
+    <title>BookyTrans - Translate The World's Stories Together</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='login.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='home.css'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
@@ -14,52 +14,65 @@
     <nav>
         <div class="logo">LOGO</div>
         <ul class="nav-links">
-            <li><a href="../../Home/home.html">Home</a></li>
+            <li><a href="home.html">Home</a></li>
             <li><a href="">Community</a></li>
             <li><a href="">How it Works</a></li>
             <li><a href="">Contact Us</a></li>
         </ul>
         <div class="login-signup">
-            <button class="login-btn" onclick="window.location.href='../Login/login.html'">Log In</button>
-            <button class="signup-btn" onclick="window.location.href='../Signup/signup.html'">Sign Up</button>
+            <button class="login-btn" onclick="window.location.href='../Authentication/Login/login.html'">Log In</button>
+            <button class="signup-btn" onclick="window.location.href='../Authentication/Signup/signup.html'">Sign Up</button>
         </div>
         <div class="hamburger-menu" onclick="toggleMenu()">&#9776;</div>
     </nav>
     <div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-logo">LOGO</div>
-  <ul>
-    <li><a href="../../Home/home.html">Home</a></li>
-    <li><a href="">Community</a></li>
-    <li><a href="">How it Works</a></li>
-    <li><a href="">Contact Us</a></li>
-  </ul>
-</div>
-    
-    <div class="login-container">
-        <div class="login-form">
-            <h1>Welcome Back!</h1>
-            <p class="subtitle">Login to continue your journey with us</p>
-            
-            <form id="loginForm">
-                <div class="input-group">
-                    <img src="../../assets/icons/email.png" alt="email" class="input-icon">
-                    <input type="email" id="email" placeholder="Email" required>
-                </div>
-                
-                <div class="input-group">
-                    <img src="../../assets/icons/password.png" alt="password" class="input-icon">
-                    <input type="password" id="password" placeholder="Password" required>
-                    <img src="../../assets/icons/showpass.png" alt="toggle" class="toggle-password" onclick="togglePassword('password')">
-                </div>
-                
-                <button type="submit" class="login-submit-btn">Login</button>
-                
-                <p class="forgot-password"><a href="../Forget password/forgetpass.html">Forgot Password ?</a></p>
-                
-                <p class="signup-link">Don't have an account? <a href="../Signup/signup.html">Sign up.</a></p>
-            </form>
-        </div>
+        <div class="mobile-logo">LOGO</div>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="">Community</a></li>
+            <li><a href="">How it Works</a></li>
+            <li><a href="">Contact Us</a></li>
+        </ul>
     </div>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Translate The World's Stories Together</h1>
+                <p class="hero-subtitle">join our community of readers and translators and get the best out of it</p>
+                
+                <div class="features">
+                    <div class="feature-item">
+                        <svg class="checkmark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="#8dceee" stroke-width="2"/>
+                            <path d="M8 12L11 15L16 9" stroke="#8dceee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Books Translation</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg class="checkmark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="#8dceee" stroke-width="2"/>
+                            <path d="M8 12L11 15L16 9" stroke="#8dceee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Books Discovery</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg class="checkmark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="#8dceee" stroke-width="2"/>
+                            <path d="M8 12L11 15L16 9" stroke="#8dceee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Books Reading</span>
+                    </div>
+                </div>
+                
+                <button class="get-started-btn">Get Started</button>
+            </div>
+            
+            <div class="hero-image">
+                <img src="../assets/icons/bookhome.png" alt="Open Book" class="book-img">
+            </div>
+        </div>
+    </section>
     
     <footer>
         <div class="footer-container">
@@ -79,7 +92,7 @@
             <div class="footer-section">
                 <h3>Navigation</h3>
                 <ul>
-                    <li><a href="../../Home/home.html">Home</a></li>
+                    <li><a href="home.html">Home</a></li>
                     <li><a href="">How it works</a></li>
                     <li><a href="">Community</a></li>
                     <li><a href="">Contact us</a></li>
@@ -107,7 +120,7 @@
         </div>
         
         <div class="footer-bottom">
-            <p>@2024. all rights reserved . BookyTrans</p>
+            <p>@2025. all rights reserved . BookyTrans</p>
             <div class="footer-bottom-links">
                 <a href="#">Privacy policy</a>
                 <a href="#">Terms of service</a>
@@ -115,6 +128,6 @@
         </div>
     </footer>
     
-    <script src="login.js"></script>
+    <script src="home.js"></script>
 </body>
 </html>

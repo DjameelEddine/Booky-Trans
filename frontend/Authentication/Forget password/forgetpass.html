@@ -3,9 +3,9 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>BookyTrans - Login</title>
+    <title>BookyTrans - Forgot Password</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='login.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='forgetpass.css'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
@@ -26,38 +26,69 @@
         <div class="hamburger-menu" onclick="toggleMenu()">&#9776;</div>
     </nav>
     <div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-logo">LOGO</div>
-  <ul>
-    <li><a href="../../Home/home.html">Home</a></li>
-    <li><a href="">Community</a></li>
-    <li><a href="">How it Works</a></li>
-    <li><a href="">Contact Us</a></li>
-  </ul>
-</div>
+        <div class="mobile-logo">LOGO</div>
+        <ul>
+            <li><a href="../../Home/home.html">Home</a></li>
+            <li><a href="">Community</a></li>
+            <li><a href="">How it Works</a></li>
+            <li><a href="">Contact Us</a></li>
+        </ul>
+    </div>
     
-    <div class="login-container">
-        <div class="login-form">
-            <h1>Welcome Back!</h1>
-            <p class="subtitle">Login to continue your journey with us</p>
+    <div class="forgot-container">
+        <div class="forgot-form">
+            <div id="emailStep" class="step active">
+                <h1>Forgot Password?</h1>
+                <p class="subtitle">Enter your email to receive a verification code</p>
+                
+                <form id="emailForm">
+                    <div class="input-group">
+                        <img src="../../assets/icons/email.png" alt="email" class="input-icon">
+                        <input type="email" id="email" placeholder="Email" required>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Send Verification Code</button>
+                    
+                    <p class="back-link"><a href="../Login/login.html">Back to Login</a></p>
+                </form>
+            </div>
             
-            <form id="loginForm">
-                <div class="input-group">
-                    <img src="../../assets/icons/email.png" alt="email" class="input-icon">
-                    <input type="email" id="email" placeholder="Email" required>
-                </div>
+            <div id="codeStep" class="step">
+                <h1>Verify Your Email</h1>
+                <p class="subtitle">Enter the verification code sent to your email</p>
                 
-                <div class="input-group">
-                    <img src="../../assets/icons/password.png" alt="password" class="input-icon">
-                    <input type="password" id="password" placeholder="Password" required>
-                    <img src="../../assets/icons/showpass.png" alt="toggle" class="toggle-password" onclick="togglePassword('password')">
-                </div>
+                <form id="codeForm">
+                    <div class="input-group">
+                        <img src="../../assets/icons/password.png" alt="code" class="input-icon">
+                        <input type="text" id="verificationCode" placeholder="Verification Code" required>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Verify Code</button>
+                    
+                    <p class="back-link"><a href="#" onclick="showStep('emailStep'); return false;">Resend Code</a></p>
+                </form>
+            </div>
+            
+            <div id="resetStep" class="step">
+                <h1>Reset Password</h1>
+                <p class="subtitle">Enter your new password</p>
                 
-                <button type="submit" class="login-submit-btn">Login</button>
-                
-                <p class="forgot-password"><a href="../Forget password/forgetpass.html">Forgot Password ?</a></p>
-                
-                <p class="signup-link">Don't have an account? <a href="../Signup/signup.html">Sign up.</a></p>
-            </form>
+                <form id="resetForm">
+                    <div class="input-group">
+                        <img src="../../assets/icons/password.png" alt="password" class="input-icon">
+                        <input type="password" id="newPassword" placeholder="New Password" required>
+                        <img src="../../assets/icons/showpass.png" alt="toggle" class="toggle-password" onclick="togglePassword('newPassword')">
+                    </div>
+                    
+                    <div class="input-group">
+                        <img src="../../assets/icons/password.png" alt="password" class="input-icon">
+                        <input type="password" id="confirmNewPassword" placeholder="Confirm New Password" required>
+                        <img src="../../assets/icons/showpass.png" alt="toggle" class="toggle-password" onclick="togglePassword('confirmNewPassword')">
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Reset Password</button>
+                </form>
+            </div>
         </div>
     </div>
     
@@ -115,6 +146,6 @@
         </div>
     </footer>
     
-    <script src="login.js"></script>
+    <script src="forgetpass.js"></script>
 </body>
 </html>
