@@ -1,0 +1,355 @@
+:root {
+    --purple: #82DDFF;
+    --soft: #E9F9FF;
+    --navy: #000418;
+    --white: #FFFFFF;
+    --muted: #6B6E79;
+    --page-bg: #F5F6F7;
+}
+
+* {
+    box-sizing: border-box
+}
+
+body {
+    font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    background: var(--page-bg);
+    color: var(--navy);
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+
+.topbar {
+    background: var(--navy);
+    color: var(--white);
+    padding: 18px 28px
+}
+
+.page {
+    max-width: 980px;
+    margin: 28px auto;
+    padding: 0 20px
+}
+
+.workspace h1 {
+    font-size: 28px;
+    margin: 6px 0 18px
+}
+
+.workspace-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 18px;
+    margin-bottom: 26px
+}
+
+.book-card,
+.upload-card {
+    background: var(--white);
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.04)
+}
+
+.book-card h3 {
+    margin: 0 0 6px
+}
+
+.book-card .by {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 10px
+}
+
+.book-card .desc {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.45
+}
+
+.book-card .meta {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 14px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.book-card .meta li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 0;
+}
+
+.book-card .meta .label {
+    font-weight: 600; 
+    color: var(--navy);
+}
+
+.book-card .meta .meta-value {
+    color: var(--muted);
+}
+
+.download-btn {
+    width: 100%;
+    background: var(--purple);
+    border: 0;
+    color: var(--white);
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold
+}
+
+.upload-card {
+    display: flex;
+    flex-direction: column
+}
+
+.upload-card h3 {
+    margin-top: 0
+}
+
+.upload-drop {
+    border: 2px dashed rgba(0, 4, 24, 0.06);
+    border-radius: 8px;
+    padding: 26px;
+    text-align: center;
+    color: var(--muted);
+    margin-bottom: 12px
+}
+
+.submit-translation {
+    width: 100%;
+    background: var(--navy);
+    color: var(--white);
+    padding: 10px;
+    border-radius: 8px;
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: auto
+}
+
+.community {
+    margin-top: 8px
+}
+
+.community h2 {
+    font-size: 22px;
+    margin: 12px 0
+}
+
+.community .subtitle {
+    color: var(--muted);
+    margin-bottom: 12px
+}
+
+.translation-card {
+    display: flex;
+    gap: 12px;
+    background: var(--white);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 4, 24, 0.06);
+    margin-bottom: 12px
+}
+
+.avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--soft)
+}
+
+.card-body {
+    flex: 1
+}
+
+.card-header strong {
+    display: block
+}
+
+.card-header .date {
+    font-size: 13px;
+    color: var(--muted)
+}
+
+.file-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid rgba(0, 4, 24, 0.06);
+    border-radius: 10px;
+    margin: 12px 0
+}
+
+.file-name {
+    color: var(--muted)
+}
+
+.download.small {
+    background: var(--purple);
+    border: 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: var(--white);
+    cursor: pointer;
+    font-weight: bold
+}
+
+.rating-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between
+}
+
+.avg-stars {
+    font-size: 18px;
+    color: var(--navy)
+}
+
+.avg {
+    color: var(--muted);
+    font-size: 13px
+}
+
+.actions {
+    display: flex;
+    gap: 8px
+}
+
+.actions button {
+    background: transparent;
+    border: 0;
+    color: var(--navy);
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-weight: bold
+}
+
+.review-form,
+.comment-form {
+    background: rgba(0, 0, 0, 0.02);
+    padding: 14px;
+    border-radius: 10px;
+    margin-top: 12px
+}
+
+.review-form label,
+.comment-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px
+}
+
+.stars {
+    font-size: 22px;
+    color: var(--navy)
+}
+
+.star {
+    cursor: pointer;
+    margin-right: 6px;
+    opacity: 0.85
+}
+
+.star.active {
+    color: var(--purple)
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 4, 24, 0.06);
+    margin-bottom: 8px
+}
+
+.submit-rating,
+.submit-comment {
+    background: var(--navy);
+    color: var(--white);
+    border: 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold
+}
+
+.hidden {
+    display: none
+}
+
+@media(max-width:900px) {
+    .workspace-grid {
+        grid-template-columns: 1fr
+    }
+}
+
+@media(max-width:600px) {
+    .translation-card {
+        flex-direction: column;
+        gap: 12px
+    }
+
+    .avatar {
+        width: 50px;
+        height: 50px
+    }
+    .file-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px
+    }
+
+    .file-name {
+        width: 100%
+    }
+
+    .download.small {
+        width: 100%
+    }
+    .rating-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px
+    }
+
+    .actions {
+        width: 100%;
+        justify-content: flex-start
+    }
+    .workspace-grid {
+        grid-template-columns: 1fr
+    }
+    .download-btn {
+        width: 100%
+    }
+    .upload-drop {
+        padding: 20px
+    }
+    .book-card,
+    .upload-card {
+        padding: 16px
+    }
+
+    .page {
+        margin: 20px auto;
+        padding: 0 16px
+    }
+
+    .workspace h1 {
+        font-size: 24px
+    }
+
+    .community h2 {
+        font-size: 20px
+    }
+}

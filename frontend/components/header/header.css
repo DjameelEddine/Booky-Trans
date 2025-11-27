@@ -1,0 +1,126 @@
+
+:root {
+  --header-bg: #090020;
+  --accent: #8dceee;
+}
+
+nav{
+    background-color: var(--header-bg);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.nav-links{
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    align-items: center;
+    list-style: none;
+}
+.logo{
+    color: white;
+    font-weight: 700;
+}
+.nav-links a{
+    color: white;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    font-weight: 500;
+}
+.nav-links a:hover{
+    text-decoration: 2.5px underline;
+    text-decoration-color: white;
+    transition: text-decoration-color 0.4s;
+}
+.upload-profile{
+    display: flex;
+    align-items: center;
+}
+.upload-btn{
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--accent);
+}
+.upload-btn:hover{
+    cursor: pointer;
+    background-color: #4199bc;
+    transition: background-color 0.4s;
+}
+
+.hamburger-menu {
+  display: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+}
+
+/* mobile menu hidden by default */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--header-bg);
+  color: white;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  padding: 20px 0;
+  z-index: 1000;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.mobile-menu li {
+  margin: 10px 0;
+}
+
+.mobile-menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.mobile-menu a:hover {
+  text-decoration: underline;
+}
+
+.mobile-logo { color: white; font-weight:700; margin-bottom:8px }
+
+/* MEDIA QUERY */
+@media (max-width: 630px) {
+  nav {
+    justify-content: space-between;
+    padding: 0 15px;
+  }
+
+  .nav-links,
+  .upload-profile {
+    display: none;
+  }
+
+  .hamburger-menu {
+    display: block;
+  }
+
+  .mobile-menu.show {
+    display: flex;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
