@@ -9,25 +9,22 @@
 </head>
 <body class="page-with-navbar">
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <div class="logo">
-                    <i class="fas fa-book-open"></i>
-                    <span>BookyTrans</span>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="community.html">Community</a></li>
-                    <li><a href="how-it-works.html" class="active">How it Works</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                </ul>
-                <div class="nav-buttons">
-                    <button class="btn-login">Log In</button>
-                    <button class="btn-signup">Sign Up</button>
-                </div>
-            </div>
+ <nav>
+        <div class="logo">LOGO</div>
+        <ul class="nav-links">
+            <li><a href="">Community</a></li>
+          <li><a href="how-it-works.html">How it Works</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+        <!-- <div class="upload-profile">
+            <button class="upload-btn">Upload a book</button>
+            <a href=""><img src="../../assets/icons/profile.svg" alt="profile"></a>
+        </div> -->
+        <div class="login-signup">
+            <button class="login-btn">Log In</button>
+            <button class="signup-btn">Sign Up</button>
         </div>
+        <div class="hamburger-menu" onclick="toggleMenu()">&#9776;</div>
     </nav>
 
     <!-- How It Works Section -->
@@ -84,6 +81,60 @@
             </div>
         </div>
     </section>
+      <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Join Our NewLetter</h3>
+                <p>lorem ipsum, lorem ipsum lorem ipsum<br>lorem ipsum, lorem ipsum lorem ipsum<br>lorem ipsum, lor.</p>
+                <div class="newsletter-input">
+                    <input type="email" placeholder="Enter your email...">
+                    <button type="submit">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="">How it works</a></li>
+                    <li><a href="">Community</a></li>
+                    <li><a href="">Contact us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="">Books translation</a></li>
+                    <li><a href="">Books Discovery</a></li>
+                    <li><a href="">Books reading</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+                    <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:contact@bookytrans.com">Email</a></li>
+                    <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>@2025. all rights reserved . BookyTrans</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy policy</a>
+                <a href="#">Terms of service</a>
+            </div>
+        </div>
+    </footer>
+    
 
     <script src="script.js"></script>
 </body>
