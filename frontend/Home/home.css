@@ -28,6 +28,14 @@ nav{
     font-weight: 700;
     font-size: 20px;
 }
+.logo img{
+  width: 120px;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 5px;
+  background-color:#f0f0f0;
+  padding: 0px 5px;
+}
 .nav-links a{
     color: white;
     text-decoration: underline;
