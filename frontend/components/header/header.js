@@ -2,11 +2,9 @@ document.addEventListener('DOMContentLoaded', function(){
   const mount = document.getElementById('site-header');
   if(!mount) return;
 
-  // Use absolute frontend root so pages in subfolders can fetch the component reliably.
-  // Adjust this if your site is served from a subpath.
+  
   const frontendRoot = '/frontend/';
 
-  // fetch and inject header.html (absolute path)
   fetch(frontendRoot + 'components/header/header.html')
       .then(r => r.text())
       .then(html => {
@@ -34,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function(){
       const resolved = frontendRoot + target;
       el.setAttribute('href', resolved);
       el.addEventListener('click', ev => {
-        if (el.tagName.toLowerCase() === 'a' && el.href) return; // let browser handle it
+        if (el.tagName.toLowerCase() === 'a' && el.href) return; 
         ev.preventDefault();
         const mm = document.getElementById('mobileMenu');
         if (mm) mm.classList.remove('show');
@@ -42,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function(){
       });
     });
 
-    // hamburger toggle
     window.toggleMenu = function(){
       const mm = document.getElementById('mobileMenu');
       if (!mm) return;

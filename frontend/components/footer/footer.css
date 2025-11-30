@@ -1,22 +1,76 @@
-.footer-container{
-  display:flex;
-  gap:24px;
-  padding:36px 48px;
-  background:#021021;
-  color:white;
-  flex-wrap:wrap;
+.footer-container {
+  display: flex;
+  gap: 24px;
+  padding: 36px 48px;
+  background: #021021;
+  color: white;
+  flex-wrap: wrap;
 }
-.footer-section{ flex:1; min-width:180px }
-.footer-section h3{ margin-bottom:10px }
-.footer-section ul{ list-style:none; padding:0; margin:0 }
-.footer-section a{ color: #cfeff7; text-decoration:none }
-.newsletter-input{ display:flex; gap:8px; margin-top:8px }
-.newsletter-input input{ padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.08); background:transparent; color:white }
-.newsletter-btn{ background:var(--accent, #8dceee); border:none; padding:8px 10px; border-radius:6px }
-.footer-bottom{ display:flex; justify-content:space-between; align-items:center; padding:12px 48px; background:#090020; color:#9aa0ab }
-.footer-bottom a{ color:#9aa0ab; margin-left:12px; text-decoration:none }
 
-@media (max-width:700px){
-  .footer-container{ padding:20px }
-  .footer-bottom{ padding:12px 20px; flex-direction:column; gap:8px }
+.footer-section {
+  flex: 1;
+  min-width: 180px
+}
+
+.footer-section h3 {
+  margin-bottom: 10px
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0
+}
+
+.footer-section a {
+  color: #cfeff7;
+  text-decoration: none
+}
+
+.newsletter-input {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px
+}
+
+.newsletter-input input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  color: white
+}
+
+.newsletter-btn {
+  background: var(--accent, #8dceee);
+  border: none;
+  padding: 8px 10px;
+  border-radius: 6px
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 48px;
+  background: #090020;
+  color: #9aa0ab
+}
+
+.footer-bottom a {
+  color: #9aa0ab;
+  margin-left: 12px;
+  text-decoration: none
+}
+
+@media (max-width:700px) {
+  .footer-container {
+    padding: 20px
+  }
+
+  .footer-bottom {
+    padding: 12px 20px;
+    flex-direction: column;
+    gap: 8px
+  }
 }
