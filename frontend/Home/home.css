@@ -231,6 +231,10 @@ body {
     box-shadow: 0 6px 20px rgba(141, 206, 238, 0.4);
 }
 
+.get-started-btn a{
+    text-decoration: none;
+}
+
 .hero-image {
     flex: 1;
     display: flex;

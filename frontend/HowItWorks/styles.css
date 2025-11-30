@@ -1,7 +1,8 @@
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Manrope, Arial, sans-serif;
 }
 
 body {
@@ -1136,7 +1137,7 @@ footer {
     color: #8dceee;
 }
 
-nav{
+/* nav{
     background-color: #090020;
     height: 60px;
     display: flex;
@@ -1226,4 +1227,135 @@ nav{
     background-color: #4199bc;
     color: white;
     transition: all 0.4s;
+} */
+
+/*Nav Bar*/
+
+nav{
+    background-color: #090020;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.nav-links{
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    align-items: center;
+    list-style: none;
+}
+.logo{
+    color: white;
+}
+.nav-links a{
+    color: white;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    font-weight: 500;
+}
+.nav-links a:hover{
+    text-decoration: 2.5px underline;
+    text-decoration-color: white;
+    transition: text-decoration-color 0.4s;
+}
+.upload-profile{
+    display: flex;
+    align-items: center;
+}
+.upload-btn{
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #8dceee;
+}
+.upload-btn:hover{
+    cursor: pointer;
+    background-color: #4199bc;
+    transition: background-color 0.4s;
+}
+.upload-profile img{
+    width: 40px;
+    height: 40px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+.upload-profile img:hover{
+    border: 2px solid #8dceee;
+    border-radius: 30px;
+    transition: border 0.2s;
+}
+
+.login-signup{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.login-btn{
+    font-weight: 800;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #8dceee;
+}
+
+.signup-btn{
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: transparent;
+    color: #8dceee;
+    border: 1px solid #8dceee;
+}
+
+.login-btn:hover{
+    cursor: pointer;
+    background-color: #4199bc;
+    transition: background-color 0.4s;
+}
+.signup-btn:hover{
+    cursor: pointer;
+    background-color: #4199bc;
+    color: white;
+    transition: all 0.4s;
+}
+
+@media (max-width: 630px) {
+  nav {
+    justify-content: space-between;
+    padding: 0 15px;
+  }
+
+  .nav-links,
+  .upload-profile {
+    display: none;
+  }
+
+  .hamburger-menu {
+    display: block;
+  }
+
+  .mobile-menu.show {
+    display: flex;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  .language-inputs{
+    display: flex;
+    flex-direction: column;
+  }
+  .filter-done{
+    top: 200px;
+  }
+}
+
+/* smooth animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
