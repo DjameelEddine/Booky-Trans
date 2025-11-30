@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>BookyTrans</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='BookUploadStyles.css'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../components/header/header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="site-header"></div>
+    <div class="main-screen">
+        <h1>Upload Your Book</h1>
+        <form action="POST">
+            <h2>Step 1: Book Details</h2>
+            <div class="book-info">
+            <label for="book-name"><h3>Book Name</h3></label>
+            <input type="text" name="book-name" id="book-name" placeholder="Enter The Book Name">
+            <label for="book-category"><h3>Book Category</h3></label>
+            <input type="text" name="book-category" id="book-category" placeholder="eg. Science Fiction, Horror, History, etc.">
+            </div>
+            <div class="book-description">
+            <label for="book-description"><h3>Book Description</h3></label>
+            <input type="text" name="book-description" id="book-description" placeholder="Provide a short summary of the book">
+            </div>
+            <div class="language-info">
+            <label for="original-language"><h3>Original Language</h3></label>
+            <input type="text" name="book-language" id="book-language" placeholder="eg. English">
+            <label for="target-language"><h3>Target Language</h3></label>
+            <input type="text" name="book-language" id="book-language" placeholder="eg. Arabic">
+            </div>
+            <hr>
+            <h2>Step 2: Upload Book File</h2>
+            <label class="book-upload" for="book-upload">
+                <p>📘 Click or Drag your file here to upload</p>
+                <small>Supported formats: PDF, EPUB, TXT</small>
+            </label>
+            <input type="file" name="book-upload" id="book-upload">
+
+            <hr>
+            <h2>Step 3: Copyright & Licence Confirmation</h2>
+            <div class="checkbox-group">
+                <input type="checkbox" id="uplaod-permission" name="uplaod-permission">
+                <label for="uplaod-permission">I promise that I have the upload permission for this book.</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="open-licence" name="open-licence">
+                <label for="open-licence">I promise that this book has been published under an open licence.</label>
+            </div>
+            <button type="submit" class="submit-btn">Submit This Book</button>
+
+            <hr>
+            <div class="copyright-info">
+                <p>&copy; 2025 BookyTranslate. All rights reserved.</p>
+            </div>
+        </form>
+    </div>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Join Our NewLetter</h3>
+                <p>lorem ipsum, lorem ipsum lorem ipsum<br>lorem ipsum, lorem ipsum lorem ipsum<br>lorem ipsum, lor.</p>
+                <div class="newsletter-input">
+                    <input type="email" placeholder="Enter your email...">
+                    <button type="submit">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="">How it works</a></li>
+                    <li><a href="">Community</a></li>
+                    <li><a href="">Contact us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="">Books translation</a></li>
+                    <li><a href="">Books Discovery</a></li>
+                    <li><a href="">Books reading</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+                    <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:contact@bookytrans.com">Email</a></li>
+                    <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>@2025. all rights reserved . BookyTrans</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy policy</a>
+                <a href="#">Terms of service</a>
+            </div>
+        </div>
+    </footer>
+    <script src="../../components/header/header.js" defer></script>
+    <script src="./BookUpload.js"></script>
+</body>
+</html>

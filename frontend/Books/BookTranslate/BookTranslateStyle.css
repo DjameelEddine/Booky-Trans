@@ -34,7 +34,8 @@ body {
 
 .workspace h1 {
     font-size: 28px;
-    margin: 6px 0 18px
+    margin: 6px 0 18px;
+    text-align: center;
 }
 
 .workspace-grid {

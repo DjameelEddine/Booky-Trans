@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>BookyTrans</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='BooksListingStyles.css'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../components/header/header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <script src='main.js'></script>
+</head>
+<body>
+    <div id="site-header"></div>
+    <div class="main-screen">
+        <h1>Books Ready For Translation</h1>
+        <div class="search-field">
+            <img src="" alt="">
+            <input type="text" placeholder="Search">
+            <a class="filter-btn" href=""><img class="filter-img" src="../../assets/icons/filter.svg" alt="Filter"></a>
+        </div>
+        <div class="filter-popup">
+                <div class="language-inputs">
+                    <input type="text" placeholder="Original Language">
+                    <input type="text" placeholder="Target Language">
+                </div>
+                <br>
+                <div class="categories-row">
+                    <div class="book-category">Fantasy</div>
+                    <div class="book-category">Novel</div>
+                    <div class="book-category">Historical</div>
+                    <div class="book-category">Horror</div>
+                    <div class="book-category">Science Fiction</div>
+                </div>
+                
+                <div class="filter-done">
+                    <button>GO</button>
+                </div>
+            </div>
+        <div class="books-grid">
+            <div class="book-card">
+                <button class="favorite-btn" onclick="toggleFavorite(this)">
+                    <img src="../../assets/icons/heart.svg" alt="Favorite">
+                </button>
+                <img src="../../assets/images/book.png" alt="Book Cover">
+                <h2>Book Title</h2>
+                <p>Author Name</p>
+                <p>English &rarr; <span>Arabic</span></p>
+                <button class="translate-btn" onclick="window.location.href='../BookTranslate/BookTranslate.html'"">Translate This</button>
+            </div>
+             <div class="book-card">
+                <button class="favorite-btn" onclick="toggleFavorite(this)">
+                    <img src="../../assets/icons/heart.svg" alt="Favorite">
+                </button>
+                <img src="../../assets/images/book.png" alt="Book Cover">
+                <h2>Book Title</h2>
+                <p>Author Name</p>
+                <p>English &rarr; <span>Arabic</span></p>
+                <button class="translate-btn">Translate This</button>
+            </div>
+             <div class="book-card">
+                <button class="favorite-btn" onclick="toggleFavorite(this)">
+                    <img src="../../assets/icons/heart.svg" alt="Favorite">
+                </button>
+                <img src="../../assets/images/book.png" alt="Book Cover">
+                <h2>Book Title</h2>
+                <p>Author Name</p>
+                <p>English &rarr; <span>Arabic</span></p>
+                <button class="translate-btn">Translate This</button>
+            </div>
+             <div class="book-card">
+                <button class="favorite-btn" onclick="toggleFavorite(this)">
+                    <img src="../../assets/icons/heart.svg" alt="Favorite">
+                </button>
+                <img src="../../assets/images/book.png" alt="Book Cover">
+                <h2>Book Title</h2>
+                <p>Author Name</p>
+                <p>English &rarr; <span>Arabic</span></p>
+                <button class="translate-btn">Translate This</button>
+            </div>
+             <div class="book-card">
+                <button class="favorite-btn" onclick="toggleFavorite(this)">
+                    <img src="../../assets/icons/heart.svg" alt="Favorite">
+                </button>
+                <img src="../../assets/images/book.png" alt="Book Cover">
+                <h2>Book Title</h2>
+                <p>Author Name</p>
+                <p>English &rarr; <span>Arabic</span></p>
+                <button class="translate-btn">Translate This</button>
+            </div>
+        </div>
+        <div class="pagination-index">
+            <ul>
+                <li><a href="">&lt;</a></li>
+                <li><a href="">1,</a></li>
+                <li><a href="">2,</a></li>
+                <li><a href="">3,</a></li>
+                <li>...</li>
+                <li><a href="">&gt;</a></li>
+            </ul>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Join Our NewLetter</h3>
+                <p>lorem ipsum, lorem ipsum lorem ipsum<br>lorem ipsum, lorem ipsum lorem ipsum<br>lorem ipsum, lor.</p>
+                <div class="newsletter-input">
+                    <input type="email" placeholder="Enter your email...">
+                    <button type="submit">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Navigation</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="">How it works</a></li>
+                    <li><a href="">Community</a></li>
+                    <li><a href="">Contact us</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="">Books translation</a></li>
+                    <li><a href="">Books Discovery</a></li>
+                    <li><a href="">Books reading</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+                    <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:contact@bookytrans.com">Email</a></li>
+                    <li><a href="https://instagram.com" target="_blank">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>@2025. all rights reserved . BookyTrans</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy policy</a>
+                <a href="#">Terms of service</a>
+            </div>
+        </div>
+    </footer>
+    <script src="../../components/header/header.js" defer></script>
+    <script src="BookListing.js"></script>
+</body>
+</html>

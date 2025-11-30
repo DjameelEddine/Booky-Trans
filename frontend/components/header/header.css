@@ -24,6 +24,12 @@ nav{
 .logo{
     color: white;
     font-weight: 700;
+    font-size: 20px;
+}
+.logo img{
+  width: 120px;
+  height: 40px;
+  margin-top: 10px;
 }
 .nav-links a{
     color: white;
@@ -51,38 +57,6 @@ nav{
     cursor: pointer;
     background-color: #4199bc;
     transition: background-color 0.4s;
-}
-
-/* Login / Signup buttons */
-.login-signup{
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.login-btn{
-  font-weight: 800;
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: none;
-  background-color: var(--accent);
-  color: #042431; /* dark text on light accent */
-  cursor: pointer;
-}
-.login-btn:hover{
-  background-color: #4199bc;
-}
-.signup-btn{
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--accent);
-  border: 1px solid var(--accent);
-  cursor: pointer;
-}
-.signup-btn:hover{
-  background-color: #4199bc;
-  color: white;
 }
 
 .hamburger-menu {
@@ -129,6 +103,49 @@ nav{
 }
 
 .mobile-logo { color: white; font-weight:700; margin-bottom:8px }
+
+/* auth buttons in the mobile menu */
+.mobile-auth{
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  align-items: center;
+}
+.mobile-auth .login-btn, .mobile-auth .signup-btn{
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* auth buttons */
+.auth-links {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.login-btn, .signup-btn, .profile-btn {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.signup-btn {
+  background: var(--accent);
+  color: #021021;
+  border-color: transparent;
+}
+
+.profile-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hidden { display: none !important; }
 
 /* MEDIA QUERY */
 @media (max-width: 630px) {
