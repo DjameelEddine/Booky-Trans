@@ -124,6 +124,44 @@ nav{
   align-items: center;
 }
 
+.user-profile {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.user-profile .upload-btn {
+  background: #82DDFF;
+  color: #090020;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.user-profile .upload-btn:hover {
+  background: #5ab8e0;
+  color: #fff;
+}
+
+.topnav-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.topnav-avatar:hover {
+  border-color: #82DDFF;
+  transform: scale(1.05);
+}
+
 .login-btn, .signup-btn, .profile-btn {
   background: transparent;
   color: white;
@@ -155,7 +193,9 @@ nav{
   }
 
   .nav-links,
-  .upload-profile {
+  .upload-profile,
+  .auth-links,
+  .user-profile {
     display: none;
   }
 

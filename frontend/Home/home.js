@@ -1,3 +1,19 @@
+function checkLoginStatus() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const authButtons = document.getElementById('authButtons');
+    const userProfile = document.getElementById('userProfile');
+    
+    if (isLoggedIn) {
+        authButtons.style.display = 'none';
+        userProfile.style.display = 'flex';
+    } else {
+        authButtons.style.display = 'flex';
+        userProfile.style.display = 'none';
+    }
+}
+
+window.addEventListener('load', checkLoginStatus);
+
 function toggleMenu() {
     document.getElementById("mobileMenu").classList.toggle("show");
 }

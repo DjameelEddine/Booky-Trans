@@ -50,8 +50,9 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
         return;
     }
     
-    console.log('Signup data:', { username, email, password });
-    alert('Account created successfully!');
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userEmail', email);
+    localStorage.setItem('username', username);
     
-    this.reset();
+    window.location.href = '../../Profile/profile.html';
 });

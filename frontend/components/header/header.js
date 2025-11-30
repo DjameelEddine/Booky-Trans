@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
 
         wireupHeaderLinks(mount, frontendRoot);
+        checkLoginStatus(mount);
       })
       .catch(e => console.error('header load failed', e));
 
@@ -45,5 +46,19 @@ document.addEventListener('DOMContentLoaded', function(){
       if (!mm) return;
       mm.classList.toggle('show');
     };
+  }
+
+  function checkLoginStatus(mount){
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const authButtons = mount.querySelector('#authButtons');
+    const userProfile = mount.querySelector('#userProfile');
+    
+    if (isLoggedIn && authButtons && userProfile) {
+      authButtons.style.display = 'none';
+      userProfile.style.display = 'flex';
+    } else if (authButtons && userProfile) {
+      authButtons.style.display = 'flex';
+      userProfile.style.display = 'none';
+    }
   }
 });

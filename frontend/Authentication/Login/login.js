@@ -35,5 +35,8 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         return;
     }
     
-    console.log('Login attempt:', { email, password });
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userEmail', email);
+    
+    window.location.href = '../../Profile/profile.html';
 });
