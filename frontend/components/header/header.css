@@ -53,6 +53,38 @@ nav{
     transition: background-color 0.4s;
 }
 
+/* Login / Signup buttons */
+.login-signup{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.login-btn{
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background-color: var(--accent);
+  color: #042431; /* dark text on light accent */
+  cursor: pointer;
+}
+.login-btn:hover{
+  background-color: #4199bc;
+}
+.signup-btn{
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  cursor: pointer;
+}
+.signup-btn:hover{
+  background-color: #4199bc;
+  color: white;
+}
+
 .hamburger-menu {
   display: none;
   font-size: 28px;
