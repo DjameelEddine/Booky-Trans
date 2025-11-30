@@ -1,38 +1,22 @@
 <!doctype html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Translation Workspace</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&display=swap"
+		rel="stylesheet">
 	<link rel="stylesheet" href="BookTranslateStyle.css">
 	<link rel="stylesheet" href="navbar-footer.css">
+	<link rel="stylesheet" href="../../components/header/header.css">
 </head>
+
 <body>
-	<nav>
-		<div class="logo"><img src="../../assets/icons/logo2.svg" alt="BookyTrans Logo"></div>
-		<ul class="nav-links">
-			<li><a href="../../Home/home.html">Home</a></li>
-			<li><a href="BookTranslate.html">Community</a></li>
-			<li><a href="../../contact-us&how it works/how-it-works.html">How it Works</a></li>
-			<li><a href="../../contact-us&how it works/contact.html">Contact Us</a></li>
-		</ul>
-		<div class="login-signup">
-			<button class="login-btn" onclick="window.location.href='../../Authentication/Login/login.html'">Log In</button>
-			<button class="signup-btn" onclick="window.location.href='../../Authentication/Signup/signup.html'">Sign Up</button>
-		</div>
-		<div class="hamburger-menu" onclick="toggleMenu()">&#9776;</div>
-	</nav>
-	<div class="mobile-menu" id="mobileMenu">
-		<ul>
-			<li><a href="../../Home/home.html">Home</a></li>
-			<li><a href="BookTranslate.html">Community</a></li>
-			<li><a href="../../contact-us&how it works/how-it-works.html">How it Works</a></li>
-			<li><a href="../../contact-us&how it works/contact.html">Contact Us</a></li>
-		</ul>
-	</div>
+	<div id="site-header"></div>
 
 	<main class="page">
 		<section class="workspace">
@@ -40,17 +24,21 @@
 
 			<div class="workspace-grid" style="position:relative;">
 				<div class="book-card" style="position:relative;">
-					<img src="../../assets/icons/heart-icon.svg" alt="favorite" class="heart-icon" style="position:absolute;top:18px;right:18px;width:38px;z-index:2;">
+					<img src="../../assets/icons/heart-icon.svg" alt="favorite" class="heart-icon"
+						style="position:absolute;top:18px;right:18px;width:38px;z-index:2;">
 					<h3>The Silent Patient</h3>
 					<p class="by">By Andrew Ross</p>
-					<p class="desc">Alicia Berenson's life is seemingly perfect. A famous painter married to an in-demand fashion photographer, she lives in a grand house with big windows overlooking a park in one of London's most desirable areas...</p>
+					<p class="desc">Alicia Berenson's life is seemingly perfect. A famous painter married to an
+						in-demand fashion photographer, she lives in a grand house with big windows overlooking a park
+						in one of London's most desirable areas...</p>
 					<ul class="meta">
 						<li><span class="label">Genre:</span> <span class="meta-value">Mystery, Thriller</span></li>
 						<li><span class="label">Original Language:</span> <span class="meta-value">English</span></li>
 						<li><span class="label">Desired Language:</span> <span class="meta-value">French</span></li>
 					</ul>
 					<button class="download-btn">
-						<img src="../../assets/icons/download-icon.svg" alt="download" class="icon" style="vertical-align:middle;width:20px;margin-right:8px;">
+						<img src="../../assets/icons/download-icon.svg" alt="download" class="icon"
+							style="vertical-align:middle;width:20px;margin-right:8px;">
 						download original (.ebep)
 					</button>
 				</div>
@@ -58,7 +46,8 @@
 				<aside class="upload-card">
 					<h3>Add Your Translation</h3>
 					<div class="upload-drop">
-						<img src="../../assets/icons/upload-icon.svg" alt="upload" class="icon" style="width:38px;display:block;margin:0 auto 8px;">
+						<img src="../../assets/icons/upload-icon.svg" alt="upload" class="icon"
+							style="width:38px;display:block;margin:0 auto 8px;">
 						Click To Upload your file<br><small>PDF or TXT</small>
 					</div>
 					<button class="submit-translation">Submit translation</button>
@@ -83,11 +72,13 @@
 
 					<div class="file-row">
 						<div class="file-name">
-							<img src="../../assets/icons/file-icon.svg" alt="file" class="file-icon" style="vertical-align:middle;width:22px;margin-right:10px;">
+							<img src="../../assets/icons/file-icon.svg" alt="file" class="file-icon"
+								style="vertical-align:middle;width:22px;margin-right:10px;">
 							El_Paciente_Silencioso_Mateo.pdf
 						</div>
 						<button class="download small">
-							<img src="../../assets/icons/download-icon.svg" alt="download" class="icon" style="vertical-align:middle;width:18px;margin-right:6px;">
+							<img src="../../assets/icons/download-icon.svg" alt="download" class="icon"
+								style="vertical-align:middle;width:18px;margin-right:6px;">
 							download
 						</button>
 					</div>
@@ -97,11 +88,13 @@
 						<div class="avg">Avg Rating: 4.5</div>
 						<div class="actions">
 							<button class="rate-btn">
-								<img src="../../assets/icons/rate-icon.svg" alt="rate" class="icon" style="vertical-align:middle;width:18px;margin-right:4px;">
+								<img src="../../assets/icons/rate-icon.svg" alt="rate" class="icon"
+									style="vertical-align:middle;width:18px;margin-right:4px;">
 								rate
 							</button>
 							<button class="comment-btn">
-								<img src="../../assets/icons/commet-icon.svg" alt="comment" class="icon" style="vertical-align:middle;width:18px;margin-right:4px;">
+								<img src="../../assets/icons/commet-icon.svg" alt="comment" class="icon"
+									style="vertical-align:middle;width:18px;margin-right:4px;">
 								comment
 							</button>
 						</div>
@@ -123,8 +116,19 @@
 					<!-- omment form (hidden) -->
 					<div class="comment-form hidden">
 						<label>Add a comment</label>
-						<textarea placeholder="Write your comment" rows="3"></textarea>
-						<button class="submit-comment">Submit comment</button>
+						<div class="comment-composer">
+							<textarea placeholder="Write your comment" rows="3"></textarea>
+							<button class="submit-comment" aria-label="Submit comment"></button>
+						</div>
+					</div>
+
+					<!-- comments list (initially hidden) -->
+					<div class="comments-list hidden">
+						<div class="comment-item">
+							<strong>Isabella Zoe</strong>
+							<div class="comment-text">Lovely translation — very natural flow.</div>
+							<div class="comment-date">May 14 2025</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -140,11 +144,13 @@
 					</div>
 					<div class="file-row">
 						<div class="file-name">
-							<img src="../../assets/icons/file-icon.svg" alt="file" class="file-icon" style="vertical-align:middle;width:22px;margin-right:10px;">
+							<img src="../../assets/icons/file-icon.svg" alt="file" class="file-icon"
+								style="vertical-align:middle;width:22px;margin-right:10px;">
 							El_Paciente_Silencioso_Mateo.pdf
 						</div>
 						<button class="download small">
-							<img src="../../assets/icons/download-icon.svg" alt="download" class="icon" style="vertical-align:middle;width:18px;margin-right:6px;">
+							<img src="../../assets/icons/download-icon.svg" alt="download" class="icon"
+								style="vertical-align:middle;width:18px;margin-right:6px;">
 							download
 						</button>
 					</div>
@@ -153,11 +159,81 @@
 						<div class="avg">Avg Rating: 4.5</div>
 						<div class="actions">
 							<button class="rate-btn">
-								<img src="../../assets/icons/rate-icon.svg" alt="rate" class="icon" style="vertical-align:middle;width:18px;margin-right:4px;">
+								<img src="../../assets/icons/rate-icon.svg" alt="rate" class="icon"
+									style="vertical-align:middle;width:18px;margin-right:4px;">
 								rate
 							</button>
 							<button class="comment-btn">
-								<img src="../../assets/icons/commet-icon.svg" alt="comment" class="icon" style="vertical-align:middle;width:18px;margin-right:4px;">
+								<img src="../../assets/icons/commet-icon.svg" alt="comment" class="icon"
+									style="vertical-align:middle;width:18px;margin-right:4px;">
+								comment
+							</button>
+
+						</div>
+					</div>
+					<div class="review-form hidden">
+						<label>Your rating</label>
+						<div class="stars">
+							<span class="star" data-value="1">★</span>
+							<span class="star" data-value="2">★</span>
+							<span class="star" data-value="3">★</span>
+							<span class="star" data-value="4">★</span>
+							<span class="star" data-value="5">☆</span>
+						</div>
+						<button class="submit-rating">Submit rating</button>
+					</div>
+					<div class="comment-form hidden">
+						<label>Add a comment</label>
+						<div class="comment-composer">
+							<textarea placeholder="Write your comment" rows="3"></textarea>
+							<button class="submit-comment" aria-label="Submit comment"></button>
+						</div>
+					</div>
+
+					<!-- comments list (initially hidden) -->
+					<div class="comments-list hidden">
+						<div class="comment-item">
+							<strong>Isabella Zoe</strong>
+							<div class="comment-text">Lovely translation — very natural flow.</div>
+							<div class="comment-date">May 14 2025</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="translation-card">
+				<div class="avatar"></div>
+				<div class="card-body">
+					<div class="card-header">
+						<div>
+							<strong>Isabella Zoe</strong>
+							<div class="date">May 14 2025</div>
+						</div>
+					</div>
+					<div class="file-row">
+						<div class="file-name">
+							<img src="../../assets/icons/file-icon.svg" alt="file" class="file-icon"
+								style="vertical-align:middle;width:22px;margin-right:10px;">
+							El_Paciente_Silencioso_Mateo.pdf
+						</div>
+						<button class="download small">
+							<img src="../../assets/icons/download-icon.svg" alt="download" class="icon"
+								style="vertical-align:middle;width:18px;margin-right:6px;">
+							download
+						</button>
+					</div>
+					<div class="rating-row">
+						<div class="avg-stars">★★★★☆</div>
+						<div class="avg">Avg Rating: 4.5</div>
+						<div class="actions">
+							<button class="rate-btn">
+								<img src="../../assets/icons/rate-icon.svg" alt="rate" class="icon"
+									style="vertical-align:middle;width:18px;margin-right:4px;">
+								rate
+							</button>
+							<button class="comment-btn">
+								<img src="../../assets/icons/commet-icon.svg" alt="comment" class="icon"
+									style="vertical-align:middle;width:18px;margin-right:4px;">
 								comment
 							</button>
 						</div>
@@ -175,60 +251,10 @@
 					</div>
 					<div class="comment-form hidden">
 						<label>Add a comment</label>
-						<textarea placeholder="Write your comment" rows="3"></textarea>
-						<button class="submit-comment">Submit comment</button>
-					</div>
-				</div>
-			</div>
-
-			<div class="translation-card">
-				<div class="avatar"></div>
-				<div class="card-body">
-					<div class="card-header">
-						<div>
-							<strong>Isabella Zoe</strong>
-							<div class="date">May 14 2025</div>
+						<div class="comment-composer">
+							<textarea placeholder="Write your comment" rows="3"></textarea>
+							<button class="submit-comment" aria-label="Submit comment"></button>
 						</div>
-					</div>
-					<div class="file-row">
-						<div class="file-name">
-							<img src="../../assets/icons/file-icon.svg" alt="file" class="file-icon" style="vertical-align:middle;width:22px;margin-right:10px;">
-							El_Paciente_Silencioso_Mateo.pdf
-						</div>
-						<button class="download small">
-							<img src="../../assets/icons/download-icon.svg" alt="download" class="icon" style="vertical-align:middle;width:18px;margin-right:6px;">
-							download
-						</button>
-					</div>
-					<div class="rating-row">
-						<div class="avg-stars">★★★★☆</div>
-						<div class="avg">Avg Rating: 4.5</div>
-						<div class="actions">
-							<button class="rate-btn">
-								<img src="../../assets/icons/rate-icon.svg" alt="rate" class="icon" style="vertical-align:middle;width:18px;margin-right:4px;">
-								rate
-							</button>
-							<button class="comment-btn">
-								<img src="../../assets/icons/commet-icon.svg" alt="comment" class="icon" style="vertical-align:middle;width:18px;margin-right:4px;">
-								comment
-							</button>
-						</div>
-					</div>
-					<div class="review-form hidden">
-						<label>Your rating</label>
-						<div class="stars">
-							<span class="star" data-value="1">★</span>
-							<span class="star" data-value="2">★</span>
-							<span class="star" data-value="3">★</span>
-							<span class="star" data-value="4">★</span>
-							<span class="star" data-value="5">☆</span>
-						</div>
-						<button class="submit-rating">Submit rating</button>
-					</div>
-					<div class="comment-form hidden">
-						<label>Add a comment</label>
-						<textarea placeholder="Write your comment" rows="3"></textarea>
-						<button class="submit-comment">Submit comment</button>
 					</div>
 				</div>
 			</div>
@@ -236,61 +262,14 @@
 		</section>
 	</main>
 
-	<footer>
-		<div class="footer-container">
-			<div class="footer-section">
-				<h3>Join Our NewLetter</h3>
-				<p>lorem ipsum, lorem ipsum lorem ipsum<br>lorem ipsum, lorem ipsum lorem ipsum<br>lorem ipsum, lor.</p>
-				<div class="newsletter-input">
-					<input type="email" placeholder="Enter your email...">
-					<button type="submit">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-					</button>
-				</div>
-			</div>
-			
-			<div class="footer-section">
-				<h3>Navigation</h3>
-				<ul>
-					<li><a href="../../Home/home.html">Home</a></li>
-					<li><a href="../../contact-us&how it works/how-it-works.html">How it works</a></li>
-					<li><a href="BookTranslate.html">Community</a></li>
-					<li><a href="../../contact-us&how it works/contact.html">Contact us</a></li>
-				</ul>
-			</div>
-			
-			<div class="footer-section">
-				<h3>Services</h3>
-				<ul>
-					<li><a href="">Books translation</a></li>
-					<li><a href="">Books Discovery</a></li>
-					<li><a href="">Books reading</a></li>
-				</ul>
-			</div>
-			
-			<div class="footer-section">
-				<h3>Contact</h3>
-				<ul>
-					<li><a href="https://facebook.com" target="_blank">Facebook</a></li>
-					<li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
-					<li><a href="mailto:contact@bookytrans.com">Email</a></li>
-					<li><a href="https://instagram.com" target="_blank">Instagram</a></li>
-				</ul>
-			</div>
-		</div>
-		
-		<div class="footer-bottom">
-			<p>@2025. all rights reserved . BookyTrans</p>
-			<div class="footer-bottom-links">
-				<a href="#">Privacy policy</a>
-				<a href="#">Terms of service</a>
-			</div>
-		</div>
-	</footer>
+	<div id="site-footer"></div>
+
+	<link rel="stylesheet" href="/frontend/components/footer/footer.css">
+	<script src="/frontend/components/footer/footer.js" defer></script>
 
 	<script src="navbar-footer.js"></script>
+	<script src="../../components/header/header.js" defer></script>
 	<script src="BookTranslate.js"></script>
 </body>
+
 </html>
