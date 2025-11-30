@@ -30,9 +30,6 @@ nav{
   width: 120px;
   height: 40px;
   margin-top: 10px;
-  border-radius: 5px;
-  background-color:#f0f0f0;
-  padding: 0px 5px;
 }
 .nav-links a{
     color: white;
@@ -156,9 +153,6 @@ nav{
   width: 120px;
   height: 40px;
   margin-top: 5px;
-  border-radius: 5px;
-  background-color:#f0f0f0;
-  padding: 0px 5px;
 }
 
 .mobile-menu img:hover {
