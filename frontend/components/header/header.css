@@ -21,11 +21,6 @@ nav{
     align-items: center;
     list-style: none;
 }
-.logo{
-    color: white;
-    font-weight: 700;
-    font-size: 20px;
-}
 .logo img{
   width: 120px;
   height: 40px;
@@ -148,7 +143,7 @@ nav{
 .hidden { display: none !important; }
 
 /* MEDIA QUERY */
-@media (max-width: 630px) {
+@media (max-width: 927px) {
   nav {
     justify-content: space-between;
     padding: 0 15px;
