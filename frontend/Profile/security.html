@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BooklyTrans – Security</title>
+  <link rel="stylesheet" href="profile.css" />
+</head>
+<script>
+async function saveAccount() {
+  await fetch('http://127.0.0.1:8000/profile/me', {method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({first_name: document.getElementById('nameField').value, email: document.getElementById('emailField').value})});
+  alert('✅ SAVED!');
+}
+</script>
+
+<body>
+  <header class="topnav">
+    <div class="brand">
+      <span class="brand-text">BooklyTrans</span>
+    </div>
+    <div class="top-links">
+      <span>Community</span>
+      <span>How it works</span>
+      <span>Contact us</span>
+    </div>
+    <div class="topnav-right">
+      <button class="upload-btn">Upload a book</button>
+      <img class="avatar" src="../assets/avatar.png" alt="User" />
+    </div>
+  </header>
+
+
+  <main class="main-container">
+    <div class="card-wrapper">
+      <aside class="sidebar">
+        <a href="profile.html" class="side-item">
+          <span class="side-icon">👤</span>
+          <span>Profile</span>
+        </a>
+        <div class="side-item active">
+          <span class="side-icon">⚙️</span>
+          <span>Settings</span>
+        </div>
+        <div class="side-item logout">
+          <span class="side-icon">⏻</span>
+          <span>Log out</span>
+        </div>
+      </aside>
+
+      <section class="content-area">
+        <div class="settings-main-layout">
+          <div class="settings-tabs">
+            <a href="settings.html" class="settings-tab">Account</a>
+            <div class="settings-tab active">Security</div>
+          </div>
+
+          <div class="settings-card">
+            <div class="settings-row-2col">
+              <div>
+                <label>Current password</label>
+                <input type="password" placeholder="••••••••" />
+              </div>
+            </div>
+
+            <div class="settings-row-2col">
+              <div>
+                <label>New password</label>
+                <input type="password" placeholder="Enter new password" />
+              </div>
+              <div>
+                <label>Confirm new password</label>
+                <input type="password" placeholder="Repeat new password" />
+              </div>
+            </div>
+
+            <div class="settings-actions">
+              <button class="cancel-btn" type="button">Cancel</button>
+             <button class="save-btn" onclick="saveAccount()">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+async function saveAccount() {
+  const data = {
+    first_name: document.getElementById('nameField').value,
+    email: document.getElementById('emailField').value
+  };
+  await fetch('http://127.0.0.1:8000/profile/me', {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  });
+  alert('✅ SAVED!');
+}
+</script>
+
+</body>
+</html>

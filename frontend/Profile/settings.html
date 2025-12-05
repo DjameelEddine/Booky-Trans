@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BooklyTrans – Settings</title>
+  <link rel="stylesheet" href="profile.css" />
+</head>
+<script>
+async function saveAccount() {
+  await fetch('http://127.0.0.1:8000/profile/me', {method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({first_name: document.getElementById('nameField').value, email: document.getElementById('emailField').value})});
+  alert('✅ SAVED!');
+}
+</script>
+
+<body>
+  <!-- Top navigation bar -->
+  <header class="topnav">
+    <div class="brand">
+      <span class="brand-text">BooklyTrans</span>
+    </div>
+
+    <div class="top-links">
+      <span>Community</span>
+      <span>How it works</span>
+      <span>Contact us</span>
+    </div>
+
+    <div class="topnav-right">
+      <!-- avatar on the right -->
+      <!-- use an image file or initials-only div -->
+      <!-- Image avatar example -->
+      <!-- <img class="avatar" src="../assets/user-avatar.png" alt="User avatar" /> -->
+
+      <!-- Initials avatar (works even without image file) -->
+      <div class="avatar"
+           style="background:#82d8f9;display:flex;align-items:center;justify-content:center;font-weight:700;color:#091634;">
+        IE
+      </div>
+
+      <button class="upload-btn" type="button">Upload a book</button>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="main-container">
+    <div class="card-wrapper">
+      <!-- Left sidebar -->
+      <aside class="sidebar">
+        <a href="profile.html" class="side-item">
+          <span class="side-icon">👤</span>
+          <span>Profile</span>
+        </a>
+
+        <div class="side-item active">
+          <span class="side-icon">⚙️</span>
+          <span>Settings</span>
+        </div>
+
+        <div class="side-item logout">
+          <span class="side-icon">⏻</span>
+          <span>Log out</span>
+        </div>
+      </aside>
+
+      <!-- Right content area -->
+      <section class="content-area">
+        <div class="settings-main-layout">
+          <!-- Account / Security tabs -->
+          <div class="settings-tabs">
+            <div class="settings-tab active">Account</div>
+            <a href="security.html" class="settings-tab">Security</a>
+          </div>
+
+          <!-- Settings card -->
+          <div class="settings-card">
+            <!-- Username + email in 2 columns -->
+            <div class="settings-row-2col">
+              <div>
+                <label>Username</label>
+                <input type="text" value="Isabella Evans" />
+              </div>
+              <div>
+                <label>Email address</label>
+                <input type="email" value="isabella.evans@email.com" />
+              </div>
+            </div>
+
+            <!-- Biography -->
+            <div class="settings-row">
+              <label>Biography</label>
+              <textarea>Short bio about Isabella goes here.</textarea>
+            </div>
+
+            <!-- Avatar + change picture -->
+            <div class="settings-avatar-row">
+              <!-- Use real image if you have it -->
+              <!-- <img class="settings-avatar" src="../assets/user-avatar.png" alt="Isabella avatar" /> -->
+
+              <!-- Initials avatar fallback -->
+              <div class="settings-avatar"
+                   style="background:#82d8f9;display:flex;align-items:center;justify-content:center;font-weight:700;color:#091634;">
+                IE
+              </div>
+
+              <button class="save-btn" type="button">Change picture</button>
+            </div>
+
+            <!-- Buttons -->
+            <div class="settings-actions">
+              <button class="cancel-btn" type="button">Cancel</button>
+             <button class="save-btn" onclick="saveAccount()">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // no special JS needed for this page now
+  </script>
+</body>
+</html>
