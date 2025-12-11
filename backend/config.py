@@ -15,4 +15,8 @@ class Settings(BaseSettings):
         # reference the file containing private information for local development
         env_file = ".env"
 
+<<<<<<< HEAD
 settings = Settings() #type: ignore
+=======
+settings = Settings() #type: ignore
+>>>>>>> develop

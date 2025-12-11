@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
+<<<<<<< HEAD
 from database import Base
 
 
@@ -15,6 +16,22 @@ class User(Base):
 class Book(Base):
     __tablename__ = "books"
 
+=======
+from sqlalchemy.ext.declarative import declarative_base
+from database import Base
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    first_name = Column(String, nullable=False)
+    last_name = Column(String, nullable=False)
+    username = Column(String, nullable=False)
+    email = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
+
+class Book(Base):
+    __tablename__ = "books"
+>>>>>>> develop
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)
     category = Column(String, nullable=False)
@@ -22,6 +39,7 @@ class Book(Base):
     language = Column(String, nullable=False)
     target_language = Column(String, nullable=False)
 
+<<<<<<< HEAD
 
 class Translation(Base):
     __tablename__ = "translations"
@@ -38,10 +56,25 @@ class Review(Base):
     id = Column(Integer, primary_key=True, index=True)
     translation_id = Column(Integer, ForeignKey("translations.id", ondelete="CASCADE"))
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
+=======
+class Translation(Base):
+    __tablename__ = "translations"
+    id = Column(Integer, primary_key=True, index=True)
+    book_id = Column(Integer, ForeignKey("books.id", ondelete='CASCADE'))
+    user_id = Column(Integer, ForeignKey("users.id", ondelete='CASCADE'))
+    upload_date = Column(Date, nullable=False)
+
+class Review(Base):
+    __tablename__ = "reviews"
+    id = Column(Integer, primary_key=True, index=True)
+    translation_id = Column(Integer, ForeignKey("translations.id", ondelete='CASCADE'))
+    user_id = Column(Integer, ForeignKey("users.id", ondelete='CASCADE'))
+>>>>>>> develop
     date_issued = Column(Date, nullable=False)
     comment = Column(String)
     rating = Column(Integer)
 
+<<<<<<< HEAD
 
 class FavoriteBooks(Base):
     __tablename__ = "favorite_books"
@@ -57,3 +90,16 @@ class UploadedBooks(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     book_id = Column(Integer, ForeignKey("books.id"), nullable=False)
+=======
+class FavoriteBooks(Base):
+    __tablename__ = 'favorite_books'
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'))
+    book_id = Column(Integer, ForeignKey('books.id', ondelete='CASCADE'))
+
+class UploadedBooks(Base):
+    __tablename__ = 'uploaded_books'
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'))
+    book_id = Column(Integer, ForeignKey('books.id', ondelete='CASCADE'))
+>>>>>>> develop

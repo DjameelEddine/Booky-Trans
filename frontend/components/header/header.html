@@ -1,0 +1,38 @@
+<nav>
+  <div class="logo">
+    <img id="site-logo" src="assets/icons/logoWHITE.svg" alt="BookyTrans" />
+  </div>
+
+  <ul class="nav-links">
+    <li><a data-target="Home/Home.html">Home</a></li>
+    <li><a data-target="Books/BookListing/BooksListing.html">Community</a></li>
+    <li><a data-target="contact-us-how-it-works/how-it-works.html">How it Works</a></li>
+    <li><a data-target="contact-us-how-it-works/contact.html">Contact Us</a></li>
+  </ul>
+
+  <!-- <div class="upload-profile">
+            <button class="upload-btn" onclick="window.location.href='../../Books/BookUpload/BookUpload.html'">Upload a book</button>
+            <a href="../../Profile/profile.html"><img src="../../assets/icons/profile.svg" alt="profile"></a>
+        </div> -->
+
+  <div class="auth-links" id="authButtons">
+    <button class="login-btn" data-target="Authentication/Login/login.html">Log In</button>
+    <button class="signup-btn" data-target="Authentication/Signup/signup.html">Sign Up</button>
+  </div>
+
+  <div class="user-profile" id="userProfile" style="display: none;">
+    <button class="upload-btn" data-target="Books/BookUpload/BookUpload.html">Upload a book</button>
+    <img src="/frontend/assets/profile.jpg" alt="User" class="topnav-avatar" data-target="Profile/profile.html">
+  </div>
+
+  <div class="hamburger-menu" onclick="toggleMenu()">&#9776;</div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+    <ul>
+    <li><a data-target="Home/Home.html">Home</a></li>
+    <li><a data-target="Books/BookListing/BooksListing.html">Community</a></li>
+    <li><a data-target="contact-us-how-it-works/how-it-works.html">How it Works</a></li>
+    <li><a data-target="contact-us-how-it-works/contact.html">Contact Us</a></li>
+  </ul>
+    </div>

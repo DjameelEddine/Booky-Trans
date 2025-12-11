@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+<<<<<<< HEAD
 from database import engine, Base
 from routes import profile
 from fastapi import FastAPI
@@ -25,3 +26,14 @@ app.include_router(profile.router, prefix="/profile", tags=["profile"])
 @app.get("/")
 def root():
     return {"message": "Profile API ✅ WORKING"}
+=======
+# import models
+from database import engine
+from routes import book
+
+# models.Base.metadata.create_all(bind=engine)
+
+app = FastAPI()
+
+app.include_router(book.router)
+>>>>>>> develop
