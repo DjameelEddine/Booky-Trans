@@ -5,17 +5,17 @@
   <title>BooklyTrans – Security</title>
   <link rel="stylesheet" href="profile.css" />
 </head>
-<script>
-async function saveAccount() {
-  await fetch('http://127.0.0.1:8000/profile/me', {method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({first_name: document.getElementById('nameField').value, email: document.getElementById('emailField').value})});
-  alert('✅ SAVED!');
-}
-</script>
 
 <body>
   <header class="topnav">
     <div class="brand">
-      <span class="brand-text">BooklyTrans</span>
+      <img class="logo" src="../assets/logo.svg" alt="logo" style="
+  width: 120px;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 0px 5px;
+"/>
     </div>
     <div class="top-links">
       <span>Community</span>
@@ -24,10 +24,9 @@ async function saveAccount() {
     </div>
     <div class="topnav-right">
       <button class="upload-btn">Upload a book</button>
-      <img class="avatar" src="../assets/avatar.png" alt="User" />
+      <img class="avatar" src="../assets/profile.svg" alt="User" />
     </div>
   </header>
-
 
   <main class="main-container">
     <div class="card-wrapper">
@@ -40,10 +39,11 @@ async function saveAccount() {
           <span class="side-icon">⚙️</span>
           <span>Settings</span>
         </div>
-        <div class="side-item logout">
-          <span class="side-icon">⏻</span>
-          <span>Log out</span>
-        </div>
+        <div class="side-item logout" onclick="logout()">
+  <span class="side-icon">⏻</span>
+  <span>Log out</span>
+</div>
+
       </aside>
 
       <section class="content-area">
@@ -57,25 +57,27 @@ async function saveAccount() {
             <div class="settings-row-2col">
               <div>
                 <label>Current password</label>
-                <input type="password" placeholder="••••••••" />
+                <input id="currentPassword" type="password" placeholder="••••••••" />
               </div>
             </div>
 
             <div class="settings-row-2col">
               <div>
                 <label>New password</label>
-                <input type="password" placeholder="Enter new password" />
+                <input id="newPassword" type="password" placeholder="Enter new password" />
               </div>
               <div>
                 <label>Confirm new password</label>
-                <input type="password" placeholder="Repeat new password" />
+                <input id="confirmPassword" type="password" placeholder="Repeat new password" />
               </div>
             </div>
 
             <div class="settings-actions">
               <button class="cancel-btn" type="button">Cancel</button>
-             <button class="save-btn" onclick="saveAccount()">Save changes</button>
+              <button class="save-btn" type="button" onclick="changePassword()">Save changes</button>
             </div>
+
+            <p id="securityMessage" style="margin-top:10px;color:#f00;"></p>
           </div>
         </div>
       </section>
@@ -83,19 +85,73 @@ async function saveAccount() {
   </main>
 
   <script>
-async function saveAccount() {
-  const data = {
-    first_name: document.getElementById('nameField').value,
-    email: document.getElementById('emailField').value
-  };
-  await fetch('http://127.0.0.1:8000/profile/me', {
-    method: 'PUT',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
-  });
-  alert('✅ SAVED!');
-}
-</script>
+    const API_BASE = "http://127.0.0.1:8000";
+    
+let ACCESS_TOKEN = null;
 
+function setToken(token) {
+  ACCESS_TOKEN = token;
+}
+
+function authHeaders() {
+  return ACCESS_TOKEN
+    ? { "Authorization": `Bearer ${ACCESS_TOKEN}` }
+    : {};
+}
+  function logout() {
+    setToken(null);
+    window.location.href = "login.html"; // change to your real login/landing page
+  }
+
+ 
+  loadStoredToken();
+async function changePassword() {
+  const current = document.getElementById("currentPassword").value;
+  const newPass = document.getElementById("newPassword").value;
+  const confirm = document.getElementById("confirmPassword").value;
+  const msgEl = document.getElementById("securityMessage");
+
+  msgEl.style.color = "#f00";
+
+  if (!current || !newPass || !confirm) {
+    msgEl.textContent = "Please fill all fields.";
+    return;
+  }
+  if (newPass !== confirm) {
+    msgEl.textContent = "New passwords do not match.";
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/profile/me/password`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        ...authHeaders()
+      },
+      body: JSON.stringify({
+        current_password: current,
+        new_password: newPass
+      })
+    });
+
+    const text = await res.text();
+    if (!res.ok) {
+      msgEl.textContent = text || "Failed to change password.";
+      return;
+    }
+
+    msgEl.style.color = "green";
+    msgEl.textContent = "Password changed successfully.";
+    document.getElementById("currentPassword").value = "";
+    document.getElementById("newPassword").value = "";
+    document.getElementById("confirmPassword").value = "";
+  } catch (err) {
+    msgEl.textContent = "Error contacting server.";
+    console.error(err);
+  }
+}
+
+  </script>
 </body>
 </html>

@@ -8,8 +8,14 @@
 <body>
  <header class="topnav">
   <div class="brand">
-      <img class="logo" src="../assets/logo.svg" alt="logo" width="30" height="40" />
-    <span class="brand-text">BooklyTrans</span>
+      <img class="logo" src="../assets/logo.svg" alt="logo" style="
+  width: 120px;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 0px 5px;
+"/>
+   
   </div>
 
 
@@ -23,7 +29,7 @@
    
     <button class="upload-btn" type="button">upload book</button>
 
-    <img class="avatar" src="../assets/user.png" alt="User avatar" />
+    <img class="avatar" src="../assets/profile.svg" alt="User avatar" />
   </div>
 </header>
 
@@ -41,10 +47,12 @@
           <span class="side-icon">⚙️</span>
           <span>Settings</span>
         </a>
-        <div class="side-item logout">
-          <span class="side-icon">⏻</span>
-          <span>Log out</span>
-        </div>
+       <div class="side-item logout" onclick="logout()">
+  <span class="side-icon">⏻</span>
+  <span>Log out</span>
+</div>
+
+
       </aside>
 
 
@@ -52,7 +60,7 @@
         <div class="profile-layout">
           <!-- user card -->
           <div class="profile-card">
-            <img class="profile-avatar" src="../assets/PORTFOLIO.png" alt="Isabella" />
+            <img class="profile-avatar" src="../assets/profile.svg" alt="Isabella" />
             <h2>Isabella Evans</h2>
             <p>Professional translator and avid reader.</p>
             <p>Focused on fiction and self‑help books.</p>
@@ -113,6 +121,65 @@
     </div>
   </main>
 
-  <script src="profile.js"></script>
+  <script>
+  const API_BASE = "http://127.0.0.1:8000";
+
+  // token management
+  let ACCESS_TOKEN = null;
+
+  function setToken(token) {
+    ACCESS_TOKEN = token;
+    if (token) {
+      localStorage.setItem("access_token", token);
+    } else {
+      localStorage.removeItem("access_token");
+    }
+  }
+
+  function loadStoredToken() {
+    const t = localStorage.getItem("access_token");
+    if (t) {
+      ACCESS_TOKEN = t;
+    }
+  }
+
+  function authHeaders() {
+    return ACCESS_TOKEN
+      ? { "Authorization": `Bearer ${ACCESS_TOKEN}` }
+      : {};
+  }
+
+  function logout() {
+    setToken(null);
+    // redirect to your real login or landing page
+    window.location.href = "login.html";
+  }
+
+  // tabs logic
+  function switchBooksTab(name) {
+    document.querySelectorAll(".tab").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.tab === name);
+    });
+
+    document.querySelectorAll(".book-card").forEach(card => {
+      const type = card.getAttribute("data-type");
+      card.style.display = name === "uploaded" || type === name ? "flex" : "none";
+    });
+  }
+
+  function handlePreview(title) {
+    alert("Preview " + title);
+  }
+
+  // init
+  document.addEventListener("DOMContentLoaded", () => {
+    loadStoredToken();  // in future, will restore token if user is logged in
+    // you can call switchBooksTab("uploaded") here if needed
+    switchBooksTab("uploaded");
+  });
+</script>
+
+ 
+  </script>
 </body>
 </html>

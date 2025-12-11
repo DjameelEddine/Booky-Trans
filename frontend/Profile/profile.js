@@ -70,4 +70,10 @@ async function saveProfile() {
     body: JSON.stringify(formData)
   });
 }
+  function logout() {
+    setToken(null);
+    window.location.href = "login.html"; // change to your real login/landing page
+  }
 
+  // call this when page loads
+  loadStoredToken();
