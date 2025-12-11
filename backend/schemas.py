@@ -19,6 +19,9 @@ class UserCreate(UserBase):
 class UserOut(UserBase):
     id: int
 
+    class Config:
+        from_attributes = True
+
 class UserUpdate(BaseModel):
     first_name : Optional[str] = None
     last_name : Optional[str] = None
@@ -37,11 +40,11 @@ class BookCreate(BaseModel):
 class BookOut(BookCreate):
     id: int
 
-class BookUpdate(BaseModel):
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
-    email: Optional[EmailStr] = None
-    phone: Optional[str] = None
+# class BookUpdate(BaseModel):
+#     first_name: Optional[str] = None
+#     last_name: Optional[str] = None
+#     email: Optional[EmailStr] = None
+#     phone: Optional[str] = None
 
 # ----------------- Translation schemas -----------------
 
