@@ -24,8 +24,7 @@ Code Explanation:
 router = APIRouter(prefix="/Books", tags=["Books"])
 
 @router.post("/BookUplaod", response_model=BookOut)
-def upload_book(book: BookCreate, db: Session=Depends(get_db),
-                current_user: models.User=Depends(get_current_user)):
+def upload_book(book: BookCreate, db: Session=Depends(get_db)):
 
     print ('inside upload_book')
 
@@ -50,11 +49,15 @@ def upload_book(book: BookCreate, db: Session=Depends(get_db),
 
         # Add this book to `uploaded_books` table
 
-        uploaded_book_dict = {'user_id': current_user.id, 'book_id':new_book.id}
+        uploaded_book_dict = {'user_id': 1, 'book_id':new_book.id}
         new_upload = models.UploadedBooks(**uploaded_book_dict)
+        print ('after creating new_upload', new_upload)
         db.add(new_upload)
+        print ('after adding new_upload')
         db.commit()
+        print ('after comitting new_uplaod')
         db.refresh(new_upload)
+        print ('after refreshing new_uplaod')
 
         return new_book
     except Exception as e:
@@ -86,11 +89,10 @@ def get_books(search: str = "", filter: str="", db: Session = Depends(get_db)):
 
 
 @router.post('/')
-def toggle_favorite(book_id: int, db: Session=Depends(get_db),
-                current_user: models.User=Depends(get_current_user)):
+def toggle_favorite(book_id: int, db: Session=Depends(get_db)):
     # Check if already favorited
     existing = db.query(models.FavoriteBooks).filter(
-        models.FavoriteBooks.user_id == current_user.id,
+        models.FavoriteBooks.user_id == 1,
         models.FavoriteBooks.book_id == book_id
     ).first()
 
@@ -101,7 +103,7 @@ def toggle_favorite(book_id: int, db: Session=Depends(get_db),
         return {"favorited": False}
     else:
         # Add favorite
-        fav = models.FavoriteBooks(UserID=current_user.id, BookID=book_id)
+        fav = models.FavoriteBooks(user_id=1, book_id=book_id)
         db.add(fav)
         db.commit()
         return {"favorited": True}

@@ -1,5 +1,5 @@
 CREATE TABLE users (
-    id INTEGER NOT NULL,
+    id SERIAL NOT NULL,
     first_name VARCHAR NOT NULL,
     last_name VARCHAR NOT NULL,
     username VARCHAR NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE books (
-    id INTEGER NOT NULL,
+    id SERIAL NOT NULL ,
     name VARCHAR NOT NULL,
     category VARCHAR NOT NULL,
     author VARCHAR,
@@ -19,7 +19,7 @@ CREATE TABLE books (
 );
 
 CREATE TABLE translations (
-    id INTEGER NOT NULL,
+    id SERIAL NOT NULL,
     book_id INTEGER,
     user_id INTEGER,
     upload_date DATE NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE translations (
 );
 
 CREATE TABLE reviews (
-    id INTEGER NOT NULL,
+    id SERIAL NOT NULL,
     translation_id INTEGER,
     user_id INTEGER,
     date_issued DATE NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE reviews (
 );
 
 CREATE TABLE favorite_books (
-    id INTEGER NOT NULL,
+    id SERIAL NOT NULL,
     user_id INTEGER,
     book_id INTEGER,
     CONSTRAINT pk_favorite_books_id PRIMARY KEY (id),
@@ -50,7 +50,7 @@ CREATE TABLE favorite_books (
 );
 
 CREATE TABLE uploaded_books (
-    id INTEGER NOT NULL,
+    id SERIAL NOT NULL,
     user_id INTEGER,
     book_id INTEGER,
     CONSTRAINT pk_uploaded_books_id PRIMARY KEY (id),
