@@ -9,8 +9,8 @@ class UserLogin(BaseModel):
 
 # ----------------- User schemas -----------------
 class UserBase(BaseModel):
-    first_name : str
-    last_name : str
+    full_name : str
+    username : str
     email : EmailStr
 
 class UserCreate(UserBase):
@@ -22,11 +22,13 @@ class UserOut(UserBase):
     class Config:
         from_attributes = True
 
-class UserUpdate(BaseModel):
-    first_name : Optional[str] = None
-    last_name : Optional[str] = None
-    email : Optional[EmailStr] = None
-    password : Optional[str] = None
+class ProfileUpdate(BaseModel):
+    full_name: Optional[str] = None
+    email: Optional[EmailStr] = None
+
+class PasswordUpdate(BaseModel):
+    current_password: str
+    new_password: str
 
 # ----------------- Book schemas -----------------
 

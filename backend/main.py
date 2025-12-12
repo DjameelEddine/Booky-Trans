@@ -1,10 +1,21 @@
 from fastapi import FastAPI
-import models
-from database import engine
-from routes import book
+from database import engine, Base
+from routes import profile, book
+from fastapi.middleware.cors import CORSMiddleware
 
-models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(title="Booky-Trans")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],      # for local testing
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
+# Create tables in the database
+Base.metadata.create_all(bind=engine)
+
+app.include_router(profile.router, prefix="/profile", tags=["profile"])
 app.include_router(book.router)
+

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BooklyTrans – Settings</title>
+  <link rel="stylesheet" href="profile.css" />
+</head>
+
+<body>
+  <!-- Top navigation bar -->
+  <header class="topnav">
+    <div class="brand">
+        <img class="logo" src="../assets/logo.svg" alt="logo" style="
+  width: 120px;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 0px 5px;
+"/>
+    </div>
+
+    <div class="top-links">
+      <span>Community</span>
+      <span>How it works</span>
+      <span>Contact us</span>
+    </div>
+
+    <div class="topnav-right">
+    
+      <button class="upload-btn" type="button">Upload a book</button>
+       <img class="avatar" src="../assets/profile.svg" alt="User avatar" />
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div class="card-wrapper">
+      <!-- Left sidebar -->
+      <aside class="sidebar">
+        <a href="profile.html" class="side-item">
+          <span class="side-icon">👤</span>
+          <span>Profile</span>
+        </a>
+
+        <div class="side-item active">
+          <span class="side-icon">⚙️</span>
+          <span>Settings</span>
+        </div>
+
+        <div class="side-item logout" onclick="logout()">
+  <span class="side-icon">⏻</span>
+  <span>Log out</span>
+</div>
+
+      </aside>
+
+      <!-- Right content area -->
+      <section class="content-area">
+        <div class="settings-main-layout">
+          <!-- Account / Security tabs -->
+          <div class="settings-tabs">
+            <div class="settings-tab active">Account</div>
+            <a href="security.html" class="settings-tab">Security</a>
+          </div>
+
+          <!-- Settings card -->
+          <div class="settings-card">
+            <!-- Username + email in 2 columns -->
+            <div class="settings-row-2col">
+              <div>
+                <label>Username</label>
+                <input id="nameField" type="text" value="" />
+              </div>
+              <div>
+                <label>Email address</label>
+                <input id="emailField" type="email" value="" />
+              </div>
+            </div>
+
+            <!-- Biography (frontend only for now) -->
+            <div class="settings-row">
+              <label>Biography</label>
+              <textarea id="bioField" placeholder="Short bio..."></textarea>
+            </div>
+
+            <!-- Avatar + change picture -->
+           
+  <div class="settings-avatar-row">
+  <div class="settings-avatar">
+    <img src="../assets/profile.svg" alt="Profile" style="
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    ">
+  </div>
+   <button class="save-btn" type="button" onclick="openAvatarPicker()">Change picture</button>
+</div>
+
+  <input id="avatarFile" type="file" accept="image/*" style="display:none;" />
+</div>
+
+             
+              <!-- hidden file input -->
+              <input id="avatarFile" type="file" accept="image/*" style="display:none;" />
+            </div>
+
+            <!-- Buttons -->
+            <div class="settings-actions">
+              <button class="cancel-btn" type="button" onclick="loadProfile()">Cancel</button>
+              <button class="save-btn" type="button" onclick="saveAccount()">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const API_BASE = "http://127.0.0.1:8000";
+
+// later you will set this from /login resDYFNR
+let ACCESS_TOKEN = null;
+
+function setToken(token) {
+  ACCESS_TOKEN = token;
+}
+
+function authHeaders() {
+  return ACCESS_TOKEN
+    ? { "Authorization": `Bearer ${ACCESS_TOKEN}` }
+    : {};
+}
+  function logout() {
+    setToken(null);
+    window.location.href = "login.html"; // change to your real login/landing page
+  }
+
+  // call this when page loads
+  loadStoredToken();
+async function loadProfile() {
+  try {
+    const res = await fetch(`${API_BASE}/profile/me`, {
+      headers: {
+        ...authHeaders()
+      }
+    });
+    if (!res.ok) {
+      alert("Failed to load profile: " + res.status);
+      return;
+    }
+    const data = await res.json();
+    document.getElementById("nameField").value = data.first_name || "";
+    document.getElementById("emailField").value = data.email || "";
+  } catch (err) {
+    alert("Error loading profile");
+    console.error(err);
+  }
+}
+
+async function saveAccount() {
+  try {
+    const body = {
+      first_name: document.getElementById("nameField").value,
+      last_name: "", // will be real later
+      email: document.getElementById("emailField").value
+    };
+    const res = await fetch(`${API_BASE}/profile/me`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        ...authHeaders()
+      },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      alert("Failed to save: " + text);
+      return;
+    }
+    alert("Account saved!");
+  } catch (err) {
+    alert("Error saving profile");
+    console.error(err);
+  }
+}
+function openAvatarPicker() {
+  const input = document.getElementById("avatarFile");
+  if (!input) {
+    console.error("avatarFile input not found");
+    return;
+  }
+  input.click();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const fileInput = document.getElementById("avatarFile");
+  if (!fileInput) {
+    console.error("avatarFile input not found on DOMContentLoaded");
+    return;
+  }
+
+  fileInput.addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const avatar = document.getElementById("avatarCircle");
+      if (!avatar) {
+        console.error("avatarCircle not found");
+        return;
+      }
+      avatar.style.backgroundImage = `url(${e.target.result})`;
+      avatar.style.backgroundSize = "cover";
+      avatar.style.backgroundPosition = "center";
+      avatar.textContent = "";
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // also load profile when page opens
+  loadProfile();
+});
+
+
+  </script>
+</body>
+</html>

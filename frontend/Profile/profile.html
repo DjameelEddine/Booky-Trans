@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html>
 <head>
     <meta charset='utf-8'>
@@ -259,5 +260,189 @@
     </footer>
 
     <script src="profile.js"></script>
+=======
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BooklyTrans – Profile</title>
+  <link rel="stylesheet" href="profile.css" />
+</head>
+<body>
+ <header class="topnav">
+  <div class="brand">
+      <img class="logo" src="../assets/logo.svg" alt="logo" style="
+  width: 120px;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 0px 5px;
+"/>
+   
+  </div>
+
+
+  <div class="top-links">
+    <span>Community</span>
+    <span>How it works</span>
+    <span>Contact us</span>
+  </div>
+
+  <div class="topnav-right">
+   
+    <button class="upload-btn" type="button">upload book</button>
+
+    <img class="avatar" src="../assets/profile.svg" alt="User avatar" />
+  </div>
+</header>
+
+
+  
+  <main class="main-container">
+    <div class="card-wrapper">
+    
+      <aside class="sidebar">
+        <div class="side-item active">
+          <span class="side-icon">👤</span>
+          <span>Profile</span>
+        </div>
+        <a href="settings.html" class="side-item">
+          <span class="side-icon">⚙️</span>
+          <span>Settings</span>
+        </a>
+       <div class="side-item logout" onclick="logout()">
+  <span class="side-icon">⏻</span>
+  <span>Log out</span>
+</div>
+
+
+      </aside>
+
+
+      <section class="content-area">
+        <div class="profile-layout">
+          <!-- user card -->
+          <div class="profile-card">
+            <img class="profile-avatar" src="../assets/profile.svg" alt="Isabella" />
+            <h2>Isabella Evans</h2>
+            <p>Professional translator and avid reader.</p>
+            <p>Focused on fiction and self‑help books.</p>
+          </div>
+
+          <!-- books area -->
+          <div class="profile-books-main">
+            <div class="profile-tabs">
+              <button class="tab active" data-tab="uploaded" onclick="switchBooksTab('uploaded')">
+                Uploaded books
+              </button>
+              <button class="tab" data-tab="translated" onclick="switchBooksTab('translated')">
+                Translated books
+              </button>
+              <button class="tab" data-tab="favorite" onclick="switchBooksTab('favorite')">
+                Favorite books
+              </button>
+            </div>
+
+            <div class="book-grid" id="books-grid">
+              <!-- book 1 -->
+              <article class="book-card" data-type="uploaded">
+                <img class="book-img" src="../assets/book1.png" alt="Let Them Home" />
+                <h3 class="book-title">Let Them Home</h3>
+                <p class="book-author">By John Carter</p>
+                <p class="book-meta">Spanish->English</p>
+                <button class="book-btn" onclick="handlePreview('Let Them Home')">Preview</button>
+              </article>
+
+              
+              <article class="book-card" data-type="uploaded">
+                <img class="book-img" src="../assets/book2.png" alt="Let Them Home" />
+                <h3 class="book-title">Let Them Home</h3>
+                <p class="book-author">By John Carter</p>
+                <p class="book-meta">French-> English</p>
+                <button class="book-btn" onclick="handlePreview('Let Them Home')">Preview</button>
+              </article>
+
+              <article class="book-card" data-type="translated">
+                <img class="book-img" src="../assets/book1.png" alt="Rising Sun" />
+                <h3 class="book-title">Rising Sun</h3>
+                <p class="book-author">By A. Smith</p>
+                <p class="book-meta">French ->Spanish</p>
+                <button class="book-btn" onclick="handlePreview('Rising Sun')">Preview</button>
+              </article>
+
+              <article class="book-card" data-type="favorite">
+                <img class="book-img" src="../assets/book2.png" alt="Rising Sun" />
+                <h3 class="book-title">Rising Sun</h3>
+                <p class="book-author">By A. Smith</p>
+                <p class="book-meta">English ->Spanish</p>
+                <button class="book-btn" onclick="handlePreview('Rising Sun')">Preview</button>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+  const API_BASE = "http://127.0.0.1:8000";
+
+  // token management
+  let ACCESS_TOKEN = null;
+
+  function setToken(token) {
+    ACCESS_TOKEN = token;
+    if (token) {
+      localStorage.setItem("access_token", token);
+    } else {
+      localStorage.removeItem("access_token");
+    }
+  }
+
+  function loadStoredToken() {
+    const t = localStorage.getItem("access_token");
+    if (t) {
+      ACCESS_TOKEN = t;
+    }
+  }
+
+  function authHeaders() {
+    return ACCESS_TOKEN
+      ? { "Authorization": `Bearer ${ACCESS_TOKEN}` }
+      : {};
+  }
+
+  function logout() {
+    setToken(null);
+    // redirect to your real login or landing page
+    window.location.href = "login.html";
+  }
+
+  // tabs logic
+  function switchBooksTab(name) {
+    document.querySelectorAll(".tab").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.tab === name);
+    });
+
+    document.querySelectorAll(".book-card").forEach(card => {
+      const type = card.getAttribute("data-type");
+      card.style.display = name === "uploaded" || type === name ? "flex" : "none";
+    });
+  }
+
+  function handlePreview(title) {
+    alert("Preview " + title);
+  }
+
+  // init
+  document.addEventListener("DOMContentLoaded", () => {
+    loadStoredToken();  // in future, will restore token if user is logged in
+    // you can call switchBooksTab("uploaded") here if needed
+    switchBooksTab("uploaded");
+  });
+</script>
+
+ 
+  </script>
+>>>>>>> 72edfba8c140e1bd4dba53b6527ac62bd21804fc
 </body>
 </html>
