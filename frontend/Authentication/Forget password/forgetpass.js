@@ -34,53 +34,145 @@ function showStep(stepId) {
 
 let userEmail = '';
 
-document.getElementById('emailForm').addEventListener('submit', function(e) {
+// Step 1: Request reset code
+document.getElementById('emailForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     userEmail = document.getElementById('email').value;
+    const submitButton = e.target.querySelector('button[type="submit"]');
     
-    console.log('Sending verification code to:', userEmail);
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending code...';
     
-    alert('Verification code sent to ' + userEmail);
-    
-    showStep('codeStep');
-});
-
-document.getElementById('codeForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const code = document.getElementById('verificationCode').value;
-    
-    console.log('Verifying code:', code);
-    
-    if (code.length >= 4) {
-        alert('Code verified successfully!');
-        showStep('resetStep');
-    } else {
-        alert('Invalid verification code!');
+    try {
+        const response = await fetch(getApiUrl(API_CONFIG.ENDPOINTS.FORGOT_PASSWORD), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: userEmail })
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+            showError(data.detail || 'Failed to send verification code');
+            submitButton.disabled = false;
+            submitButton.textContent = 'Send Code';
+            return;
+        }
+        
+        showSuccess('Verification code sent! Check your email (or console in development)');
+        showStep('codeStep');
+        
+    } catch (error) {
+        console.error('Error:', error);
+        showError('Network error. Please try again.');
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send Code';
     }
 });
 
-document.getElementById('resetForm').addEventListener('submit', function(e) {
+// Step 2: Verify code
+document.getElementById('codeForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
+    const code = document.getElementById('verificationCode').value;
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    
+    if (code.length < 6) {
+        showError('Please enter a valid 6-digit code');
+        return;
+    }
+    
+    submitButton.disabled = true;
+    submitButton.textContent = 'Verifying...';
+    
+    try {
+        const response = await fetch(getApiUrl(API_CONFIG.ENDPOINTS.VERIFY_CODE), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: userEmail,
+                code: code
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+            showError(data.detail || 'Invalid verification code');
+            submitButton.disabled = false;
+            submitButton.textContent = 'Verify Code';
+            return;
+        }
+        
+        showSuccess('Code verified successfully!');
+        showStep('resetStep');
+        
+    } catch (error) {
+        console.error('Error:', error);
+        showError('Network error. Please try again.');
+        submitButton.disabled = false;
+        submitButton.textContent = 'Verify Code';
+    }
+});
+
+// Step 3: Reset password
+document.getElementById('resetForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const code = document.getElementById('verificationCode').value;
     const newPassword = document.getElementById('newPassword').value;
     const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+    const submitButton = e.target.querySelector('button[type="submit"]');
     
     if (newPassword.length < 8) {
-        alert('Password must be at least 8 characters long!');
+        showError('Password must be at least 8 characters long!');
         return;
     }
     
     if (newPassword !== confirmNewPassword) {
-        alert('Passwords do not match!');
+        showError('Passwords do not match!');
         return;
     }
     
-    console.log('Resetting password for:', userEmail);
-    console.log('New password:', newPassword);
+    submitButton.disabled = true;
+    submitButton.textContent = 'Resetting password...';
     
-    alert('Password reset successfully!');
-    
-    window.location.href = '../Login/login.html';
+    try {
+        const response = await fetch(getApiUrl(API_CONFIG.ENDPOINTS.RESET_PASSWORD), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: userEmail,
+                code: code,
+                new_password: newPassword
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+            showError(data.detail || 'Failed to reset password');
+            submitButton.disabled = false;
+            submitButton.textContent = 'Reset Password';
+            return;
+        }
+        
+        showSuccess('Password reset successfully! Redirecting to login...');
+        setTimeout(() => {
+            window.location.href = '../Login/login.html';
+        }, 2000);
+        
+    } catch (error) {
+        console.error('Error:', error);
+        showError('Network error. Please try again.');
+        submitButton.disabled = false;
+        submitButton.textContent = 'Reset Password';
+    }
 });

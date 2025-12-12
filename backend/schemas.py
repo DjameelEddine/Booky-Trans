@@ -30,6 +30,20 @@ class PasswordUpdate(BaseModel):
     current_password: str
     new_password: str
 
+# ----------------- Password Reset schemas -----------------
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+class VerifyCodeRequest(BaseModel):
+    email: EmailStr
+    code: str
+
+class ResetPasswordRequest(BaseModel):
+    email: EmailStr
+    code: str
+    new_password: str
+
 # ----------------- Book schemas -----------------
 
 class BookCreate(BaseModel):

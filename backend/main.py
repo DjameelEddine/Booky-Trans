@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from database import engine, Base
-from routes import profile, book
+from routes import profile, book, auth
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -19,3 +19,4 @@ Base.metadata.create_all(bind=engine)
 app.include_router(profile.router, prefix="/profile", tags=["profile"])
 app.include_router(book.router)
 
+app.include_router(auth.router)
