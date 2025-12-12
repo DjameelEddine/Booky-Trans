@@ -19,7 +19,7 @@
 			<h1>Translation Workspace</h1>
 
 			<div class="workspace-grid" style="position:relative;">
-				<div class="book-card" style="position:relative;">
+				<div class="book-card" data-book-id="1" style="position:relative;">
 					<img src="../../assets/icons/heart-icon.svg" alt="favorite" class="heart-icon" style="position:absolute;top:18px;right:18px;width:38px;z-index:2;">
 					<h3>The Silent Patient</h3>
 					<p class="by">By Andrew Ross</p>
@@ -37,10 +37,11 @@
 
 				<aside class="upload-card">
 					<h3>Add Your Translation</h3>
-					<div class="upload-drop">
+					<div class="upload-drop" id="upload-drop">
 						<img src="../../assets/icons/upload-icon.svg" alt="upload" class="icon" style="width:38px;display:block;margin:0 auto 8px;">
 						Click To Upload your file<br><small>PDF or TXT</small>
 					</div>
+					<input type="file" id="upload-input" accept=".pdf,.txt" style="display:none;" />
 					<button class="submit-translation">Submit translation</button>
 				</aside>
 			</div>
@@ -50,173 +51,16 @@
 			<h2>Community Translations</h2>
 			<p class="subtitle">Review and rate translations for “The Silent Patient” into French</p>
 
-			<!-- translation card-->
-			<div class="translation-card">
-				<div class="avatar"></div>
-				<div class="card-body">
-					<div class="card-header">
-						<div>
-							<strong>Isabella Zoe</strong>
-							<div class="date">May 14 2025</div>
-						</div>
-					</div>
-
-					<div class="file-row">
-						<div class="file-name">
-							<img src="../../assets/icons/file-icon.svg" alt="file" class="file-icon" style="vertical-align:middle;width:22px;margin-right:10px;">
-							El_Paciente_Silencioso_Mateo.pdf
-						</div>
-						<button class="download small">
-							<img src="../../assets/icons/download-icon.svg" alt="download" class="icon" style="vertical-align:middle;width:18px;margin-right:6px;">
-							download
-						</button>
-					</div>
-
-					<div class="rating-row">
-						<div class="avg-stars">★★★★☆</div>
-						<div class="avg">Avg Rating: 4.5</div>
-						<div class="actions">
-							<button class="rate-btn">
-								<img src="../../assets/icons/rate-icon.svg" alt="rate" class="icon" style="vertical-align:middle;width:18px;margin-right:4px;">
-								rate
-							</button>
-							<button class="comment-btn">
-								<img src="../../assets/icons/commet-icon.svg" alt="comment" class="icon" style="vertical-align:middle;width:18px;margin-right:4px;">
-								comment
-							</button>
-						</div>
-					</div>
-
-					<!--review form (hidden) -->
-					<div class="review-form hidden">
-						<label>Your rating</label>
-						<div class="stars">
-							<span class="star" data-value="1">★</span>
-							<span class="star" data-value="2">★</span>
-							<span class="star" data-value="3">★</span>
-							<span class="star" data-value="4">★</span>
-							<span class="star" data-value="5">☆</span>
-						</div>
-						<button class="submit-rating">Submit rating</button>
-					</div>
-
-					<!-- omment form (hidden) -->
-					<div class="comment-form hidden">
-						<label>Add a comment</label>
-						<textarea placeholder="Write your comment" rows="3"></textarea>
-						<button class="submit-comment">Submit comment</button>
-					</div>
-				</div>
-			</div>
-
-			<div class="translation-card">
-				<div class="avatar"></div>
-				<div class="card-body">
-					<div class="card-header">
-						<div>
-							<strong>Isabella Zoe</strong>
-							<div class="date">May 14 2025</div>
-						</div>
-					</div>
-					<div class="file-row">
-						<div class="file-name">
-							<img src="../../assets/icons/file-icon.svg" alt="file" class="file-icon" style="vertical-align:middle;width:22px;margin-right:10px;">
-							El_Paciente_Silencioso_Mateo.pdf
-						</div>
-						<button class="download small">
-							<img src="../../assets/icons/download-icon.svg" alt="download" class="icon" style="vertical-align:middle;width:18px;margin-right:6px;">
-							download
-						</button>
-					</div>
-					<div class="rating-row">
-						<div class="avg-stars">★★★★☆</div>
-						<div class="avg">Avg Rating: 4.5</div>
-						<div class="actions">
-							<button class="rate-btn">
-								<img src="../../assets/icons/rate-icon.svg" alt="rate" class="icon" style="vertical-align:middle;width:18px;margin-right:4px;">
-								rate
-							</button>
-							<button class="comment-btn">
-								<img src="../../assets/icons/commet-icon.svg" alt="comment" class="icon" style="vertical-align:middle;width:18px;margin-right:4px;">
-								comment
-							</button>
-						</div>
-					</div>
-					<div class="review-form hidden">
-						<label>Your rating</label>
-						<div class="stars">
-							<span class="star" data-value="1">★</span>
-							<span class="star" data-value="2">★</span>
-							<span class="star" data-value="3">★</span>
-							<span class="star" data-value="4">★</span>
-							<span class="star" data-value="5">☆</span>
-						</div>
-						<button class="submit-rating">Submit rating</button>
-					</div>
-					<div class="comment-form hidden">
-						<label>Add a comment</label>
-						<textarea placeholder="Write your comment" rows="3"></textarea>
-						<button class="submit-comment">Submit comment</button>
-					</div>
-				</div>
-			</div>
-
-			<div class="translation-card">
-				<div class="avatar"></div>
-				<div class="card-body">
-					<div class="card-header">
-						<div>
-							<strong>Isabella Zoe</strong>
-							<div class="date">May 14 2025</div>
-						</div>
-					</div>
-					<div class="file-row">
-						<div class="file-name">
-							<img src="../../assets/icons/file-icon.svg" alt="file" class="file-icon" style="vertical-align:middle;width:22px;margin-right:10px;">
-							El_Paciente_Silencioso_Mateo.pdf
-						</div>
-						<button class="download small">
-							<img src="../../assets/icons/download-icon.svg" alt="download" class="icon" style="vertical-align:middle;width:18px;margin-right:6px;">
-							download
-						</button>
-					</div>
-					<div class="rating-row">
-						<div class="avg-stars">★★★★☆</div>
-						<div class="avg">Avg Rating: 4.5</div>
-						<div class="actions">
-							<button class="rate-btn">
-								<img src="../../assets/icons/rate-icon.svg" alt="rate" class="icon" style="vertical-align:middle;width:18px;margin-right:4px;">
-								rate
-							</button>
-							<button class="comment-btn">
-								<img src="../../assets/icons/commet-icon.svg" alt="comment" class="icon" style="vertical-align:middle;width:18px;margin-right:4px;">
-								comment
-							</button>
-						</div>
-					</div>
-					<div class="review-form hidden">
-						<label>Your rating</label>
-						<div class="stars">
-							<span class="star" data-value="1">★</span>
-							<span class="star" data-value="2">★</span>
-							<span class="star" data-value="3">★</span>
-							<span class="star" data-value="4">★</span>
-							<span class="star" data-value="5">☆</span>
-						</div>
-						<button class="submit-rating">Submit rating</button>
-					</div>
-					<div class="comment-form hidden">
-						<label>Add a comment</label>
-						<textarea placeholder="Write your comment" rows="3"></textarea>
-						<button class="submit-comment">Submit comment</button>
-					</div>
-				</div>
-			</div>
+			<!-- dynamic translations list -->
+			<div id="translations-list"></div>
 
 		</section>
 	</main>
 
 	<script src="../../components/header/header.js" defer></script>
+	<!-- API config and auth helpers -->
+	<script src="../../config.js"></script>
+	<script src="../../utils/auth.js"></script>
 	<script src="BookTranslate.js"></script>
 </body>
 </html>

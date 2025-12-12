@@ -1,14 +1,16 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
-from database import Base
+from .database import Base
+
 
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
-    full_name = Column(String, nullable=False)
+    first_name = Column(String, nullable=False)
+    last_name = Column(String, nullable=False)
     username = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
+
 
 class Book(Base):
     __tablename__ = "books"
@@ -18,6 +20,9 @@ class Book(Base):
     author = Column(String)
     language = Column(String, nullable=False)
     target_language = Column(String, nullable=False)
+    file_path = Column(String, nullable=True)
+
+
 
 class Translation(Base):
     __tablename__ = "translations"
@@ -25,6 +30,8 @@ class Translation(Base):
     book_id = Column(Integer, ForeignKey("books.id", ondelete='CASCADE'))
     user_id = Column(Integer, ForeignKey("users.id", ondelete='CASCADE'))
     upload_date = Column(Date, nullable=False)
+    file_path = Column(String, nullable=True)
+
 
 class Review(Base):
     __tablename__ = "reviews"
@@ -35,11 +42,13 @@ class Review(Base):
     comment = Column(String)
     rating = Column(Integer)
 
+
 class FavoriteBooks(Base):
     __tablename__ = 'favorite_books'
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'))
     book_id = Column(Integer, ForeignKey('books.id', ondelete='CASCADE'))
+
 
 class UploadedBooks(Base):
     __tablename__ = 'uploaded_books'

@@ -52,6 +52,7 @@ class BookCreate(BaseModel):
     author: Optional[str] = None
     language: str
     target_language: str
+    file_path: str
 
 class BookOut(BookCreate):
     id: int
@@ -67,8 +68,9 @@ class BookOut(BookCreate):
 
 class TranslationCreate(BaseModel):
     book_id: int
-    user_id: int
     upload_date: datetime.date
+    file_path: str
+
 
 class TranslationOut(TranslationCreate):
     id: int
@@ -81,13 +83,18 @@ class TranslationOut(TranslationCreate):
 #     case: Optional[str] = None
 
 # ------------------ Review ------------------
-
 class ReviewBase(BaseModel):
-    user_id: int
     translation_id: int
+    user_id: Optional[int] = None
     date_issued: datetime.date
     rating: Literal[1, 2, 3, 4, 5]
     comment: Optional[str] = None
+
+
+class ReviewUpdate(BaseModel):
+    rating: Optional[Literal[1, 2, 3, 4, 5]] = None
+    comment: Optional[str] = None
+
     
 
 # ------------------ JWT Tokens ------------------
