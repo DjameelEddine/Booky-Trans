@@ -26,33 +26,76 @@ function togglePassword(fieldId) {
     }
 }
 
-document.getElementById('signupForm').addEventListener('submit', function(e) {
+document.getElementById('signupForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
+    const fullName = document.getElementById('fullName').value;
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
     const termsAccepted = document.getElementById('terms').checked;
+    const submitButton = e.target.querySelector('.create-account-btn');
     
+    // Client-side validation
     if (password.length < 8) {
-        alert('Password must be at least 8 characters long!');
+        showError('Password must be at least 8 characters long!');
         return;
     }
     
     if (password !== confirmPassword) {
-        alert('Passwords do not match!');
+        showError('Passwords do not match!');
         return;
     }
     
     if (!termsAccepted) {
-        alert('Please accept the Terms of Service and Privacy Policy');
+        showWarning('Please accept the Terms of Service and Privacy Policy');
         return;
     }
     
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('userEmail', email);
-    localStorage.setItem('username', username);
+    // Disable button and show loading state
+    submitButton.disabled = true;
+    submitButton.textContent = 'Creating account...';
     
-    window.location.href = '../../Profile/profile.html';
+    try {
+        // Call backend API
+        const response = await fetch(getApiUrl(API_CONFIG.ENDPOINTS.REGISTER), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                full_name: fullName,
+                username: username,
+                email: email,
+                password: password
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+            // Handle errors from backend
+            if (response.status === 400) {
+                showError(data.detail || 'Registration failed. Please check your information.');
+            } else {
+                showError('An error occurred during registration. Please try again.');
+            }
+            submitButton.disabled = false;
+            submitButton.textContent = 'Create account';
+            return;
+        }
+        
+        // Registration successful
+        showSuccess('Account created successfully! Redirecting to login...');
+        setTimeout(() => {
+            window.location.href = '../Login/login.html';
+        }, 1500);
+        
+    } catch (error) {
+        console.error('Registration error:', error);
+        showError('Network error. Please check your connection and try again.');
+        submitButton.disabled = false;
+        submitButton.textContent = 'Create account';
+    }
 });
