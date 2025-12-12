@@ -21,7 +21,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
 def create_access_token(payload: dict):
     payload_to_encode = payload.copy()
 
-    # add expiry date to payload's items
+ 
     expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     payload_to_encode.update({"exp": expire})
 
@@ -33,16 +33,15 @@ def create_access_token(payload: dict):
 def verify_access_token(token: str, credentials_exception):
 
     try:
-        # checks the signature validity and expiration and returns the payload dict
+       
         payload = jwt.decode(token, SECRET_KEY, [ALGORITHM])
 
-        # retrieve id since it's the only component of the token
         id = payload.get('user_id')
 
         if not id:
             raise credentials_exception
         
-        # pydantic model to validate token data (payload)
+       
         token_data = schemas.TokenData(id=id)
 
     except JWTError:
@@ -51,9 +50,7 @@ def verify_access_token(token: str, credentials_exception):
     return token_data
     
 
-# dependency function to get the currently logged in user
-# it automatically extracts the token from the authorization header
-# "WWW-Authenticate": "Bearer" informs the client to send a bearer token
+
 def get_current_user(token: str=Depends(oauth2_scheme), db:Session=Depends(get_db)):
 
     cred_exc = HTTPException(status_code=401, detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})

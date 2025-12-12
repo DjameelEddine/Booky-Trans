@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>BooklyTrans – Settings</title>
+  <!-- FIXED CSP - Allows API calls + scripts -->
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; connect-src *; img-src * data: blob:;">
   <link rel="stylesheet" href="profile.css" />
 </head>
 
@@ -26,7 +28,6 @@
     </div>
 
     <div class="topnav-right">
-    
       <button class="upload-btn" type="button">Upload a book</button>
        <img class="avatar" src="../assets/profile.svg" alt="User avatar" />
     </div>
@@ -68,7 +69,7 @@
             <div class="settings-row-2col">
               <div>
                 <label>Username</label>
-                <input id="nameField" type="text" value="" />
+                <input id="usernameField" type="text" value="" />
               </div>
               <div>
                 <label>Email address</label>
@@ -83,32 +84,29 @@
             </div>
 
             <!-- Avatar + change picture -->
-           
-  <div class="settings-avatar-row">
+          <div class="settings-avatar-row">
   <div class="settings-avatar">
-    <img src="../assets/profile.svg" alt="Profile" style="
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-    ">
+     <img src="../assets/profile.svg" alt="Profile" style="
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+     ">
   </div>
-   <button class="save-btn" type="button" onclick="openAvatarPicker()">Change picture</button>
+  <button class="save-btn" type="button" onclick="openAvatarPicker()">Change picture</button>
 </div>
 
-  <input id="avatarFile" type="file" accept="image/*" style="display:none;" />
-</div>
+<input id="avatarFile" type="file" accept="image/*" style="display:none;" />
+          </div>
+           
+            <!-- hidden file input -->
+            <input id="avatarFile2" type="file" accept="image/*" style="display:none;" />
+          </div>
 
-             
-              <!-- hidden file input -->
-              <input id="avatarFile" type="file" accept="image/*" style="display:none;" />
-            </div>
-
-            <!-- Buttons -->
-            <div class="settings-actions">
-              <button class="cancel-btn" type="button" onclick="loadProfile()">Cancel</button>
-              <button class="save-btn" type="button" onclick="saveAccount()">Save changes</button>
-            </div>
+          <!-- Buttons -->
+          <div class="settings-actions">
+            <button class="cancel-btn" type="button" onclick="loadProfile()">Cancel</button>
+            <button class="save-btn" type="button" onclick="saveAccount()">Save changes</button>
           </div>
         </div>
       </section>
@@ -118,111 +116,161 @@
   <script>
     const API_BASE = "http://127.0.0.1:8000";
 
-// later you will set this from /login resDYFNR
-let ACCESS_TOKEN = null;
+    // later you will set this from /login response
+    let ACCESS_TOKEN = localStorage.getItem('access_token') || null;
 
-function setToken(token) {
-  ACCESS_TOKEN = token;
-}
-
-function authHeaders() {
-  return ACCESS_TOKEN
-    ? { "Authorization": `Bearer ${ACCESS_TOKEN}` }
-    : {};
-}
-  function logout() {
-    setToken(null);
-    window.location.href = "login.html"; // change to your real login/landing page
-  }
-
-  // call this when page loads
-  loadStoredToken();
-async function loadProfile() {
-  try {
-    const res = await fetch(`${API_BASE}/profile/me`, {
-      headers: {
-        ...authHeaders()
+    function setToken(token) {
+      ACCESS_TOKEN = token;
+      if (token) {
+        localStorage.setItem('access_token', token);
+      } else {
+        localStorage.removeItem('access_token');
       }
-    });
-    if (!res.ok) {
-      alert("Failed to load profile: " + res.status);
-      return;
     }
-    const data = await res.json();
-    document.getElementById("nameField").value = data.first_name || "";
-    document.getElementById("emailField").value = data.email || "";
-  } catch (err) {
-    alert("Error loading profile");
-    console.error(err);
-  }
-}
 
-async function saveAccount() {
-  try {
-    const body = {
-      first_name: document.getElementById("nameField").value,
-      last_name: "", // will be real later
-      email: document.getElementById("emailField").value
-    };
-    const res = await fetch(`${API_BASE}/profile/me`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        ...authHeaders()
-      },
-      body: JSON.stringify(body)
-    });
-    if (!res.ok) {
-      const text = await res.text();
-      alert("Failed to save: " + text);
-      return;
+    function authHeaders() {
+      return ACCESS_TOKEN
+        ? { "Authorization": `Bearer ${ACCESS_TOKEN}` }
+        : {};
     }
-    alert("Account saved!");
-  } catch (err) {
-    alert("Error saving profile");
-    console.error(err);
-  }
-}
-function openAvatarPicker() {
-  const input = document.getElementById("avatarFile");
-  if (!input) {
-    console.error("avatarFile input not found");
-    return;
-  }
-  input.click();
+
+  function logout() {
+  setToken(null);
+  window.location.href = "../Home/home.html";  
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const fileInput = document.getElementById("avatarFile");
-  if (!fileInput) {
-    console.error("avatarFile input not found on DOMContentLoaded");
-    return;
-  }
+    function loadStoredToken() {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        ACCESS_TOKEN = token;
+      }
+    }
 
-  fileInput.addEventListener("change", function (event) {
-    const file = event.target.files[0];
-    if (!file) return;
+    // =
+    function quickLogin() {
+      fetch(`${API_BASE}/login`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          username: 'admin@example.com',  
+          password: 'admin123'            
+        })
+      })
+      .then(r=>r.json())
+      .then(data => {
+        if (data.access_token) {
+          setToken(data.access_token);
+          alert('LOGIN SUCCESS! Token saved - Now Save works!');
+          console.log('Token:', data.access_token);
+        } else {
+          alert('Login failed: ' + JSON.stringify(data));
+        }
+      })
+      .catch(err => alert('Error: ' + err));
+    }
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const avatar = document.getElementById("avatarCircle");
-      if (!avatar) {
-        console.error("avatarCircle not found");
+
+    async function loadProfile() {
+      try {
+        const res = await fetch(`${API_BASE}/profile/me`, {
+          headers: {
+            ...authHeaders(),
+            'Content-Type': 'application/json'
+          }
+        });
+        if (!res.ok) {
+        if (res.status === 401) {
+          alert("Please log in first - Click F12 → Console → quickLogin()");
+          return;
+        }
+        alert("Failed to load profile: " + res.status);
+        return;
+        }
+        const data = await res.json();
+        document.getElementById("usernameField").value = data.username || "";
+        document.getElementById("emailField").value = data.email || "";
+      } catch (err) {
+        alert("Error loading profile");
+        console.error(err);
+      }
+    }
+
+    
+    async function saveAccount() {
+      try {
+        const body = {
+          username: document.getElementById("usernameField").value.trim(),
+          email: document.getElementById("emailField").value.trim()
+        };
+
+        if (!body.username || !body.email) {
+          alert("Please fill both username and email");
+          return;
+        }
+
+        const res = await fetch(`${API_BASE}/profile/me`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            ...authHeaders()
+          },
+          body: JSON.stringify(body)
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          alert("Failed to save: " + errorText + "\n\nCheck token: console.log(localStorage.getItem('access_token'))");
+          return;
+        }
+
+        const data = await res.json();
+        alert("✅ Account saved successfully!");
+        console.log("Saved profile:", data);
+      } catch (err) {
+        alert("Error saving profile: " + err.message);
+        console.error(err);
+      }
+    }
+
+    function openAvatarPicker() {
+      const input = document.getElementById("avatarFile");
+      if (!input) {
+        console.error("avatarFile input not found");
         return;
       }
-      avatar.style.backgroundImage = `url(${e.target.result})`;
-      avatar.style.backgroundSize = "cover";
-      avatar.style.backgroundPosition = "center";
-      avatar.textContent = "";
-    };
-    reader.readAsDataURL(file);
-  });
+      input.click();
+    }
 
-  // also load profile when page opens
-  loadProfile();
-});
+    // File upload handler
+    document.addEventListener("DOMContentLoaded", () => {
+      const fileInput = document.getElementById("avatarFile");
+      if (fileInput) {
+        fileInput.addEventListener("change", function (event) {
+          const file = event.target.files[0];
+          if (!file) return;
 
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            
+            const avatarImg = document.querySelector(".settings-avatar img");
+            if (avatarImg) {
+              avatarImg.src = e.target.result;
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+      }
 
+    
+      loadProfile();
+      
+  
+      const quickBtn = document.createElement('button');
+      quickBtn.innerText = ' Quick Login Test';
+      quickBtn.style.cssText = 'position:fixed;top:10px;right:10px;z-index:9999;padding:10px;background:#007bff;color:white;border:none;border-radius:5px;cursor:pointer;';
+      quickBtn.onclick = quickLogin;
+      document.body.appendChild(quickBtn);
+    });
   </script>
 </body>
 </html>
