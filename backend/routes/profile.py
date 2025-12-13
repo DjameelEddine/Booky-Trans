@@ -7,7 +7,7 @@ from schemas import UserOut, ProfileUpdate, PasswordUpdate
 from utils import verify_password, hash_password
 from oauth2 import get_current_user
 
-router = APIRouter()
+router = APIRouter(prefix="/profile", tags=["profile"])
 
 @router.get("/me", response_model=UserOut)
 def get_my_profile(

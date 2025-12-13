@@ -38,6 +38,8 @@ class BookCreate(BaseModel):
     author: Optional[str] = None
     language: str
     target_language: str
+    file_path: str
+    img_path: Optional[str] = None
 
 class BookOut(BookCreate):
     id: int
@@ -55,6 +57,7 @@ class TranslationCreate(BaseModel):
     book_id: int
     user_id: int
     upload_date: datetime.date
+    file_path: str
 
 class TranslationOut(TranslationCreate):
     id: int
@@ -65,15 +68,6 @@ class TranslationOut(TranslationCreate):
 #     date: Optional[datetime.date] = None
 #     time: Optional[datetime.time] = None
 #     case: Optional[str] = None
-
-# ------------------ Review ------------------
-
-class ReviewBase(BaseModel):
-    user_id: int
-    translation_id: int
-    date_issued: datetime.date
-    rating: Literal[1, 2, 3, 4, 5]
-    comment: Optional[str] = None
     
 
 # ------------------ JWT Tokens ------------------
@@ -86,3 +80,29 @@ class Token(BaseModel):
 # what payload data does the token embeds
 class TokenData(BaseModel):
     id : Optional[int] = None
+
+
+# ----------------- Password Reset schemas -----------------
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+class VerifyCodeRequest(BaseModel):
+    email: EmailStr
+    code: str
+
+class ResetPasswordRequest(BaseModel):
+    email: EmailStr
+    code: str
+    new_password: str
+
+
+# ------------------ Review ------------------
+class ReviewBase(BaseModel):
+    rating: Literal[1, 2, 3, 4, 5]
+    comment: Optional[str] = None
+
+
+class ReviewUpdate(BaseModel):
+    rating: Optional[Literal[1, 2, 3, 4, 5]] = None
+    comment: Optional[str] = None

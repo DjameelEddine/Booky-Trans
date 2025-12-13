@@ -18,6 +18,8 @@ class Book(Base):
     author = Column(String)
     language = Column(String, nullable=False)
     target_language = Column(String, nullable=False)
+    file_path = Column(String, nullable=False)
+    img_path = Column(String, nullable=True)
 
 class Translation(Base):
     __tablename__ = "translations"
@@ -25,6 +27,7 @@ class Translation(Base):
     book_id = Column(Integer, ForeignKey("books.id", ondelete='CASCADE'))
     user_id = Column(Integer, ForeignKey("users.id", ondelete='CASCADE'))
     upload_date = Column(Date, nullable=False)
+    file_path = Column(String, nullable=True)
 
 class Review(Base):
     __tablename__ = "reviews"

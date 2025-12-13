@@ -2,113 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>BooklyTrans – Settings</title>
+  <title>BooklyTrans – Security</title>
+  
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; connect-src *; img-src * data: blob:;">
   <link rel="stylesheet" href="profile.css" />
+  <link rel="stylesheet" href="../components/footer/footer.css">
+  <link rel="stylesheet" href="../components/header/header.css">
 </head>
 
 <body>
-  <!-- Top navigation bar -->
-  <header class="topnav">
-    <div class="brand">
-        <img class="logo" src="../assets/logo.svg" alt="logo" style="
-  width: 120px;
-  height: 40px;
-  margin-top: 10px;
-  border-radius: 5px;
-  padding: 0px 5px;
-"/>
-    </div>
-
-    <div class="top-links">
-      <span>Community</span>
-      <span>How it works</span>
-      <span>Contact us</span>
-    </div>
-
-    <div class="topnav-right">
-    
-      <button class="upload-btn" type="button">Upload a book</button>
-       <img class="avatar" src="../assets/profile.svg" alt="User avatar" />
-    </div>
-  </header>
-
+  <div id="site-header"></div>
   <main class="main-container">
     <div class="card-wrapper">
-      <!-- Left sidebar -->
       <aside class="sidebar">
         <a href="profile.html" class="side-item">
           <span class="side-icon">👤</span>
           <span>Profile</span>
         </a>
-
-        <div class="side-item active">
+        <div class="side-item">
           <span class="side-icon">⚙️</span>
           <span>Settings</span>
-        </div>
-
+        </a>
         <div class="side-item logout" onclick="logout()">
-  <span class="side-icon">⏻</span>
-  <span>Log out</span>
-</div>
-
+          <span class="side-icon">⏻</span>
+          <span>Log out</span>
+        </div>
       </aside>
 
-      <!-- Right content area -->
       <section class="content-area">
         <div class="settings-main-layout">
-          <!-- Account / Security tabs -->
           <div class="settings-tabs">
-            <div class="settings-tab active">Account</div>
-            <a href="security.html" class="settings-tab">Security</a>
+            <a href="settings.html" class="settings-tab">Account</a>
+            <div class="settings-tab active">Security</div>
           </div>
 
-          <!-- Settings card -->
           <div class="settings-card">
-            <!-- Username + email in 2 columns -->
             <div class="settings-row-2col">
               <div>
-                <label>Username</label>
-                <input id="nameField" type="text" value="" />
+                <label>Current password</label>
+                <input id="currentPassword" type="password" placeholder="••••••••" />
+              </div>
+            </div>
+
+            <div class="settings-row-2col">
+              <div>
+                <label>New password</label>
+                <input id="newPassword" type="password" placeholder="Enter new password" />
               </div>
               <div>
-                <label>Email address</label>
-                <input id="emailField" type="email" value="" />
+                <label>Confirm new password</label>
+                <input id="confirmPassword" type="password" placeholder="Repeat new password" />
               </div>
             </div>
 
-            <!-- Biography (frontend only for now) -->
-            <div class="settings-row">
-              <label>Biography</label>
-              <textarea id="bioField" placeholder="Short bio..."></textarea>
-            </div>
-
-            <!-- Avatar + change picture -->
-           
-  <div class="settings-avatar-row">
-  <div class="settings-avatar">
-    <img src="../assets/profile.svg" alt="Profile" style="
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-    ">
-  </div>
-   <button class="save-btn" type="button" onclick="openAvatarPicker()">Change picture</button>
-</div>
-
-  <input id="avatarFile" type="file" accept="image/*" style="display:none;" />
-</div>
-
-             
-              <!-- hidden file input -->
-              <input id="avatarFile" type="file" accept="image/*" style="display:none;" />
-            </div>
-
-            <!-- Buttons -->
             <div class="settings-actions">
-              <button class="cancel-btn" type="button" onclick="loadProfile()">Cancel</button>
-              <button class="save-btn" type="button" onclick="saveAccount()">Save changes</button>
+              <button class="cancel-btn" type="button" onclick="cancelChanges()">Cancel</button>
+              <button class="save-btn" type="button" onclick="changePassword()">Save changes</button>
             </div>
+
+            <p id="securityMessage" style="margin-top:10px;color:#f00;"></p>
           </div>
         </div>
       </section>
@@ -117,112 +69,96 @@
 
   <script>
     const API_BASE = "http://127.0.0.1:8000";
+    let ACCESS_TOKEN = localStorage.getItem('access_token') || null;
 
-// later you will set this from /login resDYFNR
-let ACCESS_TOKEN = null;
-
-function setToken(token) {
-  ACCESS_TOKEN = token;
-}
-
-function authHeaders() {
-  return ACCESS_TOKEN
-    ? { "Authorization": `Bearer ${ACCESS_TOKEN}` }
-    : {};
-}
-  function logout() {
-    setToken(null);
-    window.location.href = "login.html"; // change to your real login/landing page
-  }
-
-  // call this when page loads
-  loadStoredToken();
-async function loadProfile() {
-  try {
-    const res = await fetch(`${API_BASE}/profile/me`, {
-      headers: {
-        ...authHeaders()
+    function setToken(token) {
+      ACCESS_TOKEN = token;
+      if (token) {
+        localStorage.setItem('access_token', token);
+      } else {
+        localStorage.removeItem('access_token');
       }
-    });
-    if (!res.ok) {
-      alert("Failed to load profile: " + res.status);
-      return;
     }
-    const data = await res.json();
-    document.getElementById("nameField").value = data.first_name || "";
-    document.getElementById("emailField").value = data.email || "";
-  } catch (err) {
-    alert("Error loading profile");
-    console.error(err);
-  }
-}
 
-async function saveAccount() {
-  try {
-    const body = {
-      first_name: document.getElementById("nameField").value,
-      last_name: "", // will be real later
-      email: document.getElementById("emailField").value
-    };
-    const res = await fetch(`${API_BASE}/profile/me`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        ...authHeaders()
-      },
-      body: JSON.stringify(body)
-    });
-    if (!res.ok) {
-      const text = await res.text();
-      alert("Failed to save: " + text);
-      return;
+    function authHeaders() {
+      return ACCESS_TOKEN ? { "Authorization": `Bearer ${ACCESS_TOKEN}` } : {};
     }
-    alert("Account saved!");
-  } catch (err) {
-    alert("Error saving profile");
-    console.error(err);
-  }
-}
-function openAvatarPicker() {
-  const input = document.getElementById("avatarFile");
-  if (!input) {
-    console.error("avatarFile input not found");
-    return;
-  }
-  input.click();
+
+    function logout() {
+  setToken(null);
+  window.location.href = "../Home/home.html"; 
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const fileInput = document.getElementById("avatarFile");
-  if (!fileInput) {
-    console.error("avatarFile input not found on DOMContentLoaded");
-    return;
-  }
 
-  fileInput.addEventListener("change", function (event) {
-    const file = event.target.files[0];
-    if (!file) return;
+    function loadStoredToken() {
+      const token = localStorage.getItem('access_token');
+      if (token) ACCESS_TOKEN = token;
+    }
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const avatar = document.getElementById("avatarCircle");
-      if (!avatar) {
-        console.error("avatarCircle not found");
+    function cancelChanges() {
+      document.getElementById("currentPassword").value = "";
+      document.getElementById("newPassword").value = "";
+      document.getElementById("confirmPassword").value = "";
+      document.getElementById("securityMessage").textContent = "";
+    }
+
+    async function changePassword() {
+      const current = document.getElementById("currentPassword").value;
+      const newPass = document.getElementById("newPassword").value;
+      const confirm = document.getElementById("confirmPassword").value;
+      const msgEl = document.getElementById("securityMessage");
+
+      msgEl.style.color = "#f00";
+      msgEl.textContent = "";
+
+      if (!current || !newPass || !confirm) {
+        msgEl.textContent = "Please fill all fields.";
         return;
       }
-      avatar.style.backgroundImage = `url(${e.target.result})`;
-      avatar.style.backgroundSize = "cover";
-      avatar.style.backgroundPosition = "center";
-      avatar.textContent = "";
-    };
-    reader.readAsDataURL(file);
-  });
+      if (newPass !== confirm) {
+        msgEl.textContent = "New passwords do not match.";
+        return;
+      }
+      if (newPass.length < 6) {
+        msgEl.textContent = "New password must be at least 6 characters.";
+        return;
+      }
 
-  // also load profile when page opens
-  loadProfile();
-});
+      try {
+        const res = await fetch(`${API_BASE}/profile/me/password`, {
+          method: "PATCH",  // ✅ FIXED: PATCH not PUT
+          headers: {
+            "Content-Type": "application/json",
+            ...authHeaders()
+          },
+          body: JSON.stringify({
+            current_password: current,
+            new_password: newPass
+          })
+        });
 
+        const text = await res.text();
+        if (!res.ok) {
+          msgEl.textContent = text || "Failed to change password.";
+          return;
+        }
 
+        msgEl.style.color = "green";
+        msgEl.textContent = "✅ Password changed successfully!";
+        cancelChanges();
+      } catch (err) {
+        msgEl.textContent = "Error contacting server.";
+        console.error(err);
+      }
+    }
+
+    // Load token on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      loadStoredToken();
+    });
   </script>
+  <script src="../components/header/header.js"></script>
+  <script src="../components/footer/footer.js"></script>
+  <div id="site-footer"></div>
 </body>
 </html>

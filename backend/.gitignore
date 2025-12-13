@@ -1,0 +1,10 @@
+
+#__pycache__/
+#routes/__pycache__
+#routes/tempCodeRunnerFile.py
+*.pyc
+*.pyo
+*.pyd
+
+#.env
+
