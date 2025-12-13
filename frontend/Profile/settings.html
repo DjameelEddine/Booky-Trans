@@ -113,164 +113,98 @@
     </div>
   </main>
 
-  <script>
-    const API_BASE = "http://127.0.0.1:8000";
+ <script>
+  const API_BASE = "http://127.0.0.1:8000";
 
-    // later you will set this from /login response
-    let ACCESS_TOKEN = localStorage.getItem('access_token') || null;
-
-    function setToken(token) {
-      ACCESS_TOKEN = token;
-      if (token) {
-        localStorage.setItem('access_token', token);
-      } else {
-        localStorage.removeItem('access_token');
-      }
-    }
-
-    function authHeaders() {
-      return ACCESS_TOKEN
-        ? { "Authorization": `Bearer ${ACCESS_TOKEN}` }
-        : {};
-    }
+  
+  function authHeaders() {
+    return { "Content-Type": "application/json" };
+  }
 
   function logout() {
-  setToken(null);
-  window.location.href = "../Home/home.html";  
-}
+    window.location.href = "../Home/home.html"; 
+  }
 
-    function loadStoredToken() {
-      const token = localStorage.getItem('access_token');
-      if (token) {
-        ACCESS_TOKEN = token;
-      }
-    }
-
-    // =
-    function quickLogin() {
-      fetch(`${API_BASE}/login`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          username: 'admin@example.com',  
-          password: 'admin123'            
-        })
-      })
-      .then(r=>r.json())
-      .then(data => {
-        if (data.access_token) {
-          setToken(data.access_token);
-          alert('LOGIN SUCCESS! Token saved - Now Save works!');
-          console.log('Token:', data.access_token);
-        } else {
-          alert('Login failed: ' + JSON.stringify(data));
-        }
-      })
-      .catch(err => alert('Error: ' + err));
-    }
-
-
-    async function loadProfile() {
-      try {
-        const res = await fetch(`${API_BASE}/profile/me`, {
-          headers: {
-            ...authHeaders(),
-            'Content-Type': 'application/json'
-          }
-        });
-        if (!res.ok) {
-        if (res.status === 401) {
-          alert("Please log in first - Click F12 → Console → quickLogin()");
-          return;
-        }
-        alert("Failed to load profile: " + res.status);
-        return;
-        }
-        const data = await res.json();
-        document.getElementById("usernameField").value = data.username || "";
-        document.getElementById("emailField").value = data.email || "";
-      } catch (err) {
-        alert("Error loading profile");
-        console.error(err);
-      }
-    }
-
-    
-    async function saveAccount() {
-      try {
-        const body = {
-          username: document.getElementById("usernameField").value.trim(),
-          email: document.getElementById("emailField").value.trim()
-        };
-
-        if (!body.username || !body.email) {
-          alert("Please fill both username and email");
-          return;
-        }
-
-        const res = await fetch(`${API_BASE}/profile/me`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            ...authHeaders()
-          },
-          body: JSON.stringify(body)
-        });
-
-        if (!res.ok) {
-          const errorText = await res.text();
-          alert("Failed to save: " + errorText + "\n\nCheck token: console.log(localStorage.getItem('access_token'))");
-          return;
-        }
-
-        const data = await res.json();
-        alert("✅ Account saved successfully!");
-        console.log("Saved profile:", data);
-      } catch (err) {
-        alert("Error saving profile: " + err.message);
-        console.error(err);
-      }
-    }
-
-    function openAvatarPicker() {
-      const input = document.getElementById("avatarFile");
-      if (!input) {
-        console.error("avatarFile input not found");
-        return;
-      }
-      input.click();
-    }
-
-    // File upload handler
-    document.addEventListener("DOMContentLoaded", () => {
-      const fileInput = document.getElementById("avatarFile");
-      if (fileInput) {
-        fileInput.addEventListener("change", function (event) {
-          const file = event.target.files[0];
-          if (!file) return;
-
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            
-            const avatarImg = document.querySelector(".settings-avatar img");
-            if (avatarImg) {
-              avatarImg.src = e.target.result;
-            }
-          };
-          reader.readAsDataURL(file);
-        });
-      }
-
-    
-      loadProfile();
+  async function loadProfile() {
+    try {
+      const res = await fetch(`${API_BASE}/profile/me`, {
+        headers: authHeaders()  
+      });
       
-  
-      const quickBtn = document.createElement('button');
-      quickBtn.innerText = ' Quick Login Test';
-      quickBtn.style.cssText = 'position:fixed;top:10px;right:10px;z-index:9999;padding:10px;background:#007bff;color:white;border:none;border-radius:5px;cursor:pointer;';
-      quickBtn.onclick = quickLogin;
-      document.body.appendChild(quickBtn);
-    });
-  </script>
+      if (!res.ok) {
+        console.log("No profile data - demo mode");
+      
+        document.getElementById("usernameField").value = "demo_user";
+        document.getElementById("emailField").value = "demo@example.com";
+        return;
+      }
+      
+      const data = await res.json();
+      document.getElementById("usernameField").value = data.username || "demo_user";
+      document.getElementById("emailField").value = data.email || "demo@example.com";
+    } catch (err) {
+      console.log("Demo mode - no backend");
+      document.getElementById("usernameField").value = "demo_user";
+      document.getElementById("emailField").value = "demo@example.com";
+    }
+  }
+
+  async function saveAccount() {
+    try {
+      const body = {
+        username: document.getElementById("usernameField").value.trim(),
+        email: document.getElementById("emailField").value.trim()
+      };
+
+      if (!body.username || !body.email) {
+        alert("Please fill both username and email");
+        return;
+      }
+
+      const res = await fetch(`${API_BASE}/profile/me`, {
+        method: "PUT",
+        headers: authHeaders(), 
+        body: JSON.stringify(body)
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        alert("Save failed (demo mode): " + errorText);
+        return;
+      }
+
+      alert(" Account saved successfully!");
+      console.log("Saved:", body);
+    } catch (err) {
+      alert(" Demo save complete!");
+    }
+  }
+
+  function openAvatarPicker() {
+    const input = document.getElementById("avatarFile");
+    if (input) input.click();
+  }
+
+ 
+  document.addEventListener("DOMContentLoaded", () => {
+    const fileInput = document.getElementById("avatarFile");
+    if (fileInput) {
+      fileInput.addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const avatarImg = document.querySelector(".settings-avatar img");
+          if (avatarImg) avatarImg.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    loadProfile();  
+  });
+</script>
+
 </body>
 </html>

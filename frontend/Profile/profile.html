@@ -121,40 +121,18 @@
     </div>
   </main>
 
-  <script>
+ <script>
   const API_BASE = "http://127.0.0.1:8000";
 
-  // token management
-  let ACCESS_TOKEN = null;
-
-  function setToken(token) {
-    ACCESS_TOKEN = token;
-    if (token) {
-      localStorage.setItem("access_token", token);
-    } else {
-      localStorage.removeItem("access_token");
-    }
-  }
-
-  function loadStoredToken() {
-    const t = localStorage.getItem("access_token");
-    if (t) {
-      ACCESS_TOKEN = t;
-    }
-  }
 
   function authHeaders() {
-    return ACCESS_TOKEN
-      ? { "Authorization": `Bearer ${ACCESS_TOKEN}` }
-      : {};
+    return { "Content-Type": "application/json" };
   }
 
- function logout() {
-  setToken(null);
-  window.location.href = "../Home/home.html"; 
- }
+  function logout() {
+    window.location.href = "../Home/home.html"; 
+  }
 
- 
   function switchBooksTab(name) {
     document.querySelectorAll(".tab").forEach(btn => {
       btn.classList.toggle("active", btn.dataset.tab === name);
@@ -167,15 +145,15 @@
   }
 
   function handlePreview(title) {
-    alert("Preview " + title);
+    alert("Preview " + title + " (demo mode - no backend needed)");
   }
 
-  // init
+
   document.addEventListener("DOMContentLoaded", () => {
-    loadStoredToken();  // in future, will restore token if user is logged in
-    // you can call switchBooksTab("uploaded") here if needed
+    console.log("Profile loaded");
     switchBooksTab("uploaded");
   });
 </script>
+
 </body>
 </html>

@@ -1,63 +1,67 @@
-# FILE TO CREATE AND VERIFY JWT TOKENS
-from jose import JWTError, jwt
-from datetime import datetime, timedelta, timezone
-import schemas
-from fastapi.security import OAuth2PasswordBearer
-from fastapi import HTTPException, status, Depends
+
+from fastapi import APIRouter, HTTPException, status
+from pydantic import BaseModel, EmailStr
+from typing import Optional
 from database import get_db
 from sqlalchemy.orm import Session
 import models
-from config import settings
+from passlib.context import CryptContext
 
-# to extract the bearer token automatically from the header
-# and to define where clients should get tokens (/login)
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+router = APIRouter(prefix="/auth", tags=["auth"])
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-SECRET_KEY = settings.secret_key
-ALGORITHM = settings.algorithm
-ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str
+    name: Optional[str] = None
 
-def create_access_token(payload: dict):
-    payload_to_encode = payload.copy()
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
 
- 
-    expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    payload_to_encode.update({"exp": expire})
-
-    # create a token
-    token = jwt.encode(payload_to_encode, SECRET_KEY, ALGORITHM)
-
-    return token
-
-def verify_access_token(token: str, credentials_exception):
-
-    try:
-       
-        payload = jwt.decode(token, SECRET_KEY, [ALGORITHM])
-
-        id = payload.get('user_id')
-
-        if not id:
-            raise credentials_exception
-        
-       
-        token_data = schemas.TokenData(id=id)
-
-    except JWTError:
-        raise credentials_exception
+@router.post("/register")
+def register(user: UserCreate, db: Session = Depends(get_db)):
+    """Simple register - NO TOKENS"""
+    # Check if user exists
+    db_user = db.query(models.User).filter(models.User.email == user.email).first()
+    if db_user:
+        raise HTTPException(status_code=400, detail="Email already registered")
     
-    return token_data
+    # Hash password
+    hashed_password = pwd_context.hash(user.password)
     
+    # Create user
+    db_user = models.User(
+        email=user.email,
+        hashed_password=hashed_password,
+        name=user.name
+    )
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    
+    return {"message": f"User {user.email} created successfully", "user_id": db_user.id}
 
+@router.post("/login")
+def login(user: UserLogin, db: Session = Depends(get_db)):
+    """Simple login - NO TOKENS, just success message"""
+    # Find user
+    db_user = db.query(models.User).filter(models.User.email == user.email).first()
+    if not db_user:
+        raise HTTPException(status_code=400, detail="Invalid credentials")
+    
+    # Check password
+    if not pwd_context.verify(user.password, db_user.hashed_password):
+        raise HTTPException(status_code=400, detail="Invalid credentials")
+    
+    return {"message": f"Logged in as {user.email}", "user_id": db_user.id}
 
-def get_current_user(token: str=Depends(oauth2_scheme), db:Session=Depends(get_db)):
-
-    cred_exc = HTTPException(status_code=401, detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
-    token_data = verify_access_token(token, cred_exc)
-
-    user = db.query(models.User).filter_by(id=token_data.id).first()
+@router.get("/me")
+def get_me(db: Session = Depends(get_db)):
+    """Public profile - NO TOKEN needed"""
+    
+    user = db.query(models.User).first()
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    
-    return user
+        raise HTTPException(status_code=404, detail="No users found")
+    return {"email": user.email, "name": user.name}

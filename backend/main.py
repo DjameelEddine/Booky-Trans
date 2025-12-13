@@ -12,13 +12,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Create tables
+
 Base.metadata.create_all(bind=engine)
 
-# Include ALL routes
 app.include_router(profile.router, prefix="/profile", tags=["profile"])
-app.include_router(auth.router, prefix="/auth", tags=["auth"])  # ← ADD THIS LINE
+app.include_router(auth.router, prefix="/auth", tags=["auth"])  
 
 @app.get("/")
 def root():
-    return {"message": "Profile API ✅ WORKING"}
+    return {"message": "Profile API WORKING"}
