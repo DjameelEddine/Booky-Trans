@@ -153,3 +153,121 @@ function toggleMenu(){
 	if (!el) return;
 	el.classList.toggle('show');
 }
+
+// Translation upload functionality
+const API_BASE = "http://127.0.0.1:8000";
+let ACCESS_TOKEN = null;
+
+function loadStoredToken() {
+	const t = localStorage.getItem("access_token");
+	if (t) {
+		ACCESS_TOKEN = t;
+	}
+}
+
+function authHeaders() {
+	return {
+		"Authorization": `Bearer ${ACCESS_TOKEN}`
+	};
+}
+
+// Get book ID from URL or use default
+function getBookIdFromURL() {
+	const params = new URLSearchParams(window.location.search);
+	return params.get('bookId') || 1; // Default to 1 if not provided
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+	loadStoredToken();
+
+	// Handle file upload for translation
+	const uploadDrop = document.querySelector(".upload-drop");
+	const submitBtn = document.querySelector(".submit-translation");
+
+	let uploadedFile = null;
+
+	if (uploadDrop) {
+		// Click to upload
+		uploadDrop.addEventListener("click", () => {
+			const input = document.createElement("input");
+			input.type = "file";
+			input.accept = ".pdf,.txt,.epub";
+			input.addEventListener("change", (e) => {
+				if (e.target.files.length > 0) {
+					uploadedFile = e.target.files[0];
+					uploadDrop.textContent = "File selected: " + uploadedFile.name;
+					uploadDrop.style.color = "#44b1fc";
+				}
+			});
+			input.click();
+		});
+
+		// Drag and drop
+		uploadDrop.addEventListener("dragover", (e) => {
+			e.preventDefault();
+			uploadDrop.style.backgroundColor = "#e8f5ff";
+		});
+
+		uploadDrop.addEventListener("dragleave", () => {
+			uploadDrop.style.backgroundColor = "";
+		});
+
+		uploadDrop.addEventListener("drop", (e) => {
+			e.preventDefault();
+			uploadDrop.style.backgroundColor = "";
+			if (e.dataTransfer.files.length > 0) {
+				uploadedFile = e.dataTransfer.files[0];
+				uploadDrop.textContent = "File selected: " + uploadedFile.name;
+				uploadDrop.style.color = "#44b1fc";
+			}
+		});
+	}
+
+	// Submit translation
+	if (submitBtn) {
+		submitBtn.addEventListener("click", async () => {
+			if (!ACCESS_TOKEN) {
+				alert("Please login to submit a translation");
+				window.location.href = "../../Authentication/Login/login.html";
+				return;
+			}
+
+			if (!uploadedFile) {
+				alert("Please select a file to upload");
+				return;
+			}
+
+			const bookId = getBookIdFromURL();
+
+			try {
+				const formData = new FormData();
+				formData.append("file", uploadedFile);
+
+				const response = await fetch(
+					`${API_BASE}/Books/${bookId}/Translations/upload`,
+					{
+						method: "POST",
+						headers: authHeaders(),
+						body: formData
+					}
+				);
+
+				if (response.ok) {
+					const data = await response.json();
+					alert("Translation submitted successfully!");
+					uploadedFile = null;
+					if (uploadDrop) {
+						uploadDrop.textContent = "Click To Upload your file\n<br><small>PDF or TXT</small>";
+						uploadDrop.style.color = "";
+					}
+				} else {
+					const error = await response.json();
+					alert("Failed to submit: " + (error.detail || "Unknown error"));
+				}
+			} catch (error) {
+				console.error("Error submitting translation:", error);
+				alert("Error: " + error.message);
+			}
+		});
+	}
+});
