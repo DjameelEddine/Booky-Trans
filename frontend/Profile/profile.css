@@ -640,6 +640,25 @@ button {
   transform: translateY(0);
 }
 
+/* Book actions container */
+.book-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  width: 100%;
+  margin-top: auto;
+}
+
+/* Delete button styling */
+.book-btn.delete-btn {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+}
+
+.book-btn.delete-btn:hover {
+  background: linear-gradient(135deg, #ff5252 0%, #cc3333 100%);
+  box-shadow: 0 6px 18px rgba(255, 107, 107, 0.4);
+}
+
 /* Settings */
 .settings-main-layout {
   flex: 1;

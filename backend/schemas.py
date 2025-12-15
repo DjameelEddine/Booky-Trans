@@ -106,3 +106,46 @@ class ReviewBase(BaseModel):
 class ReviewUpdate(BaseModel):
     rating: Optional[Literal[1, 2, 3, 4, 5]] = None
     comment: Optional[str] = None
+
+
+# -------------- User's Books Schemas ---------------
+
+class FavoriteBookOut(BaseModel):
+    id: int
+    name: str
+    category: str
+    author: Optional[str] = None
+    language: str
+    target_language: str
+    img_path: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+
+class UploadedBookOut(BaseModel):
+    id: int
+    name: str
+    category: str
+    author: Optional[str] = None
+    language: str
+    target_language: str
+    img_path: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+
+class TranslatedBookOut(BaseModel):
+    id: int
+    name: str
+    category: str
+    author: Optional[str] = None
+    language: str
+    target_language: str
+    img_path: Optional[str] = None
+    upload_date: datetime.date
+    translation_id: int
+
+    class Config:
+        from_attributes = True
