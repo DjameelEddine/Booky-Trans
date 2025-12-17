@@ -10,7 +10,7 @@ router = APIRouter(prefix="/Books/{book_id}/Translations", tags=["Reviews"])
 @router.patch("/{translation_id}/reviews/{review_id}")
 def update_review(
     review_id: int,
-    review_update: ReviewUpdate,  # Assuming from schemas
+    review_update: ReviewUpdate, 
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
