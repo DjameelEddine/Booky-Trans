@@ -75,10 +75,22 @@ async def upload_translation(
 # -------------------------
 # 2) LIST TRANSLATIONS FOR A BOOK
 # -------------------------
-@router.get("/", response_model=list[TranslationOut])
+@router.get("/")
 def list_translations(book_id: int, db: Session = Depends(get_db)):
-    translations = db.query(models.Translation).filter(models.Translation.book_id == book_id).all()
-    return translations
+    rows = db.query(models.Translation, models.User).join(models.User, models.User.id == models.Translation.user_id).filter(models.Translation.book_id == book_id).all()
+    out = []
+    for tr, user in rows:
+        out.append({
+            "id": tr.id,
+            "book_id": tr.book_id,
+            "user_id": tr.user_id,
+            "upload_date": tr.upload_date.isoformat() if tr.upload_date is not None else None,
+            "file_path": tr.file_path or '',
+            "author_username": user.username,
+            "author_full_name": user.full_name,
+            "author_display": user.full_name or user.username,
+        })
+    return out
 
 
 # -------------------------
@@ -112,24 +124,29 @@ def submit_review(
     db: Session = Depends(get_db),
     current_user = Depends(get_current_user)
 ):
-    # Validate translation exists
+
     tr = db.query(models.Translation).filter(models.Translation.id == translation_id).first()
     if not tr:
         raise HTTPException(status_code=404, detail="Translation not found")
 
-    # create review as the authenticated user
+    if review.rating is None and (review.comment is None or str(review.comment).strip() == ""):
+        raise HTTPException(status_code=400, detail="Review must contain at least a rating or a comment")
+
+
     new_review = models.Review(
         user_id=current_user.id,
         translation_id=translation_id,
         date_issued=datetime.date.today(),
-        rating=review.rating,
-        comment=review.comment,
+        rating=review.rating if review.rating is not None else None,
+        comment=review.comment if review.comment is not None and str(review.comment).strip() != '' else None,
     )
 
     db.add(new_review)
     db.commit()
     db.refresh(new_review)
 
+    # Attach author display info for frontend convenience
+    user = db.query(models.User).filter(models.User.id == new_review.user_id).first()
     return {
         "message": "Review added successfully",
         "review": {
@@ -138,7 +155,10 @@ def submit_review(
             "user_id": new_review.user_id,
             "date_issued": new_review.date_issued.isoformat() if new_review.date_issued is not None else None,
             "comment": new_review.comment,
-            "rating": new_review.rating
+            "rating": new_review.rating,
+            "author_username": user.username if user else None,
+            "author_full_name": user.full_name if user else None,
+            "author_display": (user.full_name or user.username) if user else None,
         }
     }
 
@@ -148,5 +168,19 @@ def submit_review(
 # -------------------------
 @router.get("/{translation_id}/reviews")
 def list_reviews(translation_id: int, db: Session = Depends(get_db)):
-    reviews = db.query(models.Review).filter(models.Review.translation_id == translation_id).all()
-    return reviews
+   
+    rows = db.query(models.Review, models.User).join(models.User, models.User.id == models.Review.user_id).filter(models.Review.translation_id == translation_id).all()
+    out = []
+    for rev, user in rows:
+        out.append({
+            "id": rev.id,
+            "translation_id": rev.translation_id,
+            "user_id": rev.user_id,
+            "date_issued": rev.date_issued.isoformat() if rev.date_issued is not None else None,
+            "comment": rev.comment,
+            "rating": rev.rating,
+            "author_username": user.username,
+            "author_full_name": user.full_name,
+            "author_display": user.full_name or user.username,
+        })
+    return out
