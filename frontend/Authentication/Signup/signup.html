@@ -43,28 +43,38 @@
             <form id="signupForm">
                 <div class="input-group">
                     <img src="../../assets/icons/user.png" alt="user" class="input-icon">
-                    <input type="text" id="username" placeholder="Username" required>
+                    <input type="text" id="fullName" placeholder="Full Name">
                 </div>
+                <div class="error-message" id="fullNameError" style="color: #ff4444; font-size: 14px; margin-top: -10px; margin-bottom: 10px; display: none;"></div>
+                
+                <div class="input-group">
+                    <img src="../../assets/icons/user.png" alt="user" class="input-icon">
+                    <input type="text" id="username" placeholder="Username">
+                </div>
+                <div class="error-message" id="usernameError" style="color: #ff4444; font-size: 14px; margin-top: -10px; margin-bottom: 10px; display: none;"></div>
                 
                 <div class="input-group">
                     <img src="../../assets/icons/email.png" alt="email" class="input-icon">
-                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="email" id="email" placeholder="Email">
                 </div>
+                <div class="error-message" id="emailError" style="color: #ff4444; font-size: 14px; margin-top: -10px; margin-bottom: 10px; display: none;"></div>
                 
                 <div class="input-group">
                     <img src="../../assets/icons/password.png" alt="password" class="input-icon">
-                    <input type="password" id="password" placeholder="Password" required>
+                    <input type="password" id="password" placeholder="Password">
                     <img src="../../assets/icons/showpass.png" alt="toggle" class="toggle-password" onclick="togglePassword('password')">
                 </div>
+                <div class="error-message" id="passwordError" style="color: #ff4444; font-size: 14px; margin-top: -10px; margin-bottom: 10px; display: none;"></div>
                 
                 <div class="input-group">
                     <img src="../../assets/icons/password.png" alt="password" class="input-icon">
-                    <input type="password" id="confirmPassword" placeholder="Confirm password" required>
+                    <input type="password" id="confirmPassword" placeholder="Confirm password">
                     <img src="../../assets/icons/showpass.png" alt="toggle" class="toggle-password" onclick="togglePassword('confirmPassword')">
                 </div>
+                <div class="error-message" id="confirmPasswordError" style="color: #ff4444; font-size: 14px; margin-top: -10px; margin-bottom: 10px; display: none;"></div>
                 
                 <div class="terms-group">
-                    <input type="checkbox" id="terms" required>
+                    <input type="checkbox" id="terms">
                     <label for="terms">I agree to the <a href="#">Terms Of Service</a> and <a href="#">Privacy Policy</a>.</label>
                 </div>
                 
@@ -128,6 +138,13 @@
             </div>
         </div>
     </footer>
+    
+    <div id="toastNotification" style="display: none; position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: white; padding: 16px 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 10000; min-width: 300px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <span id="toastIcon" style="font-size: 20px;"></span>
+            <div id="toastMessage" style="color: #333; font-size: 15px;"></div>
+        </div>
+    </div>
     
     <script src="signup.js"></script>
 </body>
