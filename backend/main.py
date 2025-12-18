@@ -22,3 +22,8 @@ app.include_router(auth.router)
 app.include_router(translation.router)
 app.include_router(review.router)
 
+# For Books' file and Cover path
+
+from fastapi.staticfiles import StaticFiles
+
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")

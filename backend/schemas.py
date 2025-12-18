@@ -36,6 +36,7 @@ class BookCreate(BaseModel):
     name: str
     category: str
     author: Optional[str] = None
+    description: Optional[str] = None
     language: str
     target_language: str
     file_path: str

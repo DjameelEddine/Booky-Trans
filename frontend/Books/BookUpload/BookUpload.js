@@ -6,9 +6,9 @@ const API_BASE = "http://127.0.0.1:8000";
 let ACCESS_TOKEN = null;
 
 function loadStoredToken() {
-    // ACCESS_TOKEN = localStorage.getItem("access_token");
+    ACCESS_TOKEN = localStorage.getItem("accessToken");
     // To test upload, independently of login, uncomment the line below and provide a valid token
-    ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjU5OTgyMDl9.dijdSIjWwWMYNNSojOYT8K58IM_j9_2RAXdNeY-9N-8";
+    // ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjU5OTgyMDl9.dijdSIjWwWMYNNSojOYT8K58IM_j9_2RAXdNeY-9N-8";
 }
 
 function toggleMenu() {
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const bookLanguage = document.getElementById('book-language').value;
         const targetLanguage = document.getElementById('target-language').value;
         const bookFile = bookFileInput.files[0];
-        const coverFile = coverFileInput.files[0];
+        const coverFile = coverFileInput.files[0] || null;
         
         // 3. Validate required fields
         if (!bookFile) {

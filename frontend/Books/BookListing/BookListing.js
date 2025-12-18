@@ -34,8 +34,8 @@ let favoriteBooks = new Set();
 let allBooks = [];
 
 function loadStoredToken() {
-    // ACCESS_TOKEN = localStorage.getItem("access_token");
-    ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjU5OTgyMDl9.dijdSIjWwWMYNNSojOYT8K58IM_j9_2RAXdNeY-9N-8";
+    ACCESS_TOKEN = localStorage.getItem("accessToken");
+    // ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjU5OTgyMDl9.dijdSIjWwWMYNNSojOYT8K58IM_j9_2RAXdNeY-9N-8";
 }
 
 function authHeaders() {
@@ -62,9 +62,13 @@ async function loadBooks() {
             author: book.author,
             original_language: book.language,
             target_language: book.target_language,
-            cover_url: book.cover_url || book.cover_image || '../../assets/images/book.png',
+            img_path: book.img_path
+            ? `${API_BASE}${book.img_path}`
+            : '../../assets/images/book.png',
             categories: book.category ? [book.category] : []
         }));
+
+        console.log("Book loaded img_path:", allBooks[0].img_path);  // Verify books are loaded
 
         renderBooks(allBooks);
         }
@@ -101,7 +105,7 @@ function renderBooks(books) {
             <button class="favorite-btn" data-book-id="${book.id}">
                 <img src="../../assets/icons/heart.svg" alt="Favorite">
             </button>
-            <img src="${book.cover_url}" alt="Book Cover">
+            <img src="${book.img_path}" alt="Book Cover">
             <h2>${book.title}</h2>
             <p>${book.author}</p>
             <p>${book.original_language} → <span>${book.target_language}</span></p>

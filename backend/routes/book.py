@@ -32,11 +32,11 @@ async def upload_book(db: Session=Depends(get_db),
                       name: str = Form(...),
                       category: str = Form(...),
                       author: str = Form(...),
-                      description: str = "Book",
+                      description: str = Form(...),
                       language: str = Form(...),
                       target_language: str = Form(...),
                       file: UploadFile = File(...),
-                      img: UploadFile = File(...),
+                      img: UploadFile = File(None),
                       current_user: models.User=Depends(get_current_user)):
 
     print ('inside upload_book')
@@ -85,6 +85,7 @@ async def upload_book(db: Session=Depends(get_db),
         # 5. Update book with file paths
         db.query(models.Book).filter(models.Book.id == new_book.id).update({"file_path": file_path})
         if img_path:
+            img_path = '/' + img_path.replace("\\", "/")
             db.query(models.Book).filter(models.Book.id == new_book.id).update({"img_path": img_path})
         db.commit()  # Don't forget this!
 
@@ -141,7 +142,7 @@ def get_books(search: str = "", filter: str = "", db: Session = Depends(get_db))
             status_code=status.HTTP_404_NOT_FOUND,
             detail="No Book Has Been Found!"
         )
-    
+    print ("one of the returned books' img_path: ", books[0].img_path)
     return books
 
 
