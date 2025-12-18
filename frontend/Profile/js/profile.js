@@ -223,7 +223,7 @@ async function removeFavorite(bookId) {
   }
 }
 
-// Initialize
+
 document.addEventListener("DOMContentLoaded", () => {
   loadStoredToken();
   loadUserProfile();
