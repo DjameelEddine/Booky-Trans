@@ -25,6 +25,9 @@ class UserOut(UserBase):
 class ProfileUpdate(BaseModel):
     full_name: Optional[str] = None
     email: Optional[EmailStr] = None
+    bio: Optional[str] = None          
+    avatar_url: Optional[str] = None  
+
 
 class PasswordUpdate(BaseModel):
     current_password: str
