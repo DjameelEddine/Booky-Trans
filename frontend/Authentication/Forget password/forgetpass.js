@@ -7,21 +7,6 @@ if (localStorage.getItem('accessToken')) {
 let userEmail = '';
 let verificationCode = '';
 
-function toggleMenu() {
-    document.getElementById("mobileMenu").classList.toggle("show");
-}
-
-document.addEventListener('click', function(event) {
-    const mobileMenu = document.getElementById('mobileMenu');
-    const hamburger = document.querySelector('.hamburger-menu');
-    
-    if (mobileMenu.classList.contains('show') && 
-        !mobileMenu.contains(event.target) && 
-        !hamburger.contains(event.target)) {
-        mobileMenu.classList.remove('show');
-    }
-});
-
 function togglePassword(inputId) {
     const passwordInput = document.getElementById(inputId);
     const toggleIcon = passwordInput.parentElement.querySelector('.toggle-password');

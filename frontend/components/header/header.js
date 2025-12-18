@@ -48,17 +48,35 @@ document.addEventListener('DOMContentLoaded', function(){
     };
   }
 
-  function checkLoginStatus(mount){
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  async function checkLoginStatus(mount){
+    const token = localStorage.getItem('accessToken');
     const authButtons = mount.querySelector('#authButtons');
     const userProfile = mount.querySelector('#userProfile');
     
-    if (isLoggedIn && authButtons && userProfile) {
-      authButtons.style.display = 'none';
-      userProfile.style.display = 'flex';
-    } else if (authButtons && userProfile) {
-      authButtons.style.display = 'flex';
-      userProfile.style.display = 'none';
+    if (token) {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/auth/verify-token', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (response.ok) {
+          if (authButtons) authButtons.style.display = 'none';
+          if (userProfile) userProfile.style.display = 'flex';
+          return;
+        } else {
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('username');
+        }
+      } catch (error) {
+        console.error('Error verifying token:', error);
+      }
     }
+    
+    if (authButtons) authButtons.style.display = 'flex';
+    if (userProfile) userProfile.style.display = 'none';
   }
 });

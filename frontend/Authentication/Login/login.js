@@ -4,32 +4,6 @@ if (localStorage.getItem('accessToken')) {
     window.location.replace('../../Home/home.html');
 }
 
-function toggleMenu() {
-    document.getElementById("mobileMenu").classList.toggle("show");
-}
-
-document.addEventListener('click', function(event) {
-    const mobileMenu = document.getElementById('mobileMenu');
-    const hamburger = document.querySelector('.hamburger-menu');
-    
-    if (mobileMenu.classList.contains('show') && 
-        !mobileMenu.contains(event.target) && 
-        !hamburger.contains(event.target)) {
-        mobileMenu.classList.remove('show');
-    }
-});
-
-function togglePassword(inputId) {
-    const passwordInput = document.getElementById(inputId);
-    const toggleIcon = passwordInput.parentElement.querySelector('.toggle-password');
-    
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-    } else {
-        passwordInput.type = 'password';
-    }
-}
-
 function showToast(message, isSuccess = false) {
     const toast = document.getElementById('toastNotification');
     const toastMessage = document.getElementById('toastMessage');
