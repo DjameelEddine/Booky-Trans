@@ -49,7 +49,7 @@ const REVIEWS_PAGE_SIZE = 3;
 		await ensureAuth();
 
 		try {
-			const res = await apiFetch('/Books/');
+			const res = await apiFetch('/books/');
 			if (!res.ok) return;
 			const books = await res.json();
 			const book = books.find(b => String(b.id) === String(bookId));
@@ -86,7 +86,8 @@ const REVIEWS_PAGE_SIZE = 3;
 
 				if (book.img_path && book.img_path.trim() !== '' && !book.img_path.includes('placeholder')) {
 					const imgEl = document.createElement('img');
-					imgEl.src = book.img_path;
+					// Construct full URL for image path, matching BookListing.js behavior
+					imgEl.src = book.img_path.startsWith('http') ? book.img_path : `${API}${book.img_path}`;
 					imgEl.alt = 'cover';
 					imgEl.className = 'book-cover';
 					imgEl.style.maxWidth = '120px';
@@ -104,7 +105,7 @@ const REVIEWS_PAGE_SIZE = 3;
 
 					dl.addEventListener('click', (e) => {
 						e.preventDefault();
-						window.location.href = `${API}/Books/${bookId}/download`;
+						window.location.href = `${API}/books/${bookId}/download`;
 					});
 
 					dl.setAttribute('role', 'link');
@@ -122,7 +123,7 @@ const REVIEWS_PAGE_SIZE = 3;
 							return;
 						}
 						try {
-							const res = await apiFetch(`/Books/${bookId}`, { method: 'POST' });
+							const res = await apiFetch(`/books/${bookId}`, { method: 'POST' });
 							if (res.ok) {
 								const data = await res.json();
 								heart.classList.toggle('favorited', data.favorited === true);
@@ -134,12 +135,14 @@ const REVIEWS_PAGE_SIZE = 3;
 
 
 					if (CURRENT_USER) {
+						// Check if book is in user's favorites list
 						try {
-							const favRes = await apiFetch(`/Books/${bookId}/favorite`);
+							const favRes = await apiFetch('/profile/favorites');
 							if (favRes.ok) {
-								const favData = await favRes.json();
-								heart.classList.toggle('favorited', favData.favorited === true);
-								heart.setAttribute('aria-pressed', favData.favorited ? 'true' : 'false');
+								const favorites = await favRes.json();
+								const isFavorited = favorites.some(fav => String(fav.id) === String(bookId));
+								heart.classList.toggle('favorited', isFavorited);
+								heart.setAttribute('aria-pressed', isFavorited ? 'true' : 'false');
 							}
 						} catch (err) { console.error('Could not fetch favorite state', err); }
 					}
@@ -481,7 +484,7 @@ function updateAvgForCard(card) {
 				return;
 			}
 			try {
-				const res = await apiFetch(`/Books/${bookId}`, { method: 'POST' });
+				const res = await apiFetch(`/books/${bookId}`, { method: 'POST' });
 				if (!res.ok) {
 					alert('Could not toggle favorite');
 					return;
