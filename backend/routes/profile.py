@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-
 from database import get_db
 from models import User, FavoriteBooks, UploadedBooks, Book, Translation
 from schemas import UserOut, ProfileUpdate, PasswordUpdate, FavoriteBookOut, UploadedBookOut, TranslatedBookOut
@@ -18,7 +17,7 @@ def get_my_profile(
     user = db.query(User).filter(User.id == current_user.id).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"User with id: {id} not found!")
+                           detail=f"User with id: {current_user.id} not found!")  # ✅ FIXED
     return user
 
 @router.patch("/me", response_model=UserOut)
@@ -34,8 +33,8 @@ def update_my_profile(
     try:
         user_dict["full_name"] = user_dict["full_name"].capitalize()
     except Exception as e:
-        print (e)
-    user_query.update(user_dict, synchronize_session=False) #type: ignore
+        print(e)
+    user_query.update(user_dict, synchronize_session=False) # type: ignore
     db.commit()
     db.refresh(user)
     return user
@@ -58,10 +57,8 @@ def change_my_password(
 
     return {"detail": "Password updated successfully"}
 
-
 # ====================== FAVORITES ENDPOINTS ======================
-
-@router.get("/me/favorites", response_model=List[FavoriteBookOut])
+@router.get("/favorites", response_model=List[FavoriteBookOut])
 def get_favorite_books(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -73,9 +70,62 @@ def get_favorite_books(
     
     return favorites
 
-# ====================== UPLOADED BOOKS ENDPOINTS ======================
+@router.post("/favorites/{book_id}")
+def add_favorite_book(
+    book_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Add a book to favorites"""
+    book = db.query(Book).filter(Book.id == book_id).first()
+    if not book:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Book not found"
+        )
+    
+    existing = db.query(FavoriteBooks).filter(
+        FavoriteBooks.user_id == current_user.id,
+        FavoriteBooks.book_id == book_id
+    ).first()
+    
+    if existing:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Book already in favorites"
+        )
+    
+    favorite = FavoriteBooks(user_id=current_user.id, book_id=book_id)
+    db.add(favorite)
+    db.commit()
+    
+    return {"message": "Book added to favorites", "favorited": True}
 
-@router.get("/me/uploaded-books", response_model=List[UploadedBookOut])
+@router.delete("/favorites/{book_id}")
+def remove_favorite_book(
+    book_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Remove a book from favorites"""
+    favorite = db.query(FavoriteBooks).filter(
+        FavoriteBooks.user_id == current_user.id,
+        FavoriteBooks.book_id == book_id
+    ).first()
+    
+    if not favorite:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Book not in favorites"
+        )
+    
+    db.delete(favorite)
+    db.commit()
+    
+    return {"message": "Book removed from favorites", "favorited": False}
+
+# ====================== UPLOADED BOOKS ENDPOINTS ======================
+@router.get("/uploaded-books", response_model=List[UploadedBookOut])
 def get_uploaded_books(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -87,15 +137,13 @@ def get_uploaded_books(
     
     return uploaded
 
-
-@router.delete("/me/uploaded-books/{book_id}")
+@router.delete("/uploaded-books/{book_id}")
 def delete_uploaded_book(
     book_id: int,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
     """Delete an uploaded book"""
-    # Check if book exists
     book = db.query(Book).filter(Book.id == book_id).first()
     if not book:
         raise HTTPException(
@@ -103,7 +151,6 @@ def delete_uploaded_book(
             detail="Book not found"
         )
     
-    # Check if user uploaded this book
     uploaded = db.query(UploadedBooks).filter(
         UploadedBooks.user_id == current_user.id,
         UploadedBooks.book_id == book_id
@@ -115,17 +162,14 @@ def delete_uploaded_book(
             detail="You did not upload this book"
         )
     
-    # Delete the uploaded_book record and the book itself
     db.delete(uploaded)
     db.delete(book)
     db.commit()
     
     return {"message": "Book deleted successfully"}
 
-
 # ====================== TRANSLATED BOOKS ENDPOINTS ======================
-
-@router.get("/me/translated-books", response_model=List[TranslatedBookOut])
+@router.get("/translated-books", response_model=List[TranslatedBookOut])
 def get_translated_books(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -135,7 +179,6 @@ def get_translated_books(
         Translation, Book.id == Translation.book_id
     ).filter(Translation.user_id == current_user.id).all()
     
-    # Format response with upload_date and translation_id from translation
     result = []
     for book, upload_date, translation_id in translated_books:
         book_data = TranslatedBookOut(
@@ -153,15 +196,13 @@ def get_translated_books(
     
     return result
 
-
-@router.delete("/me/translated-books/{translation_id}")
+@router.delete("/translated-books/{translation_id}")
 def delete_translated_book(
     translation_id: int,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
     """Delete a translation (user's translation of a book)"""
-    # Check if translation exists and belongs to current user
     translation = db.query(Translation).filter(
         Translation.id == translation_id,
         Translation.user_id == current_user.id

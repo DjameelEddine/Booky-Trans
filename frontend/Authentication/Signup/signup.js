@@ -4,21 +4,6 @@ if (localStorage.getItem('accessToken')) {
     window.location.replace('../../Home/home.html');
 }
 
-function toggleMenu() {
-    document.getElementById("mobileMenu").classList.toggle("show");
-}
-
-document.addEventListener('click', function(event) {
-    const mobileMenu = document.getElementById('mobileMenu');
-    const hamburger = document.querySelector('.hamburger-menu');
-    
-    if (mobileMenu.classList.contains('show') && 
-        !mobileMenu.contains(event.target) && 
-        !hamburger.contains(event.target)) {
-        mobileMenu.classList.remove('show');
-    }
-});
-
 function togglePassword(fieldId) {
     const field = document.getElementById(fieldId);
     const icon = field.nextElementSibling;

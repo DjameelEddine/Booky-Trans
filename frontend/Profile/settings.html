@@ -2,16 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>BooklyTrans – Security</title>
-  
+  <title>BooklyTrans – Settings</title>
   <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; connect-src *; img-src * data: blob:;">
   <link rel="stylesheet" href="profile.css" />
-  <link rel="stylesheet" href="../components/footer/footer.css">
   <link rel="stylesheet" href="../components/header/header.css">
+  <link rel="stylesheet" href="../components/footer/footer.css">
 </head>
-
 <body>
   <div id="site-header"></div>
+
   <main class="main-container">
     <div class="card-wrapper">
       <aside class="sidebar">
@@ -19,10 +18,10 @@
           <span class="side-icon">👤</span>
           <span>Profile</span>
         </a>
-        <div class="side-item">
+        <div class="side-item active">
           <span class="side-icon">⚙️</span>
           <span>Settings</span>
-        </a>
+        </div>
         <div class="side-item logout" onclick="logout()">
           <span class="side-icon">⏻</span>
           <span>Log out</span>
@@ -32,35 +31,39 @@
       <section class="content-area">
         <div class="settings-main-layout">
           <div class="settings-tabs">
-            <a href="settings.html" class="settings-tab">Account</a>
-            <div class="settings-tab active">Security</div>
+            <div class="settings-tab active">Account</div>
+            <a href="security.html" class="settings-tab">Security</a>
           </div>
 
           <div class="settings-card">
             <div class="settings-row-2col">
               <div>
-                <label>Current password</label>
-                <input id="currentPassword" type="password" placeholder="••••••••" />
-              </div>
-            </div>
-
-            <div class="settings-row-2col">
-              <div>
-                <label>New password</label>
-                <input id="newPassword" type="password" placeholder="Enter new password" />
+                <label>Username</label>
+                <input id="usernameField" type="text" value="" />
               </div>
               <div>
-                <label>Confirm new password</label>
-                <input id="confirmPassword" type="password" placeholder="Repeat new password" />
+                <label>Email address</label>
+                <input id="emailField" type="email" value="" />
               </div>
             </div>
 
-            <div class="settings-actions">
-              <button class="cancel-btn" type="button" onclick="cancelChanges()">Cancel</button>
-              <button class="save-btn" type="button" onclick="changePassword()">Save changes</button>
+            <div class="settings-row">
+              <label>Biography</label>
+              <textarea id="bioField" placeholder="Short bio..."></textarea>
             </div>
 
-            <p id="securityMessage" style="margin-top:10px;color:#f00;"></p>
+            <div class="settings-avatar-row">
+              <div class="settings-avatar">
+                <img id="avatarPreview" src="../assets/profile.svg" alt="Profile" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+              </div>
+              <button class="save-btn" type="button" onclick="openAvatarPicker()">Change picture</button>
+            </div>
+            <input id="avatarFile" type="file" accept="image/*" style="display:none;" />
+          </div>
+
+          <div class="settings-actions">
+            <button class="cancel-btn" type="button" onclick="loadProfile()">Cancel</button>
+            <button class="save-btn" type="button" onclick="saveAccount()">Save changes</button>
           </div>
         </div>
       </section>
