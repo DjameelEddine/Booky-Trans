@@ -21,7 +21,10 @@
 
 			<div class="workspace-grid" style="position:relative;">
 				<div class="book-card" style="position:relative;">
-					<img src="../../assets/icons/heart-icon.svg" alt="favorite" class="heart-icon" style="position:absolute;top:18px;right:18px;width:38px;z-index:2;">
+		
+					<svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="button" aria-label="favorite" style="position:absolute;top:18px;right:18px;width:38px;z-index:2;" tabindex="0">
+						<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor" />
+					</svg>
 					<h3>The Silent Patient</h3>
 					<p class="by">By Andrew Ross</p>
 					<p class="desc">Alicia Berenson's life is seemingly perfect. A famous painter married to an in-demand fashion photographer, she lives in a grand house with big windows overlooking a park in one of London's most desirable areas...</p>
@@ -88,7 +91,7 @@
 						</div>
 					</div>
 
-					<!--review form (hidden) -->
+				
 					<div class="review-form hidden">
 						<label>Your rating</label>
 						<div class="stars">
@@ -101,11 +104,13 @@
 						<button class="submit-rating">Submit rating</button>
 					</div>
 
-					<!-- omment form (hidden) -->
-					<div class="comment-form hidden">
-						<label>Add a comment</label>
-						<textarea placeholder="Write your comment" rows="3"></textarea>
-						<button class="submit-comment">Submit comment</button>
+					<div class="comments-section hidden" aria-live="polite">
+						<div class="comment-composer">
+							<textarea placeholder="Write your comment" rows="3"></textarea>
+							<button class="submit-comment" aria-label="Send comment">Send</button>
+						</div>
+						<div class="ratings-list comments-list hidden"></div>
+						<div class="comments-list hidden"></div>
 					</div>
 				</div>
 			</div>
@@ -154,10 +159,14 @@
 						</div>
 						<button class="submit-rating">Submit rating</button>
 					</div>
-					<div class="comment-form hidden">
-						<label>Add a comment</label>
-						<textarea placeholder="Write your comment" rows="3"></textarea>
-						<button class="submit-comment">Submit comment</button>
+
+					<div class="comments-section hidden" aria-live="polite">
+						<div class="comment-composer">
+							<textarea placeholder="Write your comment" rows="3"></textarea>
+							<button class="submit-comment" aria-label="Send comment">Send</button>
+						</div>
+						<div class="ratings-list comments-list hidden"></div>
+						<div class="comments-list hidden"></div>
 					</div>
 				</div>
 			</div>
@@ -206,10 +215,14 @@
 						</div>
 						<button class="submit-rating">Submit rating</button>
 					</div>
-					<div class="comment-form hidden">
-						<label>Add a comment</label>
-						<textarea placeholder="Write your comment" rows="3"></textarea>
-						<button class="submit-comment">Submit comment</button>
+
+					<div class="comments-section hidden" aria-live="polite">
+						<div class="comment-composer">
+							<textarea placeholder="Write your comment" rows="3"></textarea>
+							<button class="submit-comment" aria-label="Send comment">Send</button>
+						</div>
+						<div class="ratings-list comments-list hidden"></div>
+						<div class="comments-list hidden"></div>
 					</div>
 				</div>
 			</div>

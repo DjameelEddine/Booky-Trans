@@ -16,6 +16,7 @@ class Book(Base):
     name = Column(String, nullable=False)
     category = Column(String, nullable=False)
     author = Column(String)
+    description = Column(String)
     language = Column(String, nullable=False)
     target_language = Column(String, nullable=False)
     file_path = Column(String, nullable=False)

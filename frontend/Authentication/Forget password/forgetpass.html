@@ -146,7 +146,12 @@
             </div>
         </div>
     </footer>
-    
-    <script src="forgetpass.js"></script>
+        <div id="toastNotification" style="display: none; position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: white; padding: 16px 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 10000; min-width: 300px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <span id="toastIcon" style="font-size: 20px;"></span>
+            <div id="toastMessage" style="color: #333; font-size: 15px;"></div>
+        </div>
+    </div>
+        <script src="forgetpass.js"></script>
 </body>
 </html>

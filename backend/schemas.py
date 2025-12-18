@@ -69,7 +69,6 @@ class TranslationOut(TranslationCreate):
 #     time: Optional[datetime.time] = None
 #     case: Optional[str] = None
     
-
 # ------------------ JWT Tokens ------------------
 
 class Token(BaseModel):
@@ -99,15 +98,15 @@ class ResetPasswordRequest(BaseModel):
 
 # ------------------ Review ------------------
 class ReviewBase(BaseModel):
-    rating: Literal[1, 2, 3, 4, 5]
+    # Allow either rating or comment . Rating is optional so clients can submit
+    # comment-only reviews.
+    rating: Optional[Literal[1, 2, 3, 4, 5]] = None
     comment: Optional[str] = None
 
 
 class ReviewUpdate(BaseModel):
     rating: Optional[Literal[1, 2, 3, 4, 5]] = None
     comment: Optional[str] = None
-
-
 # -------------- User's Books Schemas ---------------
 
 class FavoriteBookOut(BaseModel):

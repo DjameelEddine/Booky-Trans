@@ -73,22 +73,16 @@ def login(
 
 @router.post("/forgot-password")
 def forgot_password(email_data: schemas.ForgotPasswordRequest, db: Session = Depends(get_db)):
-    """
-    Send password reset verification code to email
-    """
-    # Check if user exists
     user = db.query(models.User).filter(models.User.email == email_data.email).first()
     
-    if user:
-        # Only generate and send code if email exists
-        code = generate_reset_code()
-        store_reset_code(email_data.email, code)
-        
-        # Send email (prints to console in development)
-        send_reset_email(email_data.email, code)
+    if not user:
+        raise HTTPException(status_code=404, detail="Email address not found")
     
-    # Don't reveal if email exists or not for security
-    return {"message": "If the email exists, a verification code has been sent"}
+    code = generate_reset_code()
+    store_reset_code(email_data.email, code)
+    send_reset_email(email_data.email, code)
+    
+    return {"message": "Verification code sent to your email"}
 
 
 @router.post("/verify-reset-code")
@@ -135,3 +129,8 @@ def reset_password(reset_data: schemas.ResetPasswordRequest, db: Session = Depen
     delete_reset_code(reset_data.email)
     
     return {"message": "Password reset successfully"}
+
+
+@router.get("/verify-token")
+def verify_token(current_user: models.User = Depends(get_current_user)):
+    return {"valid": True, "user_id": current_user.id, "username": current_user.username}
