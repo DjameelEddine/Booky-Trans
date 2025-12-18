@@ -25,13 +25,14 @@ Code Explanation:
 '''
 
 
-router = APIRouter(prefix="/Books", tags=["Books"])
+router = APIRouter(prefix="/books", tags=["Books"])
 
-@router.post("/BookUplaod", response_model=BookOut)
+@router.post("/upload", response_model=BookOut)
 async def upload_book(db: Session=Depends(get_db),
                       name: str = Form(...),
                       category: str = Form(...),
                       author: str = Form(...),
+                      description: str = "Book",
                       language: str = Form(...),
                       target_language: str = Form(...),
                       file: UploadFile = File(...),
@@ -42,9 +43,11 @@ async def upload_book(db: Session=Depends(get_db),
 
     try:
         book_dict = {
+            
             "name": name.capitalize(),
             "category": category.capitalize(),
             "author": author.capitalize(),
+            "description": description,
             "language": language.capitalize(),
             "target_language": target_language.capitalize(),
             "file_path": "",

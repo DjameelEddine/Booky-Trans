@@ -23,36 +23,46 @@
             <h2>Step 1: Book Details</h2>
             <div class="book-info">
             <label for="book-name"><h3>Book Name</h3></label>
-            <input type="text" name="book-name" id="book-name" placeholder="Enter The Book Name">
+            <input type="text" name="book-name" id="book-name" placeholder="Enter The Book Name" required>
+            <label for="book-author"><h3>Author Name</h3></label>
+            <input type="text" name="book-author" id="book-author" placeholder="Enter author name">
             <label for="book-category"><h3>Book Category</h3></label>
-            <input type="text" name="book-category" id="book-category" placeholder="eg. Science Fiction, Horror, History, etc.">
+            <input type="text" name="book-category" id="book-category" placeholder="eg. Science Fiction, Horror, History, etc." required>
             </div>
             <div class="book-description">
             <label for="book-description"><h3>Book Description</h3></label>
-            <input type="text" name="book-description" id="book-description" placeholder="Provide a short summary of the book">
+            <input type="text" name="book-description" id="book-description" placeholder="Provide a short summary of the book" required>
             </div>
             <div class="language-info">
             <label for="original-language"><h3>Original Language</h3></label>
-            <input type="text" name="book-language" id="book-language" placeholder="eg. English">
+            <input type="text" name="book-language" id="book-language" placeholder="eg. English" required>
             <label for="target-language"><h3>Target Language</h3></label>
-            <input type="text" name="target-language" id="target-language" placeholder="eg. Arabic">
+            <input type="text" name="target-language" id="target-language" placeholder="eg. Arabic" required>
             </div>
             <hr>
-            <h2>Step 2: Upload Book File</h2>
+            <h2>Step 2: Upload Book Files</h2>
+            <h3>Book File</h3>
             <label class="book-upload" for="book-upload">
                 <p>📘 Click or Drag your file here to upload</p>
                 <small>Supported formats: PDF, EPUB, TXT</small>
             </label>
-            <input type="file" name="book-upload" id="book-upload">
+            <input type="file" name="book-upload" id="book-upload" required>
+
+            <h3>Book Cover</h3>
+            <label class="book-upload" for="book-cover">
+                <p>📘 Click or Drag your book cover here to upload</p>
+                <small>Supported formats: PNG, JPG, JPEG</small>
+            </label>
+            <input type="file" name="book-cover" id="book-cover">
 
             <hr>
             <h2>Step 3: Copyright & Licence Confirmation</h2>
             <div class="checkbox-group">
-                <input type="checkbox" id="uplaod-permission" name="uplaod-permission">
+                <input type="checkbox" id="uplaod-permission" name="uplaod-permission" required>
                 <label for="uplaod-permission">I promise that I have the upload permission for this book.</label>
             </div>
             <div class="checkbox-group">
-                <input type="checkbox" id="open-licence" name="open-licence">
+                <input type="checkbox" id="open-licence" name="open-licence" required>
                 <label for="open-licence">I promise that this book has been published under an open licence.</label>
             </div>
             <button type="submit" class="submit-btn">Submit This Book</button>

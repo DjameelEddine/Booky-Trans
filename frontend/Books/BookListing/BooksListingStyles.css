@@ -365,6 +365,14 @@ nav{
   transform: translateY(-3px);
 }
 
+.no-books {
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: 40px;
+    color: #666;
+    font-size: 1.2em;
+}
+
 /* Favorite icon */
 .favorite-btn {
   position: absolute;

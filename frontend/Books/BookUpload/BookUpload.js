@@ -6,113 +6,132 @@ const API_BASE = "http://127.0.0.1:8000";
 let ACCESS_TOKEN = null;
 
 function loadStoredToken() {
-    const t = localStorage.getItem("access_token");
-    if (t) {
-        ACCESS_TOKEN = t;
-    }
+    // ACCESS_TOKEN = localStorage.getItem("access_token");
+    // To test upload, independently of login, uncomment the line below and provide a valid token
+    ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NjU5OTgyMDl9.dijdSIjWwWMYNNSojOYT8K58IM_j9_2RAXdNeY-9N-8";
 }
 
-function authHeaders() {
-    return {
-        "Authorization": `Bearer ${ACCESS_TOKEN}`
-    };
+function toggleMenu() {
+    document.getElementById("mobileMenu").classList.toggle("show");
 }
 
-// Handle form submission
-document.addEventListener("DOMContentLoaded", function() {
+function updateBookLabel(file, uploadArea) {
+    uploadArea.innerHTML = `
+        <p>✅ ${file.name}</p>
+        <small>Size: ${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+    `;
+}
+
+// When page loads
+document.addEventListener("DOMContentLoaded", () => {
     loadStoredToken();
     
-    const form = document.querySelector("form");
-    if (form) {
-        form.addEventListener("submit", async function(e) {
-            e.preventDefault();
-
-            if (!ACCESS_TOKEN) {
-                alert("Please login first");
-                window.location.href = "../../Authentication/Login/login.html";
-                return;
-            }
-
-            // Get form values
-            const bookName = document.getElementById("book-name").value.trim();
-            const bookCategory = document.getElementById("book-category").value.trim();
-            const bookAuthor = document.getElementById("book-description").value.trim();
-            const originalLanguage = document.getElementById("book-language").value.trim();
-            const targetLanguage = document.getElementById("target-language").value.trim();
-            const bookFile = document.getElementById("book-upload").files[0];
-            const hasPermission = document.getElementById("uplaod-permission").checked;
-            const hasLicense = document.getElementById("open-licence").checked;
-
-            // Validation
-            if (!bookName || !bookCategory || !originalLanguage || !targetLanguage || !bookFile) {
-                alert("Please fill in all required fields");
-                return;
-            }
-
-            if (!hasPermission || !hasLicense) {
-                alert("Please confirm copyright and license");
-                return;
-            }
-
-            // Upload book
-            try {
-                const formData = new FormData();
-                formData.append("name", bookName);
-                formData.append("category", bookCategory);
-                formData.append("author", bookAuthor || "Unknown");
-                formData.append("language", originalLanguage);
-                formData.append("target_language", targetLanguage);
-                formData.append("file", bookFile);
+    const form = document.querySelector('form');
+    const bookFileInput = document.getElementById('book-upload');
+    const coverFileInput = document.getElementById('book-cover');
+    const bookUploadArea = document.querySelectorAll('.book-upload')[0];
+    const coverUploadArea = document.querySelectorAll('.book-upload')[1];
+    
+    // Show book file name when selected
+    bookFileInput.addEventListener('change', function() {
+        if (this.files.length > 0) {
+            updateBookLabel(this.files[0], bookUploadArea);
+        }
+    });
+    
+    // Show cover file name when selected
+    coverFileInput.addEventListener('change', function() {
+        if (this.files.length > 0) {
+            updateBookLabel(this.files[0], coverUploadArea);
+        }
+    });
+    
+    // Handle form submission
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // 1. Check if user is logged in
+        if (!ACCESS_TOKEN) {
+            alert("Please login to upload a book");
+            window.location.href = "../../Authentication/Login/login.html";
+            return;
+        }
+        
+        // 2. Get form values
+        const bookName = document.getElementById('book-name').value;
+        const bookAuthor = document.getElementById('book-author').value;
+        const bookCategory = document.getElementById('book-category').value;
+        const bookDescription = document.getElementById('book-description').value;
+        const bookLanguage = document.getElementById('book-language').value;
+        const targetLanguage = document.getElementById('target-language').value;
+        const bookFile = bookFileInput.files[0];
+        const coverFile = coverFileInput.files[0];
+        
+        // 3. Validate required fields
+        if (!bookFile) {
+            alert("Please select a book file");
+            return;
+        }
+        
+        // 4. Validate checkboxes
+        if (!document.getElementById('uplaod-permission').checked ||
+            !document.getElementById('open-licence').checked) {
+            alert("Please confirm both permissions");
+            return;
+        }
+        
+        // 5. Create FormData for backend
+        const formData = new FormData();
+        formData.append('file', bookFile);
+        if (coverFile) formData.append('img', coverFile);
+        formData.append('name', bookName);
+        formData.append('author', bookAuthor);
+        formData.append('category', bookCategory);
+        formData.append('description', bookDescription);
+        formData.append('language', bookLanguage);
+        formData.append('target_language', targetLanguage);
+        
+        // Show loading
+        const submitBtn = document.querySelector('.submit-btn');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Uploading...';
+        submitBtn.disabled = true;
+        
+        try {
+            // 6. Send to backend
+            const response = await fetch(`${API_BASE}/books/upload`, {
+                method: 'POST',
+                headers: {
+                    "Authorization": `Bearer ${ACCESS_TOKEN}`
+                },
+                body: formData
+            });
+            
+            // 7. Handle response
+            if (response.ok) {
+                const result = await response.json();
+                alert("Book uploaded successfully!");
                 
-                // Add a dummy image for now (can be updated to accept actual image)
-                const dummyImage = new File(["dummy"], "cover.png", { type: "image/png" });
-                formData.append("img", dummyImage);
-
-                const response = await fetch(`${API_BASE}/Books/BookUplaod`, {
-                    method: "POST",
-                    headers: authHeaders(),
-                    body: formData
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    alert("Book uploaded successfully!");
-                    form.reset();
-                    // Optionally redirect to profile
-                    setTimeout(() => {
-                        window.location.href = "../../Profile/profile.html";
-                    }, 1500);
-                } else {
-                    const error = await response.json();
-                    alert("Upload failed: " + (error.detail || "Unknown error"));
-                }
-            } catch (error) {
-                console.error("Error uploading book:", error);
-                alert("Error uploading book: " + error.message);
+                // Reset form
+                form.reset();
+                
+                // Reset upload areas
+                bookUploadArea.innerHTML = 
+                    '<p>📘 Click or Drag your file here to upload</p><small>Supported formats: PDF, EPUB, TXT</small>';
+                coverUploadArea.innerHTML = 
+                    '<p>📘 Click or Drag your book cover here to upload</p><small>Supported formats: PNG, JPG, JPEG</small>';
+                    
+            } else {
+                const error = await response.json();
+                alert(`Upload failed: ${error.detail || 'Server error'}`);
             }
-        });
-    }
-
-    // File drag and drop
-    const fileInput = document.getElementById("book-upload");
-    const uploadLabel = document.querySelector(".book-upload");
-
-    if (uploadLabel) {
-        uploadLabel.addEventListener("dragover", (e) => {
-            e.preventDefault();
-            uploadLabel.style.backgroundColor = "#e8f5ff";
-        });
-
-        uploadLabel.addEventListener("dragleave", () => {
-            uploadLabel.style.backgroundColor = "";
-        });
-
-        uploadLabel.addEventListener("drop", (e) => {
-            e.preventDefault();
-            uploadLabel.style.backgroundColor = "";
-            if (e.dataTransfer.files.length > 0) {
-                fileInput.files = e.dataTransfer.files;
-            }
-        });
-    }
+            
+        } catch (error) {
+            alert("Network error. Please try again.");
+        } finally {
+            // Reset button
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
+    });
 });

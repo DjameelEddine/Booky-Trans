@@ -6,6 +6,8 @@
     <title>BookyTrans</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='BooksListingStyles.css'>
+    <link rel="stylesheet" href="/frontend/components/footer/footer.css">
+    <link rel="stylesheet" href="/frontend/components/header/header.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
@@ -21,14 +23,13 @@
     <div class="main-screen">
         <h1>Books Ready For Translation</h1>
         <div class="search-field">
-            <img src="" alt="">
-            <input type="text" placeholder="Search">
-            <a class="filter-btn" href=""><img class="filter-img" src="../../assets/icons/filter.svg" alt="Filter"></a>
-        </div>
+    <input type="text" placeholder="Search books or authors..." id="searchInput" oninput="filterBooks()">
+    <a class="filter-btn" href="#"><img class="filter-img" src="../../assets/icons/filter.svg" alt="Filter"></a>
+</div>
         <div class="filter-popup">
                 <div class="language-inputs">
-                    <input type="text" placeholder="Original Language">
-                    <input type="text" placeholder="Target Language">
+                    <input type="text" placeholder="Original Language" id="originalLang" oninput="filterBooks()">
+                    <input type="text" placeholder="Target Language" id="targetLang" oninput="filterBooks()">
                 </div>
                 <br>
                 <div class="categories-row">
@@ -43,8 +44,29 @@
                     <button>GO</button>
                 </div>
             </div>
-        <div class="books-grid">
-            <div class="book-card">
+        <div class="books-grid"></div>
+        <div class="pagination-index">
+            <ul>
+                <li><a href="">&lt;</a></li>
+                <li><a href="">1,</a></li>
+                <li><a href="">2,</a></li>
+                <li><a href="">3,</a></li>
+                <li>...</li>
+                <li><a href="">&gt;</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="site-footer"></div>
+
+    <script src="/frontend/components/footer/footer.js" defer></script>
+
+    <script src="../../components/header/header.js" defer></script>
+    <script src="BookListing.js" defer></script>
+</body>
+</html>
+
+<!-- <div class="book-card">
                 <button class="favorite-btn" data-book-id="1" onclick="toggleFavorite(this)">
                     <img src="../../assets/icons/heart.svg" alt="Favorite">
                 </button>
@@ -93,26 +115,4 @@
                 <p>Author Name</p>
                 <p>English &rarr; <span>Arabic</span></p>
                 <button class="translate-btn">Translate This</button>
-            </div>
-        </div>
-        <div class="pagination-index">
-            <ul>
-                <li><a href="">&lt;</a></li>
-                <li><a href="">1,</a></li>
-                <li><a href="">2,</a></li>
-                <li><a href="">3,</a></li>
-                <li>...</li>
-                <li><a href="">&gt;</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="site-footer"></div>
-
-    <link rel="stylesheet" href="/frontend/components/footer/footer.css">
-    <script src="/frontend/components/footer/footer.js" defer></script>
-
-    <script src="../../components/header/header.js" defer></script>
-    <script src="BookListing.js"></script>
-</body>
-</html>
+            </div> -->

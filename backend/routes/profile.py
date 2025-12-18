@@ -61,7 +61,7 @@ def change_my_password(
 
 # ====================== FAVORITES ENDPOINTS ======================
 
-@router.get("/favorites", response_model=List[FavoriteBookOut])
+@router.get("/me/favorites", response_model=List[FavoriteBookOut])
 def get_favorite_books(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -73,69 +73,9 @@ def get_favorite_books(
     
     return favorites
 
-
-@router.post("/favorites/{book_id}")
-def add_favorite_book(
-    book_id: int,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
-):
-    """Add a book to favorites"""
-    # Check if book exists
-    book = db.query(Book).filter(Book.id == book_id).first()
-    if not book:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Book not found"
-        )
-    
-    # Check if already favorited
-    existing = db.query(FavoriteBooks).filter(
-        FavoriteBooks.user_id == current_user.id,
-        FavoriteBooks.book_id == book_id
-    ).first()
-    
-    if existing:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Book already in favorites"
-        )
-    
-    # Add to favorites
-    favorite = FavoriteBooks(user_id=current_user.id, book_id=book_id)
-    db.add(favorite)
-    db.commit()
-    
-    return {"message": "Book added to favorites", "favorited": True}
-
-
-@router.delete("/favorites/{book_id}")
-def remove_favorite_book(
-    book_id: int,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
-):
-    """Remove a book from favorites"""
-    favorite = db.query(FavoriteBooks).filter(
-        FavoriteBooks.user_id == current_user.id,
-        FavoriteBooks.book_id == book_id
-    ).first()
-    
-    if not favorite:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Book not in favorites"
-        )
-    
-    db.delete(favorite)
-    db.commit()
-    
-    return {"message": "Book removed from favorites", "favorited": False}
-
-
 # ====================== UPLOADED BOOKS ENDPOINTS ======================
 
-@router.get("/uploaded-books", response_model=List[UploadedBookOut])
+@router.get("/me/uploaded-books", response_model=List[UploadedBookOut])
 def get_uploaded_books(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -148,7 +88,7 @@ def get_uploaded_books(
     return uploaded
 
 
-@router.delete("/uploaded-books/{book_id}")
+@router.delete("/me/uploaded-books/{book_id}")
 def delete_uploaded_book(
     book_id: int,
     db: Session = Depends(get_db),
@@ -185,7 +125,7 @@ def delete_uploaded_book(
 
 # ====================== TRANSLATED BOOKS ENDPOINTS ======================
 
-@router.get("/translated-books", response_model=List[TranslatedBookOut])
+@router.get("/me/translated-books", response_model=List[TranslatedBookOut])
 def get_translated_books(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
@@ -214,7 +154,7 @@ def get_translated_books(
     return result
 
 
-@router.delete("/translated-books/{translation_id}")
+@router.delete("/me/translated-books/{translation_id}")
 def delete_translated_book(
     translation_id: int,
     db: Session = Depends(get_db),
@@ -237,3 +177,64 @@ def delete_translated_book(
     db.commit()
     
     return {"message": "Translation deleted successfully"}
+
+
+
+# @router.post("/favorites/{book_id}")
+# def add_favorite_book(
+#     book_id: int,
+#     db: Session = Depends(get_db),
+#     current_user: User = Depends(get_current_user),
+# ):
+#     """Add a book to favorites"""
+#     # Check if book exists
+#     book = db.query(Book).filter(Book.id == book_id).first()
+#     if not book:
+#         raise HTTPException(
+#             status_code=status.HTTP_404_NOT_FOUND,
+#             detail="Book not found"
+#         )
+    
+#     # Check if already favorited
+#     existing = db.query(FavoriteBooks).filter(
+#         FavoriteBooks.user_id == current_user.id,
+#         FavoriteBooks.book_id == book_id
+#     ).first()
+    
+#     if existing:
+#         raise HTTPException(
+#             status_code=status.HTTP_400_BAD_REQUEST,
+#             detail="Book already in favorites"
+#         )
+    
+#     # Add to favorites
+#     favorite = FavoriteBooks(user_id=current_user.id, book_id=book_id)
+#     db.add(favorite)
+#     db.commit()
+    
+#     return {"message": "Book added to favorites", "favorited": True}
+
+
+
+# @router.delete("/favorites/{book_id}")
+# def remove_favorite_book(
+#     book_id: int,
+#     db: Session = Depends(get_db),
+#     current_user: User = Depends(get_current_user),
+# ):
+#     """Remove a book from favorites"""
+#     favorite = db.query(FavoriteBooks).filter(
+#         FavoriteBooks.user_id == current_user.id,
+#         FavoriteBooks.book_id == book_id
+#     ).first()
+    
+#     if not favorite:
+#         raise HTTPException(
+#             status_code=status.HTTP_404_NOT_FOUND,
+#             detail="Book not in favorites"
+#         )
+    
+#     db.delete(favorite)
+#     db.commit()
+    
+#     return {"message": "Book removed from favorites", "favorited": False}
