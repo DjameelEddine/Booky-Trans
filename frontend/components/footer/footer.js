@@ -2,6 +2,15 @@ document.addEventListener('DOMContentLoaded', function(){
   const mount = document.getElementById('site-footer');
   if (!mount) return;
 
+  // Inject CSS if not already present
+  if (!document.getElementById('footer-component-styles')) {
+    const link = document.createElement('link');
+    link.id = 'footer-component-styles';
+    link.rel = 'stylesheet';
+    link.href = '/frontend/components/footer/footer.css';
+    document.head.appendChild(link);
+  }
+
   const frontendRoot = '/frontend/';
   fetch(frontendRoot + 'components/footer/footer.html')
     .then(r => r.text())

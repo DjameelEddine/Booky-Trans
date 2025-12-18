@@ -2,6 +2,14 @@ document.addEventListener('DOMContentLoaded', function(){
   const mount = document.getElementById('site-header');
   if(!mount) return;
 
+  // Inject CSS if not already present
+  if (!document.getElementById('header-component-styles')) {
+    const link = document.createElement('link');
+    link.id = 'header-component-styles';
+    link.rel = 'stylesheet';
+    link.href = '/frontend/components/header/header.css';
+    document.head.appendChild(link);
+  }
   
   const frontendRoot = '/frontend/';
 
