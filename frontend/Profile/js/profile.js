@@ -255,7 +255,17 @@ async function switchBooksTab(name) {
 }
 
 function handlePreview(title) {
-  alert("Preview for: " + title);
+  // Get the book data from the current tab
+  const activeTab = document.querySelector('.tab.active')?.dataset.tab || 'uploaded';
+  const books = booksData[activeTab] || [];
+  const book = books.find(b => b.name === title);
+  
+  if (book) {
+    // Navigate to the translate page for this book
+    window.location.href = `../Books/BookTranslate/BookTranslate.html?bookId=${book.id}`;
+  } else {
+    alert("Book not found");
+  }
 }
 
 async function deleteUploadedBook(bookId) {
