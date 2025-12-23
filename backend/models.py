@@ -9,6 +9,8 @@ class User(Base):
     username = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
+    avatar_url = Column(String(255), nullable=True)  
+    bio = Column(String, nullable=True)             
 
 class Book(Base):
     __tablename__ = "books"
@@ -16,11 +18,12 @@ class Book(Base):
     name = Column(String, nullable=False)
     category = Column(String, nullable=False)
     author = Column(String)
-    description = Column(String)
+    description = Column(String, nullable=True) 
     language = Column(String, nullable=False)
     target_language = Column(String, nullable=False)
     file_path = Column(String, nullable=False)
     img_path = Column(String, nullable=True)
+
 
 class Translation(Base):
     __tablename__ = "translations"

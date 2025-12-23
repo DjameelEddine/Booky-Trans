@@ -7,13 +7,13 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI(title="Booky-Trans")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],      # for local testing
+    allow_origins=["*"],      
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Create tables in the database
+
 Base.metadata.create_all(bind=engine)
 
 app.include_router(profile.router)
@@ -22,7 +22,7 @@ app.include_router(auth.router)
 app.include_router(translation.router)
 app.include_router(review.router)
 
-# For Books' file and Cover path
+
 
 from fastapi.staticfiles import StaticFiles
 

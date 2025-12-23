@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function(){
   const mount = document.getElementById('site-header');
   if(!mount) return;
 
-  // Inject CSS if not already present
   if (!document.getElementById('header-component-styles')) {
     const link = document.createElement('link');
     link.id = 'header-component-styles';
@@ -56,6 +55,48 @@ document.addEventListener('DOMContentLoaded', function(){
     };
   }
 
+  async function updateNavbarAvatar(mount) {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      const navAvatar = mount.querySelector('.topnav-avatar');
+      if (navAvatar) navAvatar.src = "/frontend/assets/profile.jpg";
+      return;
+    }
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/profile/me', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      if (response.ok) {
+        const user = await response.json();
+        const navAvatar = mount.querySelector('.topnav-avatar');  
+        
+        if (navAvatar) {
+         
+          if (user.avatar_url && user.avatar_url.startsWith('/uploads/')) {
+            navAvatar.src = `http://127.0.0.1:8000${user.avatar_url}`;
+          } else {
+            navAvatar.src = "/frontend/assets/profile.jpg";
+          }
+          navAvatar.alt = user.full_name || "User Profile";
+          
+          // Cache
+          localStorage.setItem("profile_avatar_url", navAvatar.src);
+          localStorage.setItem("profile_full_name", user.full_name || "");
+        }
+      } else {
+        // Token invalid - fallback
+        const navAvatar = mount.querySelector('.topnav-avatar');
+        if (navAvatar) navAvatar.src = "/frontend/assets/profile.jpg";
+      }
+    } catch (error) {
+      console.error('Navbar avatar failed:', error);
+      const navAvatar = mount.querySelector('.topnav-avatar');
+      if (navAvatar) navAvatar.src = "/frontend/assets/profile.jpg";
+    }
+  }
+
   async function checkLoginStatus(mount){
     const token = localStorage.getItem('accessToken');
     const authButtons = mount.querySelector('#authButtons');
@@ -73,6 +114,8 @@ document.addEventListener('DOMContentLoaded', function(){
         if (response.ok) {
           if (authButtons) authButtons.style.display = 'none';
           if (userProfile) userProfile.style.display = 'flex';
+          
+          updateNavbarAvatar(mount); 
           return;
         } else {
           localStorage.removeItem('isLoggedIn');
@@ -86,5 +129,15 @@ document.addEventListener('DOMContentLoaded', function(){
     
     if (authButtons) authButtons.style.display = 'flex';
     if (userProfile) userProfile.style.display = 'none';
+    
+    updateNavbarAvatar(mount);  
   }
+
+  
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'accessToken' || e.key === 'profile_avatar_url') {
+      const mount = document.getElementById('site-header');
+      if (mount) updateNavbarAvatar(mount);
+    }
+  });
 });

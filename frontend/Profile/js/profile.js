@@ -1,6 +1,5 @@
 const API_BASE = "http://127.0.0.1:8000";
 
-
 let ACCESS_TOKEN = localStorage.getItem("accessToken") || null;
 
 let booksData = {
@@ -32,52 +31,100 @@ function authHeaders() {
   };
 }
 
+
 async function loadUserProfile() {
   try {
     if (ACCESS_TOKEN) {
       const response = await fetch(`${API_BASE}/profile/me`, {
         headers: authHeaders()
       });
-      
+
       if (response.ok) {
         const user = await response.json();
-        document.getElementById('user-name').textContent =
-          user.full_name || user.username;
-        document.getElementById('user-avatar').src =
-          user.avatar_url || '../assets/profile.svg';
-        document.getElementById('user-avatar').alt =
-          user.full_name || user.username;
-        document.getElementById('user-description1').textContent =
-          user.bio || 'No bio available';
-        document.getElementById('user-description2').textContent =
-          user.description || '';
+        const displayName = user.full_name || user.username || user.email || "User";
+
+       
+        const avatarImg = document.getElementById("user-avatar");
+        if (user.avatar_url && user.avatar_url.startsWith('/uploads/')) {
+          avatarImg.src = `${API_BASE}${user.avatar_url}`;
+          avatarImg.alt = displayName;
+        } else {
+          avatarImg.src = "../assets/profile.svg";
+          avatarImg.alt = "Default avatar";
+        }
+
+        document.getElementById("user-name").textContent = displayName;
+        document.getElementById("user-description1").textContent = user.bio || "No bio available";
+        document.getElementById("user-description2").textContent = user.description || "";
+
+        
+        updateNavbarAvatar(user);
         return;
       }
     }
   } catch (error) {
-    console.error('JWT failed, trying fallback:', error);
+    console.error("Profile load failed:", error);
   }
 
-  if (localStorage.getItem('isLoggedIn') === 'true') {
-    const email = localStorage.getItem('userEmail') || 'Team User';
-    document.getElementById('user-name').textContent = email;
-    document.getElementById('user-avatar').src = '../assets/profile.svg';
-    document.getElementById('user-avatar').alt = email;
-    document.getElementById('user-description1').textContent = 'Welcome back!';
-    document.getElementById('user-description2').textContent = 'Team member account';
+  
+  const avatarImg = document.getElementById("user-avatar");
+  if (avatarImg) {
+    avatarImg.src = "../assets/profile.svg";
+    avatarImg.alt = "Default avatar";
+  }
+  
+  if (localStorage.getItem("isLoggedIn") === "true") {
+    const email = localStorage.getItem("userEmail") || "Team User";
+    document.getElementById("user-name").textContent = email;
+    document.getElementById("user-description1").textContent = "Welcome back!";
+    document.getElementById("user-description2").textContent = "Team member account";
     return;
   }
 
-  document.getElementById('user-name').textContent = 'Guest User';
-  document.getElementById('user-description1').textContent =
-    'Please log in to see your profile';
+  document.getElementById("user-name").textContent = "Guest User";
+  document.getElementById("user-description1").textContent = "Please log in to see your profile";
 }
 
+function updateNavbarAvatar(user = null) {
+  try {
+    const navSelectors = [
+      "#nav-user-avatar", 
+      ".nav-user-avatar", 
+      ".user-avatar-small", 
+      "[id*='nav-avatar'] img",
+      "#navbar-avatar",
+      ".navbar .avatar img"
+    ];
+
+    for (let selector of navSelectors) {
+      const navAvatar = document.querySelector(selector);
+      if (navAvatar) {
+        const avatarUrl = user?.avatar_url && user.avatar_url.startsWith('/uploads/') 
+          ? `${API_BASE}${user.avatar_url}` 
+          : "../assets/profile.svg";
+        navAvatar.src = avatarUrl;
+        navAvatar.alt = user?.full_name || "User avatar";
+        break;
+      }
+    }
+  } catch (err) {
+    console.error("Navbar avatar update failed:", err);
+  }
+}
+
+// ---------- REFRESH AFTER AVATAR UPLOAD ----------
+window.refreshProfile = function() {
+  loadUserProfile();
+  loadAllBooks();
+};
+
+// ---------- AUTH ----------
 function logout() {
   setToken(null);
   window.location.href = "../Home/home.html";
 }
 
+// ---------- BOOKS ----------
 async function loadAllBooks() {
   try {
     if (ACCESS_TOKEN) {
@@ -106,25 +153,36 @@ async function loadAllBooks() {
       return;
     }
   } catch (error) {
-    console.error("Backend failed, using demo books:", error);
+    console.error("Backend books failed:", error);
   }
 
+  // Demo books fallback
   booksData = {
-    uploaded: [
-      { id: 1, name: "Demo Book 1", author: "Demo Author",
-        language: "English", target_language: "French",
-        img_path: "../assets/book1.png" }
-    ],
-    translated: [
-      { id: 2, name: "Demo Translation", author: "Demo Author",
-        language: "English", target_language: "Arabic",
-        translation_id: 1, img_path: "../assets/book1.png" }
-    ],
-    favorite: [
-      { id: 3, name: "Demo Favorite", author: "Demo Author",
-        language: "French", target_language: "English",
-        img_path: "../assets/book1.png" }
-    ]
+    uploaded: [{
+      id: 1,
+      name: "Demo Book 1",
+      author: "Demo Author",
+      language: "English",
+      target_language: "French",
+      img_path: "../assets/book1.png"
+    }],
+    translated: [{
+      id: 2,
+      name: "Demo Translation",
+      author: "Demo Author",
+      language: "English",
+      target_language: "Arabic",
+      translation_id: 1,
+      img_path: "../assets/book1.png"
+    }],
+    favorite: [{
+      id: 3,
+      name: "Demo Favorite",
+      author: "Demo Author",
+      language: "French",
+      target_language: "English",
+      img_path: "../assets/book1.png"
+    }]
   };
   renderBooks("uploaded");
 }
@@ -136,10 +194,7 @@ function renderBooks(type) {
   const books = booksData[type] || [];
 
   if (books.length === 0) {
-    grid.innerHTML =
-      `<p style="grid-column: 1/-1; text-align: center; padding: 40px;">
-         No ${type} books yet.
-       </p>`;
+    grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 40px;">No ${type} books yet.</p>`;
     return;
   }
 
@@ -162,29 +217,20 @@ function createBookCard(book, type) {
 
   let actionButton = "";
   if (type === "uploaded") {
-    actionButton =
-      `<button class="book-btn delete-btn"
-               onclick="deleteUploadedBook(${book.id})">Delete</button>`;
+    actionButton = `<button class="book-btn delete-btn" onclick="deleteUploadedBook(${book.id})">Delete</button>`;
   } else if (type === "translated") {
-    actionButton =
-      `<button class="book-btn delete-btn"
-               onclick="deleteTranslation(${book.translation_id})">Remove</button>`;
+    actionButton = `<button class="book-btn delete-btn" onclick="deleteTranslation(${book.translation_id})">Remove</button>`;
   } else if (type === "favorite") {
-    actionButton =
-      `<button class="book-btn delete-btn"
-               onclick="removeFavorite(${book.id})">Remove</button>`;
+    actionButton = `<button class="book-btn delete-btn" onclick="removeFavorite(${book.id})">Remove</button>`;
   }
 
   article.innerHTML = `
-    <img class="book-img"
-         src="${book.img_path || '../assets/book1.png'}"
-         alt="${book.name}" />
+    <img class="book-img" src="${book.img_path || "../assets/book1.png"}" alt="${book.name}" />
     <h3 class="book-title">${book.name}</h3>
-    <p class="book-author">By ${book.author || 'Unknown'}</p>
+    <p class="book-author">By ${book.author || "Unknown"}</p>
     <p class="book-meta">${languageLabel}</p>
     <div class="book-actions">
-      <button class="book-btn"
-              onclick="handlePreview('${book.name}')">Preview</button>
+      <button class="book-btn" onclick="handlePreview('${book.name}')">Preview</button>
       ${actionButton}
     </div>
   `;
@@ -196,7 +242,6 @@ async function switchBooksTab(name) {
   document.querySelectorAll(".tab").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.tab === name);
   });
-
   renderBooks(name);
 }
 
@@ -215,8 +260,7 @@ async function deleteUploadedBook(bookId) {
       });
 
       if (response.ok) {
-        booksData.uploaded =
-          booksData.uploaded.filter(b => b.id !== bookId);
+        booksData.uploaded = booksData.uploaded.filter(b => b.id !== bookId);
         renderBooks("uploaded");
         alert("Book deleted successfully");
         return;
@@ -226,8 +270,7 @@ async function deleteUploadedBook(bookId) {
     }
   }
 
-  booksData.uploaded =
-    booksData.uploaded.filter(b => b.id !== bookId);
+  booksData.uploaded = booksData.uploaded.filter(b => b.id !== bookId);
   renderBooks("uploaded");
   alert("Demo book removed");
 }
@@ -237,17 +280,13 @@ async function deleteTranslation(translationId) {
 
   if (ACCESS_TOKEN) {
     try {
-      const response = await fetch(
-        `${API_BASE}/profile/translated-books/${translationId}`, {
-          method: "DELETE",
-          headers: authHeaders()
-        }
-      );
+      const response = await fetch(`${API_BASE}/profile/translated-books/${translationId}`, {
+        method: "DELETE",
+        headers: authHeaders()
+      });
 
       if (response.ok) {
-        booksData.translated =
-          booksData.translated
-            .filter(b => b.translation_id !== translationId);
+        booksData.translated = booksData.translated.filter(b => b.translation_id !== translationId);
         renderBooks("translated");
         alert("Translation removed successfully");
         return;
@@ -257,9 +296,7 @@ async function deleteTranslation(translationId) {
     }
   }
 
-  booksData.translated =
-    booksData.translated
-      .filter(b => b.translation_id !== translationId);
+  booksData.translated = booksData.translated.filter(b => b.translation_id !== translationId);
   renderBooks("translated");
   alert("Demo translation removed");
 }
@@ -275,8 +312,7 @@ async function removeFavorite(bookId) {
       });
 
       if (response.ok) {
-        booksData.favorite =
-          booksData.favorite.filter(b => b.id !== bookId);
+        booksData.favorite = booksData.favorite.filter(b => b.id !== bookId);
         renderBooks("favorite");
         alert("Removed from favorites");
         return;
@@ -286,14 +322,13 @@ async function removeFavorite(bookId) {
     }
   }
 
-  booksData.favorite =
-    booksData.favorite.filter(b => b.id !== bookId);
+  booksData.favorite = booksData.favorite.filter(b => b.id !== bookId);
   renderBooks("favorite");
   alert("Demo favorite removed");
 }
 
+// ---------- PERFECT INIT ----------
 document.addEventListener("DOMContentLoaded", () => {
   loadStoredToken();
-  loadUserProfile();
-  loadAllBooks();
+  loadUserProfile();  // Loads profile + navbar + books
 });
