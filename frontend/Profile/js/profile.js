@@ -132,21 +132,30 @@ async function loadAllBooks() {
         headers: authHeaders()
       });
       if (uploadedRes.ok) {
-        booksData.uploaded = await uploadedRes.json();
+        booksData.uploaded = (await uploadedRes.json()).map(b => ({
+          ...b,
+          img_path: b.img_path && b.img_path.startsWith('/uploads/') ? `${API_BASE}${b.img_path}` : b.img_path
+        }));
       }
 
       const translatedRes = await fetch(`${API_BASE}/profile/translated-books`, {
         headers: authHeaders()
       });
       if (translatedRes.ok) {
-        booksData.translated = await translatedRes.json();
+        booksData.translated = (await translatedRes.json()).map(b => ({
+          ...b,
+          img_path: b.img_path && b.img_path.startsWith('/uploads/') ? `${API_BASE}${b.img_path}` : b.img_path
+        }));
       }
 
       const favoriteRes = await fetch(`${API_BASE}/profile/favorites`, {
         headers: authHeaders()
       });
       if (favoriteRes.ok) {
-        booksData.favorite = await favoriteRes.json();
+        booksData.favorite = (await favoriteRes.json()).map(b => ({
+          ...b,
+          img_path: b.img_path && b.img_path.startsWith('/uploads/') ? `${API_BASE}${b.img_path}` : b.img_path
+        }));
       }
 
       renderBooks("uploaded");
@@ -246,7 +255,17 @@ async function switchBooksTab(name) {
 }
 
 function handlePreview(title) {
-  alert("Preview for: " + title);
+  // Get the book data from the current tab
+  const activeTab = document.querySelector('.tab.active')?.dataset.tab || 'uploaded';
+  const books = booksData[activeTab] || [];
+  const book = books.find(b => b.name === title);
+  
+  if (book) {
+    // Navigate to the translate page for this book
+    window.location.href = `../Books/BookTranslate/BookTranslate.html?bookId=${book.id}`;
+  } else {
+    alert("Book not found");
+  }
 }
 
 async function deleteUploadedBook(bookId) {
@@ -330,5 +349,7 @@ async function removeFavorite(bookId) {
 // ---------- PERFECT INIT ----------
 document.addEventListener("DOMContentLoaded", () => {
   loadStoredToken();
-  loadUserProfile();  // Loads profile + navbar + books
+  loadUserProfile();
+  // Ensure books lists are fetched and rendered
+  loadAllBooks();
 });

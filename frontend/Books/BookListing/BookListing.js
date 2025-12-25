@@ -176,11 +176,11 @@ async function toggleFavorite(btn) {
         if (response.ok) {
             const result = await response.json();
             if (result.favorited) {
-                favoriteBooks.delete(parseInt(bookId));
-                btn.classList.add("active")
-            } else {
                 favoriteBooks.add(parseInt(bookId));
-                btn.classList.remove("active")
+                btn.classList.add("active");
+            } else {
+                favoriteBooks.delete(parseInt(bookId));
+                btn.classList.remove("active");
             }
         }
         else {

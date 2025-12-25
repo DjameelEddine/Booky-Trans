@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', function(){
+  // Helper to resolve paths from any page location
+  function getComponentPath(componentPath) {
+    const currentPath = window.location.pathname;
+    const pathDepth = (currentPath.split('/').length - 2);
+    let backToRoot = '';
+    for (let i = 0; i < pathDepth; i++) backToRoot += '../';
+    return backToRoot + 'components/' + componentPath;
+  }
+
   const mount = document.getElementById('site-header');
   if(!mount) return;
 
@@ -6,20 +15,23 @@ document.addEventListener('DOMContentLoaded', function(){
     const link = document.createElement('link');
     link.id = 'header-component-styles';
     link.rel = 'stylesheet';
-    link.href = '/frontend/components/header/header.css';
+    link.href = getComponentPath('header/header.css');
     document.head.appendChild(link);
   }
-  
-  const frontendRoot = '/frontend/';
 
-  fetch(frontendRoot + 'components/header/header.html')
+  fetch(getComponentPath('header/header.html'))
       .then(r => r.text())
       .then(html => {
         mount.innerHTML = html || '';
         const logo = mount.querySelector('#site-logo');
         const mobileLogo = mount.querySelector('#mobile-logo-img');
-        const logoPrimary = frontendRoot + 'assets/icons/logoWHITE.svg';
-        const logoFallback = frontendRoot + 'assets/icons/logowhite.svg';
+        // Simplify: calculate the base path to frontend root once
+        const currentPath = window.location.pathname;
+        const pathDepth = (currentPath.split('/').length - 2);
+        let backToRoot = '';
+        for (let i = 0; i < pathDepth; i++) backToRoot += '../';
+        const logoPrimary = backToRoot + 'assets/icons/logoWHITE.svg';
+        const logoFallback = backToRoot + 'assets/icons/logowhite.svg';
         if (logo){
           logo.src = logoPrimary;
           logo.onerror = () => { logo.src = logoFallback; };
@@ -29,15 +41,19 @@ document.addEventListener('DOMContentLoaded', function(){
           mobileLogo.onerror = () => { mobileLogo.src = logoFallback; };
         }
 
-        wireupHeaderLinks(mount, frontendRoot);
+        wireupHeaderLinks(mount);
         checkLoginStatus(mount);
       })
       .catch(e => console.error('header load failed', e));
 
-  function wireupHeaderLinks(mount, frontendRoot){
+  function wireupHeaderLinks(mount){
     mount.querySelectorAll('[data-target]').forEach(el => {
       const target = el.getAttribute('data-target');
-      const resolved = frontendRoot + target;
+      const currentPath = window.location.pathname;
+      const pathDepth = (currentPath.split('/').length - 2);
+      let backToRoot = '';
+      for (let i = 0; i < pathDepth; i++) backToRoot += '../';
+      const resolved = backToRoot + target;
       el.setAttribute('href', resolved);
       el.addEventListener('click', ev => {
         if (el.tagName.toLowerCase() === 'a' && el.href) return; 
@@ -59,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const token = localStorage.getItem('accessToken');
     if (!token) {
       const navAvatar = mount.querySelector('.topnav-avatar');
-      if (navAvatar) navAvatar.src = "/frontend/assets/profile.jpg";
+      if (navAvatar) navAvatar.src = getComponentPath('header/../assets/profile.jpg');
       return;
     }
 
@@ -77,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function(){
           if (user.avatar_url && user.avatar_url.startsWith('/uploads/')) {
             navAvatar.src = `http://127.0.0.1:8000${user.avatar_url}`;
           } else {
-            navAvatar.src = "/frontend/assets/profile.jpg";
+            navAvatar.src = getComponentPath('header/../assets/profile.jpg');
           }
           navAvatar.alt = user.full_name || "User Profile";
           
@@ -88,12 +104,12 @@ document.addEventListener('DOMContentLoaded', function(){
       } else {
         // Token invalid - fallback
         const navAvatar = mount.querySelector('.topnav-avatar');
-        if (navAvatar) navAvatar.src = "/frontend/assets/profile.jpg";
+        if (navAvatar) navAvatar.src = getComponentPath('header/../assets/profile.jpg');
       }
     } catch (error) {
       console.error('Navbar avatar failed:', error);
       const navAvatar = mount.querySelector('.topnav-avatar');
-      if (navAvatar) navAvatar.src = "/frontend/assets/profile.jpg";
+      if (navAvatar) navAvatar.src = getComponentPath('header/../assets/profile.jpg');
     }
   }
 
