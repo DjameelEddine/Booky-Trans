@@ -1,10 +1,19 @@
 document.addEventListener('DOMContentLoaded', function(){
-  // Helper to resolve paths from any page location
+  // Helper to resolve component paths for both Live Server (workspace root)
+  // and Python http.server (frontend as server root)
   function getComponentPath(componentPath) {
-    const currentPath = window.location.pathname;
-    const pathDepth = (currentPath.split('/').length - 2);
+    const pathname = window.location.pathname;
+    const FRONTEND_TOKEN = '/frontend/';
+
+    const idx = pathname.indexOf(FRONTEND_TOKEN);
+    if (idx !== -1) {
+      const base = pathname.substring(0, idx + FRONTEND_TOKEN.length);
+      return base + 'components/' + componentPath;
+    }
+
+    const segments = pathname.split('/').filter(Boolean);
     let backToRoot = '';
-    for (let i = 0; i < pathDepth; i++) backToRoot += '../';
+    for (let i = 0; i < Math.max(segments.length - 1, 0); i++) backToRoot += '../';
     return backToRoot + 'components/' + componentPath;
   }
 
@@ -34,16 +43,42 @@ document.addEventListener('DOMContentLoaded', function(){
   function wireupFooterLinks(mount){
     mount.querySelectorAll('[data-target]').forEach(el => {
       const target = el.getAttribute('data-target');
-      const currentPath = window.location.pathname;
-      const pathDepth = (currentPath.split('/').length - 2);
-      let backToRoot = '';
-      for (let i = 0; i < pathDepth; i++) backToRoot += '../';
-      const resolved = backToRoot + target;
-      el.setAttribute('href', resolved);
+
+      // Fallback href
+      el.setAttribute('href', '/' + target);
+
       el.addEventListener('click', ev => {
-        if (el.tagName.toLowerCase() === 'a' && el.href) return;
         ev.preventDefault();
-        window.location.href = resolved;
+
+        const pathname = window.location.pathname;
+        const FRONTEND_TOKEN = '/frontend/';
+        const idx = pathname.indexOf(FRONTEND_TOKEN);
+        const candidates = [];
+
+        if (idx !== -1) {
+          const base = pathname.substring(0, idx + FRONTEND_TOKEN.length);
+          candidates.push(base + target);
+        }
+
+        candidates.push('/' + target);
+
+        const segs = pathname.split('/').filter(Boolean);
+        let back = '';
+        for (let i = 0; i < Math.max(segs.length - 1, 0); i++) back += '../';
+        candidates.push(back + target);
+
+        (async function tryNavigate() {
+          for (const url of candidates) {
+            try {
+              const res = await fetch(url, { method: 'GET' });
+              if (res && res.ok) {
+                window.location.href = url;
+                return;
+              }
+            } catch (e) {}
+          }
+          window.location.href = candidates[0];
+        })();
       });
     });
   }
