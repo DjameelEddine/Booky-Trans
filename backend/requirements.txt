@@ -5,7 +5,7 @@ SQLAlchemy==2.0.41
 alembic==1.16.2
 psycopg2-binary
 
-pydantic==2.11.7
+pydantic[email]==2.11.7
 pydantic-settings==2.10.1
 
 python-dotenv==1.1.1
