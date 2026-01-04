@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/profile/me', {
+      const response = await fetch('https://booky-trans.onrender.com/profile/me', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function(){
         if (navAvatar) {
          
           if (user.avatar_url && user.avatar_url.startsWith('/uploads/')) {
-            navAvatar.src = `http://127.0.0.1:8000${user.avatar_url}`;
+            navAvatar.src = `https://booky-trans.onrender.com${user.avatar_url}`;
           } else {
             navAvatar.src = getComponentPath('header/../assets/profile.jpg');
           }
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function(){
     
     if (token) {
       try {
-        const response = await fetch('http://127.0.0.1:8000/auth/verify-token', {
+        const response = await fetch('https://booky-trans.onrender.com/auth/verify-token', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`

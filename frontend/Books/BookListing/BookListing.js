@@ -28,7 +28,7 @@ function toggleMenu() {
 
 // ########## BACKEND CONNECTION ############
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "https://booky-trans.onrender.com";
 let ACCESS_TOKEN = null;
 let favoriteBooks = new Set();
 let allBooks = [];

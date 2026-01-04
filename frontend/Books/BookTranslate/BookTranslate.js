@@ -23,7 +23,7 @@ function getDisplayName() {
 
 
 
-	const API = window.BACKEND_URL || 'http://127.0.0.1:8000';
+	const API = 'https://booky-trans.onrender.com';
 
 
 const REVIEWS_PAGE_SIZE = 3;
